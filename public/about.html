@@ -478,8 +478,8 @@
             <div class="relative flex flex-wrap justify-center gap-8">
                 <!-- Connecting Arrows -->
                 <svg class="absolute w-full h-full top-0 left-0" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet" style="pointer-events: none;">
-                    <!-- Arrow from Excellence to Discipline -->
-                    <path d="M 300 150 Q 450 150 600 150" 
+                    <!-- Arrow from Excellence to Discipline (curved up) -->
+                    <path d="M 300 150 Q 450 50 600 150" 
                           fill="none" 
                           stroke="#2c64ac" 
                           stroke-width="6"
@@ -494,10 +494,11 @@
                     <!-- Arrow head 1 -->
                     <polygon points="590,140 610,150 590,160" 
                             fill="#2c64ac"
+                            transform="rotate(-30 600 150)"
                             class="opacity-100"/>
 
-                    <!-- Arrow from Discipline to Holistic -->
-                    <path d="M 650 150 Q 800 150 950 150" 
+                    <!-- Arrow from Discipline to Holistic (curved down) -->
+                    <path d="M 650 150 Q 800 250 950 150" 
                           fill="none" 
                           stroke="#2c64ac" 
                           stroke-width="6"
@@ -512,6 +513,7 @@
                     <!-- Arrow head 2 -->
                     <polygon points="940,140 960,150 940,160" 
                             fill="#2c64ac"
+                            transform="rotate(30 950 150)"
                             class="opacity-100"/>
                 </svg>
 
@@ -521,7 +523,7 @@
                     <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg transform hover:scale-110 transition-transform duration-300" style="box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 -2px 4px rgba(0,0,0,0.2);">
                         <div class="absolute inset-1 rounded-full bg-gradient-to-br from-blue-300 to-blue-500 opacity-50"></div>
                     </div>
-                    <div class="absolute -top-4 -left-4 bg-coral-500 text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">01</div>
+                    <div class="absolute -top-4 -left-4 bg-[#FF0000] text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">01</div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Excellence</h3>
                     <p class="text-gray-600 leading-relaxed">Striving for the highest standards in education and character development.</p>
                 </div>
@@ -531,7 +533,7 @@
                     <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 shadow-lg transform hover:scale-110 transition-transform duration-300" style="box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 -2px 4px rgba(0,0,0,0.2);">
                         <div class="absolute inset-1 rounded-full bg-gradient-to-br from-purple-300 to-purple-500 opacity-50"></div>
                     </div>
-                    <div class="absolute -top-4 -left-4 bg-coral-500 text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">02</div>
+                    <div class="absolute -top-4 -left-4 bg-[#FF0000] text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">02</div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Discipline</h3>
                     <p class="text-gray-600 leading-relaxed">Building character through structured guidance and accountability.</p>
                 </div>
@@ -541,7 +543,7 @@
                     <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-br from-coral-400 to-coral-600 shadow-lg transform hover:scale-110 transition-transform duration-300" style="box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 -2px 4px rgba(0,0,0,0.2);">
                         <div class="absolute inset-1 rounded-full bg-gradient-to-br from-coral-300 to-coral-500 opacity-50"></div>
                     </div>
-                    <div class="absolute -top-4 -left-4 bg-coral-500 text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">03</div>
+                    <div class="absolute -top-4 -left-4 bg-[#FF0000] text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">03</div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Holistic Approach</h3>
                     <p class="text-gray-600 leading-relaxed">Developing the whole child - mind, body, and spirit.</p>
                 </div>
