@@ -9,6 +9,20 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="css/output.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coral: {
+                            500: '#ff6f61',
+                        },
+                    },
+                },
+            },
+        };
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
@@ -456,6 +470,34 @@
                 </div>
             </div>
         </section>
+
+
+        <div class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Our Core Values</h2>
+            <p class="text-lg text-gray-600 mb-10">The principles that guide everything we do</p>
+            <div class="relative flex flex-wrap justify-center gap-8">
+                <!-- Card 1: Excellence -->
+                <div class="relative bg-white rounded-lg shadow-lg w-64 p-6 text-left z-10">
+                    <div class="absolute -top-4 -left-4 bg-coral-500 text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">01</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Excellence</h3>
+                    <p class="text-gray-600 leading-relaxed">Striving for the highest standards in education and character development.</p>
+                </div>
+                <!-- Card 2: Discipline -->
+                <div class="relative bg-white rounded-lg shadow-lg w-64 p-6 text-left z-10">
+                    <div class="absolute -top-4 -left-4 bg-coral-500 text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">02</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Discipline</h3>
+                    <p class="text-gray-600 leading-relaxed">Building character through structured guidance and accountability.</p>
+                </div>
+                <!-- Card 3: Holistic Approach -->
+                <div class="relative bg-white rounded-lg shadow-lg w-64 p-6 text-left z-10">
+                    <div class="absolute -top-4 -left-4 bg-coral-500 text-white font-bold text-lg w-10 h-10 flex items-center justify-center rounded-full shadow-md">03</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Holistic Approach</h3>
+                    <p class="text-gray-600 leading-relaxed">Developing the whole child - mind, body, and spirit.</p>
+                </div>
+                <!-- Dotted line background -->
+                <div class="absolute inset-0 z-0" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"20%\" y1=\"20%\" x2=\"80%\" y2=\"80%\" stroke=\"%23d1d5db\" stroke-width=\"2\" stroke-dasharray=\"5,5\"/></svg>'); transform: rotate(45deg);"></div>
+            </div>
+        </div>
     
         <!-- Core Values Section: Highlights the school's guiding principles -->
         <section class="py-12">
