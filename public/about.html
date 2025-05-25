@@ -476,6 +476,41 @@
             <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Our Core Values</h2>
             <p class="text-lg text-gray-600 mb-10">The principles that guide everything we do</p>
             <div class="relative flex flex-wrap justify-center gap-8">
+                <!-- Connecting Arrows -->
+                <svg class="absolute w-full h-full top-0 left-0 z-0" style="pointer-events: none;">
+                    <!-- Arrow from Excellence to Discipline -->
+                    <path d="M 280 100 C 320 100, 340 100, 380 100" 
+                          fill="none" 
+                          stroke="#94a3b8" 
+                          stroke-width="2"
+                          stroke-dasharray="4,4">
+                        <animate attributeName="stroke-dashoffset" 
+                                 from="0" 
+                                 to="16" 
+                                 dur="2s" 
+                                 repeatCount="indefinite"/>
+                    </path>
+                    <!-- Arrow head -->
+                    <path d="M 380 100 L 370 95 L 370 105 Z" 
+                          fill="#94a3b8"/>
+
+                    <!-- Arrow from Discipline to Holistic -->
+                    <path d="M 600 100 C 640 100, 660 100, 700 100" 
+                          fill="none" 
+                          stroke="#94a3b8" 
+                          stroke-width="2"
+                          stroke-dasharray="4,4">
+                        <animate attributeName="stroke-dashoffset" 
+                                 from="0" 
+                                 to="16" 
+                                 dur="2s" 
+                                 repeatCount="indefinite"/>
+                    </path>
+                    <!-- Arrow head -->
+                    <path d="M 700 100 L 690 95 L 690 105 Z" 
+                          fill="#94a3b8"/>
+                </svg>
+
                 <!-- Card 1: Excellence -->
                 <div class="relative bg-white rounded-lg shadow-lg w-64 p-6 text-left z-10 transform hover:-rotate-1 transition-transform duration-300" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);">
                     <!-- Pin -->
@@ -506,8 +541,6 @@
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Holistic Approach</h3>
                     <p class="text-gray-600 leading-relaxed">Developing the whole child - mind, body, and spirit.</p>
                 </div>
-                <!-- Dotted line background -->
-                <div class="absolute inset-0 z-0 opacity-50" style="background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px), radial-gradient(circle, #d1d5db 1px, transparent 1px); background-size: 20px 20px; background-position: 0 0, 10px 10px;"></div>
             </div>
         </div>
     
