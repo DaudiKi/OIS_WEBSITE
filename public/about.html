@@ -299,6 +299,52 @@
         .nav-link:hover {
             text-shadow: 0 0 8px rgba(99, 182, 71, 0.5);
         }
+
+        .scripture-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scripture-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .scripture-text {
+            transition: all 0.3s ease;
+        }
+
+        .scripture-card:hover .scripture-text {
+            color: #2c64ac;
+            text-shadow: 0 0 15px rgba(44, 100, 172, 0.3);
+        }
+
+        .scripture-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(99, 182, 71, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .scripture-card:hover::before {
+            opacity: 1;
+        }
+
+        .scripture-reference {
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .scripture-card:hover .scripture-reference {
+            transform: scale(1.05);
+            color: #63b647;
+        }
     </style>
 </head>
 <body class="bg-white text-ois-text font-sans">
@@ -428,11 +474,11 @@
                 <div class="flex flex-col md:flex-row items-center">
                     <!-- Image column -->
                     <div class="md:w-1/2 mb-8 md:mb-0">
-                        <img src="images/principles-image.jpg" alt="Principles Message" class="w-full rounded-lg shadow-lg">
+                        <img src="images/director's-image.jpg" alt="Principles Message" class="w-full rounded-lg shadow-lg">
                     </div>
                     <!-- Text column -->
                     <div class="md:w-1/2 md:pl-8">
-                        <h3 class="text-2xl font-semibold text-gray-800">Our Principles Message</h3>
+                        <h3 class="text-2xl font-semibold text-gray-800">Our Director's Message</h3>
                         <p class="text-gray-600 mt-4">At OrchardsWood International School, our principles are rooted in fostering a Christ-centered environment that nurtures academic excellence, spiritual growth, and moral integrity. We are committed to guiding our students to become compassionate, responsible, and purpose-driven individuals who impact the world positively.</p>
                     </div>
                 </div>
@@ -556,33 +602,227 @@
             </div>
         </div>
     
-        <!-- Core Values Section: Highlights the school's guiding principles -->
-        <section class="py-12">
+        <!-- Guiding Scripture Section: Displays the school's guiding Bible verses -->
+        <section class="bg-gray-100 py-12">
             <div class="container mx-auto px-4">
-                <!-- Section heading and description -->
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Our Core Values</h2>
-                <p class="text-center text-gray-600 mb-12">The principles that guide everything we do</p>
-                <!-- Grid layout for core values -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="text-center">
-                        <img src="images/excellence.jpg" alt="Excellence" class="w-16 h-16 mx-auto mb-4">
-                        <h4 class="text-xl font-semibold text-gray-800">Excellence</h4>
-                        <p class="text-gray-600 mt-2">Striving for the highest standards in education and character development.</p>
+                <!-- Section heading -->
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Our Guiding Scriptures</h2>
+                <!-- Scripture quotes in a grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <!-- Psalm 1:1-3 on the left -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg scripture-card">
+                        <blockquote class="text-gray-600 italic">
+                            <p class="text-lg scripture-text">"Blessed is the man that walketh not in the counsel of the ungodly, nor standeth in the way of sinners, nor sitteth in the seat of the scornful. But his delight is in the law of the Lord; and in his law doth he meditate day and night. And he shall be like a tree planted by the rivers of water, that bringeth forth his fruit in his season; his leaf also shall not wither; and whatsoever he doeth shall prosper."</p>
+                            <footer class="mt-4 text-gray-800 font-semibold">
+                                <span class="scripture-reference">- Psalm 1:1-3 KJV</span>
+                            </footer>
+                        </blockquote>
                     </div>
-                    <div class="text-center">
-                        <img src="images/discipline.jpg" alt="Discipline" class="w-16 h-16 mx-auto mb-4">
-                        <h4 class="text-xl font-semibold text-gray-800">Discipline</h4>
-                        <p class="text-gray-600 mt-2">Building character through structured guidance and accountability.</p>
+                    
+                    <!-- Central Image -->
+                    <div class="flex justify-center items-center">
+                        <img src="images/tree-by-water.jpg" alt="Tree by the Water" class="w-full max-w-[300px] h-auto rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
                     </div>
-                    <div class="text-center">
-                        <img src="images/holistic.jpg" alt="Holistic Approach" class="w-16 h-16 mx-auto mb-4">
-                        <h4 class="text-xl font-semibold text-gray-800">Holistic Approach</h4>
-                        <p class="text-gray-600 mt-2">Developing the whole child - mind, body, and spirit.</p>
+                    
+                    <!-- Jeremiah 17:7-8 on the right -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg scripture-card">
+                        <blockquote class="text-gray-600 italic">
+                            <p class="text-lg scripture-text">"Blessed is the man that trusts in the LORD, and whose hope is in the Lord is. He shall be like a tree planted by the waters, and that spreads out its roots by the river, and shall not fear when the heat comes, but its leaf shall be green, and shall not be anxious in the year of drought, neither shall cease from yielding fruit."</p>
+                            <footer class="mt-4 text-gray-800 font-semibold">
+                                <span class="scripture-reference">- Jeremiah 17:7-8 NKJV</span>
+                            </footer>
+                        </blockquote>
                     </div>
                 </div>
             </div>
         </section>
-    
+
+        <!-- Accreditation Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Accreditation</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                    <!-- Left side: Main content -->
+                    <div class="space-y-8">
+                        <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#2c64ac]">
+                            <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6">International Recognition</h3>
+                            <div class="space-y-4 text-gray-600 leading-relaxed">
+                                <p>Orchardswood International School certificates are accredited by the International Christian Certificate of Education Limited (ICCEL), whose offices are in the UK.</p>
+                                <p>ICCEL offers certificates at different levels, recognized by the Universities and Colleges Admission Services in the UK and internationally.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#63b647]">
+                            <h3 class="text-2xl font-semibold text-[#63b647] mb-6">Academic Standards</h3>
+                            <div class="space-y-4 text-gray-600 leading-relaxed">
+                                <p>A recent benchmarking study by UK NARIC confirmed that the International Certificate of Christian Education (ICCEL) General and Advanced Certificates can be considered to be comparable to the overall Cambridge International O and A Level standard respectively.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right side: Certificate levels and additional info -->
+                    <div class="space-y-8">
+                        <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6">Available Certificates</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                    <span class="block text-[#2c64ac] font-semibold">Achievement</span>
+                                    <span class="text-sm text-gray-600">For children with learning disabilities</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                    <span class="block text-[#2c64ac] font-semibold">Vocational</span>
+                                    <span class="text-sm text-gray-600">Career-focused certification</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                    <span class="block text-[#2c64ac] font-semibold">General</span>
+                                    <span class="text-sm text-gray-600">O-Level equivalent</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                    <span class="block text-[#2c64ac] font-semibold">Intermediate</span>
+                                    <span class="text-sm text-gray-600">Advanced preparation</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                    <span class="block text-[#2c64ac] font-semibold">Advanced</span>
+                                    <span class="text-sm text-gray-600">A-Level equivalent</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                    <span class="block text-[#2c64ac] font-semibold">Advanced Plus</span>
+                                    <span class="text-sm text-gray-600">Higher qualification</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-t-4 border-[#2c64ac]">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">University Admission</h3>
+                            <p class="text-gray-600 leading-relaxed">With the certificate from ICCE, students' results can be converted by UNEB to enable them to attend universities in Uganda as well as around the world, in various courses.</p>
+                            <div class="mt-6 flex justify-center">
+                                <img src="images/iccel-logo.png" alt="ICCEL Logo" class="h-16 w-auto transform hover:scale-105 transition-transform duration-300">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Curriculum</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Cambridge Primary -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="h-16 w-16 bg-[#2c64ac] rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <img src="images/primary-icon.png" alt="Primary Icon" class="h-8 w-8 object-contain brightness-0 invert">
+                        </div>
+                        <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Cambridge Primary</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                English Language
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Mathematics
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Science
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                ICT
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Cambridge Lower Secondary -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="h-16 w-16 bg-[#63b647] rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <img src="images/secondary-icon.png" alt="Secondary Icon" class="h-8 w-8 object-contain brightness-0 invert">
+                        </div>
+                        <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Cambridge Lower Secondary</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#2c64ac] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                English Language & Literature
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#2c64ac] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Advanced Mathematics
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#2c64ac] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Integrated Science
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#2c64ac] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Global Perspectives
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Additional Programs -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="h-16 w-16 bg-[#2c64ac] rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <img src="images/extra-programs-icon.png" alt="Extra Programs Icon" class="h-8 w-8 object-contain brightness-0 invert">
+                        </div>
+                        <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Additional Programs</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Christian Education
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Music & Arts
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Physical Education
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-[#63b647] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Leadership Development
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Learn More Button -->
+                <div class="text-center mt-12">
+                    <a href="curriculum.html" class="inline-flex items-center px-6 py-3 bg-[#2c64ac] text-white rounded-lg hover:bg-[#63b647] transition-colors duration-300">
+                        <span class="mr-2">Explore Our Full Curriculum</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Team Section: Introduces key staff members -->
         <section class="py-12">
             <div class="container mx-auto px-4">
@@ -592,10 +832,10 @@
                 <!-- Grid layout for team members -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="text-center">
-                        <img src="images/principal.jpg" alt="Mrs. Makumbi Harriet" class="w-32 h-32 mx-auto rounded-full mb-4">
-                        <h4 class="text-xl font-semibold text-gray-800">Mrs. Makumbi Harriet</h4>
-                        <p class="text-gray-600">Our Principal</p>
-                        <p class="text-gray-600 mt-2">Leading our school with passion and dedication to Christian education excellence.</p>
+                        <img src="images/director.jpg" alt="Mr. Daudi Kisembo" class="w-32 h-32 mx-auto rounded-full mb-4">
+                        <h4 class="text-xl font-semibold text-gray-800">Mr. Daudi Kisembo</h4>
+                        <p class="text-gray-600">School Director</p>
+                        <p class="text-gray-600 mt-2">Guiding our institution with vision and commitment to excellence in Christian education.</p>
                     </div>
                     <div class="text-center">
                         <img src="images/art-teacher.jpg" alt="Mr. Daniel Lubwama" class="w-32 h-32 mx-auto rounded-full mb-4">
@@ -610,19 +850,6 @@
                         <p class="text-gray-600 mt-2">Ensuring smooth operations and supporting our educational mission.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-    
-        <!-- Guiding Scripture Section: Displays the school's guiding Bible verse -->
-        <section class="bg-gray-100 py-12">
-            <div class="container mx-auto px-4">
-                <!-- Section heading -->
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Our Guiding Scripture</h2>
-                <!-- Scripture quote -->
-                <blockquote class="text-center text-gray-600 italic">
-                    <p>"Blessed is the man that walketh not in the counsel of the ungodly, nor standeth in the way of sinners, nor sitteth in the seat of the scornful. But his delight is in the law of the Lord; and in his law doth he meditate day and night. And he shall be like a tree planted by the rivers of water, that bringeth forth his fruit in his season; his leaf also shall not wither; and whatsoever he doeth shall prosper."</p>
-                    <footer class="mt-4 text-gray-800 font-semibold">- Psalm 1:1-3 KJV</footer>
-                </blockquote>
             </div>
         </section>
     
