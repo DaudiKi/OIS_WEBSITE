@@ -641,69 +641,71 @@
         <section class="py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Accreditation</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-                    <!-- Left side: Main content -->
-                    <div class="space-y-8">
-                        <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#2c64ac]">
-                            <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6">International Recognition</h3>
-                            <div class="space-y-4 text-gray-600 leading-relaxed">
+                <!-- Mixed Grid Layout for all Accreditation sections -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                        <!-- International Recognition - Spans full width -->
+                        <div class="md:col-span-3 bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#2c64ac] hover:bg-green-50 group">
+                            <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6 text-center group-hover:text-green-700">International Recognition</h3>
+                            <div class="space-y-4 text-gray-600 leading-relaxed group-hover:text-green-600">
                                 <p>Orchardswood International School certificates are accredited by the International Christian Certificate of Education Limited (ICCEL), whose offices are in the UK.</p>
                                 <p>ICCEL offers certificates at different levels, recognized by the Universities and Colleges Admission Services in the UK and internationally.</p>
                             </div>
                         </div>
 
-                        <!-- Two-column layout for Academic Standards and University Admission -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#63b647]">
-                                <h3 class="text-2xl font-semibold text-[#63b647] mb-6">Academic Standards</h3>
-                                <div class="space-y-4 text-gray-600 leading-relaxed">
-                                    <p>A recent benchmarking study by UK NARIC confirmed that the International Certificate of Christian Education (ICCEL) General and Advanced Certificates can be considered to be comparable to the overall Cambridge International O and A Level standard respectively.</p>
+                        <!-- Academic Standards -->
+                        <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#63b647] hover:bg-blue-50 group">
+                            <h3 class="text-2xl font-semibold text-[#63b647] mb-6 text-center group-hover:text-blue-700">Academic Standards</h3>
+                            <div class="space-y-4 text-gray-600 leading-relaxed group-hover:text-blue-600">
+                                <p>A recent benchmarking study by UK NARIC confirmed that the International Certificate of Christian Education (ICCEL) General and Advanced Certificates can be considered to be comparable to the overall Cambridge International O and A Level standard respectively.</p>
+                            </div>
+                        </div>
+
+                        <!-- Available Certificates - Spans 2 columns -->
+                        <div class="md:col-span-2 bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-t-4 border-[#2c64ac]">
+                            <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6 text-center">Available Certificates</h3>
+                            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors duration-300 group">
+                                    <span class="block text-[#2c64ac] font-semibold text-center group-hover:text-red-600">Achievement</span>
+                                    <span class="text-sm text-gray-600 block text-center group-hover:text-red-500">For children with learning disabilities</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors duration-300 group">
+                                    <span class="block text-[#2c64ac] font-semibold text-center group-hover:text-red-600">Vocational</span>
+                                    <span class="text-sm text-gray-600 block text-center group-hover:text-red-500">Career-focused certification</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors duration-300 group">
+                                    <span class="block text-[#2c64ac] font-semibold text-center group-hover:text-red-600">General</span>
+                                    <span class="text-sm text-gray-600 block text-center group-hover:text-red-500">O-Level equivalent</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors duration-300 group">
+                                    <span class="block text-[#2c64ac] font-semibold text-center group-hover:text-red-600">Intermediate</span>
+                                    <span class="text-sm text-gray-600 block text-center group-hover:text-red-500">Advanced preparation</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors duration-300 group">
+                                    <span class="block text-[#2c64ac] font-semibold text-center group-hover:text-red-600">Advanced</span>
+                                    <span class="text-sm text-gray-600 block text-center group-hover:text-red-500">A-Level equivalent</span>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-red-50 transition-colors duration-300 group">
+                                    <span class="block text-[#2c64ac] font-semibold text-center group-hover:text-red-600">Advanced Plus</span>
+                                    <span class="text-sm text-gray-600 block text-center group-hover:text-red-500">Higher qualification</span>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#2c64ac]">
-                                <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6">University Admission</h3>
-                                <div class="space-y-4 text-gray-600 leading-relaxed">
-                                    <p>With the certificate from ICCE, students' results can be converted by UNEB to enable them to attend universities in Uganda as well as around the world, in various courses.</p>
+                        <!-- University Admission -->
+                        <div class="md:col-span-3 bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#2c64ac] hover:bg-green-50 group">
+                            <div class="flex flex-col md:flex-row items-center justify-between">
+                                <div class="md:w-2/3 space-y-4">
+                                    <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6 text-center md:text-left group-hover:text-green-700">University Admission</h3>
+                                    <div class="text-gray-600 leading-relaxed group-hover:text-green-600">
+                                        <p>With the certificate from ICCE, students' results can be converted by UNEB to enable them to attend universities in Uganda as well as around the world, in various courses.</p>
+                                    </div>
                                 </div>
-                                <div class="mt-6 flex justify-center">
+                                <div class="md:w-1/3 flex justify-center mt-6 md:mt-0">
                                     <img src="images/iccel-logo.png" alt="ICCEL Logo" class="h-16 w-auto transform hover:scale-105 transition-transform duration-300">
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Available Certificates Section -->
-                        <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-t-4 border-[#2c64ac] max-w-4xl mx-auto">
-                            <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6 text-center">Available Certificates</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                                    <span class="block text-[#2c64ac] font-semibold">Achievement</span>
-                                    <span class="text-sm text-gray-600">For children with learning disabilities</span>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                                    <span class="block text-[#2c64ac] font-semibold">Vocational</span>
-                                    <span class="text-sm text-gray-600">Career-focused certification</span>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                                    <span class="block text-[#2c64ac] font-semibold">General</span>
-                                    <span class="text-sm text-gray-600">O-Level equivalent</span>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                                    <span class="block text-[#2c64ac] font-semibold">Intermediate</span>
-                                    <span class="text-sm text-gray-600">Advanced preparation</span>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                                    <span class="block text-[#2c64ac] font-semibold">Advanced</span>
-                                    <span class="text-sm text-gray-600">A-Level equivalent</span>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                                    <span class="block text-[#2c64ac] font-semibold">Advanced Plus</span>
-                                    <span class="text-sm text-gray-600">Higher qualification</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
             </div>
         </section>
 
@@ -711,7 +713,7 @@
         <section class="py-16 bg-gray-50">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Curriculum</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     <!-- Cambridge Primary -->
                     <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                         <div class="h-16 w-16 bg-[#2c64ac] rounded-full flex items-center justify-center mb-6 mx-auto">
