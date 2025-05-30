@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gallery - OrchardsWood International School - Quality Christian Education in Buziga, Kampala">
+    <meta name="keywords" content="OrchardsWood, international school, Christian education, Buziga, gallery, school life">
+    <title>Gallery - OrchardsWood International School</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/output.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        /* Base animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeInOutLeft {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animated-text span {
+            display: inline-block;
+            animation: fadeInOutLeft 6s ease-in-out infinite;
+        }
+
+        .animated-text span:nth-child(1) { animation-delay: 0s; }
+        .animated-text span:nth-child(2) { animation-delay: 0.2s; }
+        .animated-text span:nth-child(3) { animation-delay: 0.4s; }
+        .animated-text span:nth-child(4) { animation-delay: 0.6s; }
+        .animated-text span:nth-child(5) { animation-delay: 0.8s; }
+        .animated-text span:nth-child(6) { animation-delay: 1s; }
+        .animated-text span:nth-child(7) { animation-delay: 1.2s; }
+        .animated-text span:nth-child(8) { animation-delay: 1.4s; }
+        .animated-text span:nth-child(9) { animation-delay: 1.6s; }
+
+        /* Navigation styles */
+        .nav-link {
+            position: relative;
+            padding: 4px 0;
+        }
+        .nav-link::after, .nav-link::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #63b647;
+            box-shadow: 0 0 8px #63b647, 0 0 12px #63b647;
+            transition: all 0.3s ease;
+        }
+        .nav-link::after {
+            bottom: 0;
+            left: 0;
+        }
+        .nav-link::before {
+            top: 0;
+            right: 0;
+        }
+        .nav-link:hover::after, .nav-link:hover::before {
+            width: 100%;
+        }
+        .nav-link:hover {
+            text-shadow: 0 0 8px rgba(99, 182, 71, 0.5);
+        }
+
+        /* Gallery specific styles */
+        .gallery-container {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 2rem;
+            color: white;
+            transform: translateY(100%);
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(99, 182, 71, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-category {
+            transform: translateX(0);
+        }
+
+        /* Filter buttons */
+        .filter-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #2c64ac, #63b647);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .filter-btn:hover::after,
+        .filter-btn.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .filter-btn.active {
+            color: #2c64ac;
+            font-weight: 600;
+        }
+
+        /* Contact and social icons */
+        .contact-glow {
+            transition: all 0.3s ease;
+        }
+
+        .contact-glow:hover {
+            color: #ff0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .social-icon-glow {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-glow:hover {
+            filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8));
+            color: #ff0000;
+            transform: translateY(-2px) scale(1.25);
+        }
+
+        .icon-glow {
+            transition: all 0.3s ease;
+        }
+
+        .icon-glow:hover {
+            filter: brightness(0) saturate(100%) invert(21%) sepia(100%) saturate(7414%) hue-rotate(359deg) brightness(94%) contrast(117%);
+            transform: translateY(-2px);
+        }
+
+        .footer-icon {
+            transition: all 0.3s ease;
+        }
+
+        .footer-icon:hover {
+            filter: brightness(0) saturate(100%) invert(21%) sepia(100%) saturate(7414%) hue-rotate(359deg) brightness(94%) contrast(117%);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+   <!-- Top Bar -->
+   <div class="relative h-12">
+    <!-- Left background -->
+    <div class="absolute inset-y-0 left-0 w-[40%] bg-[#63b647] z-0"></div>
+    <!-- Right background -->
+    <div class="absolute inset-y-0 right-0 w-[60%] bg-[#2c64ac] z-0"></div>
+    <!-- Gradient overlay -->
+    <div class="absolute inset-y-0 left-[35%] w-[10%] bg-gradient-to-r from-[#63b647] to-[#2c64ac] z-0"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto h-full">
+      <div class="flex justify-between items-center h-full">
+        <!-- Left side - Social Links -->
+        <div class="flex items-center justify-center px-6 text-white w-[40%]">
+          <span class="text-white font-semibold mr-4 animated-text">
+            <span>F</span><span>o</span><span>l</span><span>l</span><span>o</span><span>w</span><span>&nbsp;</span><span>U</span><span>s</span>
+          </span>
+          <div class="flex items-center space-x-6">
+            <a href="https://wa.me/+256780394344" class="text-white hover:opacity-80 transition-all duration-300 transform hover:scale-125 hover:-translate-y-1 social-icon-glow">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/ois_uganda/" class="text-white hover:opacity-80 transition-all duration-300 transform hover:scale-125 hover:-translate-y-1 social-icon-glow">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+            <a href="https://x.com/ois_uganda" class="text-white hover:opacity-80 transition-all duration-300 transform hover:scale-125 hover:-translate-y-1 social-icon-glow">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+                
+        <!-- Right side - Contact Info -->
+        <div class="flex items-center justify-end space-x-8 px-6 text-white w-[60%]">
+          <div class="flex items-center space-x-2">
+            <img src="assets/icons/telephone.png" alt="Phone" class="w-5 h-5 object-contain brightness-0 invert icon-float icon-glow">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-gray-200">Call Now!</span>
+              <span class="text-sm font-semibold contact-glow">+256706236688 | +256780394344</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <img src="assets/icons/sent.png" alt="Email" class="w-5 h-5 object-contain brightness-0 invert icon-float icon-glow">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-gray-200">Email Now!</span>
+              <span class="text-sm font-semibold contact-glow">info@ois.ug</span>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="bg-white shadow-lg">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center justify-center flex-1 max-w-[300px]">
+          <img
+            src="assets/icons/oisLogo.png"
+            alt="OrchardsWood International School Logo"
+            class="h-16 w-auto"
+          />
+        </div>
+        <nav class="hidden md:flex flex-1 justify-center space-x-8">
+          <a href="index.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Home</a>
+          <a href="about.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">About</a>
+          <a href="apply.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Apply</a>
+          <a href="gallery.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Gallery</a>
+          <a href="calendar.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Calendar</a>
+        </nav>
+        <div class="hidden md:flex items-center justify-center pl-8 w-[200px]">
+          <a href="https://ams.ois.ug" class="ams-login-btn text-white px-6 py-2.5 rounded-lg font-medium flex items-center space-x-2">
+            <span>AMS Login</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+        <!-- Mobile menu button -->
+        <button class="md:hidden p-2 rounded-lg hover:bg-ois-light-blue" id="mobileMenuBtn">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+        <div class="flex flex-col space-y-3">
+          <a href="index.html" class="px-4 py-2 rounded">Home</a>
+          <a href="about.html" class="px-4 py-2 rounded">About</a>
+          <a href="apply.html" class="px-4 py-2 rounded">Apply</a>
+          <a href="gallery.html" class="px-4 py-2 rounded">Gallery</a>
+          <a href="calendar.html" class="px-4 py-2 rounded">Calendar</a>
+          <a href="https://ams.ois.ug" class="ams-login-btn text-white px-4 py-2 rounded mt-2">AMS Login</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 hero-text" style="text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);">
+          <span class="gradient-text">Our Gallery</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in">
+          Explore life at OrchardsWood through our collection of memories and moments.
+        </p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <button class="filter-btn active px-6 py-2 text-lg" data-filter="all">All</button>
+        <button class="filter-btn px-6 py-2 text-lg" data-filter="academic">Academic</button>
+        <button class="filter-btn px-6 py-2 text-lg" data-filter="sports">Sports</button>
+        <button class="filter-btn px-6 py-2 text-lg" data-filter="events">Events</button>
+        <button class="filter-btn px-6 py-2 text-lg" data-filter="facilities">Facilities</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gallery-container">
+        <!-- Academic -->
+        <div class="gallery-item" data-category="academic">
+          <img src="assets/gallery/classroom.jpg" alt="Modern Classroom" class="w-full h-64 object-cover">
+          <span class="gallery-category">Academic</span>
+          <div class="gallery-overlay">
+            <h3 class="text-xl font-bold mb-2">Modern Classrooms</h3>
+            <p>State-of-the-art learning environments designed for interactive education.</p>
+          </div>
+        </div>
+
+        <!-- Sports -->
+        <div class="gallery-item" data-category="sports">
+          <img src="assets/gallery/sports.jpg" alt="Sports Activities" class="w-full h-64 object-cover">
+          <span class="gallery-category">Sports</span>
+          <div class="gallery-overlay">
+            <h3 class="text-xl font-bold mb-2">Sports Excellence</h3>
+            <p>Developing physical skills and teamwork through various sports activities.</p>
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div class="gallery-item" data-category="events">
+          <img src="assets/gallery/graduation.jpg" alt="Graduation Ceremony" class="w-full h-64 object-cover">
+          <span class="gallery-category">Events</span>
+          <div class="gallery-overlay">
+            <h3 class="text-xl font-bold mb-2">Graduation Day</h3>
+            <p>Celebrating academic achievements and milestones.</p>
+          </div>
+        </div>
+
+        <!-- Facilities -->
+        <div class="gallery-item" data-category="facilities">
+          <img src="assets/gallery/library.jpg" alt="School Library" class="w-full h-64 object-cover">
+          <span class="gallery-category">Facilities</span>
+          <div class="gallery-overlay">
+            <h3 class="text-xl font-bold mb-2">Modern Library</h3>
+            <p>A vast collection of books and digital resources for research and learning.</p>
+          </div>
+        </div>
+
+        <!-- Academic -->
+        <div class="gallery-item" data-category="academic">
+          <img src="assets/gallery/science-lab.jpg" alt="Science Laboratory" class="w-full h-64 object-cover">
+          <span class="gallery-category">Academic</span>
+          <div class="gallery-overlay">
+            <h3 class="text-xl font-bold mb-2">Science Laboratory</h3>
+            <p>Well-equipped labs for hands-on scientific experiments and learning.</p>
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div class="gallery-item" data-category="events">
+          <img src="assets/gallery/cultural-day.jpg" alt="Cultural Day" class="w-full h-64 object-cover">
+          <span class="gallery-category">Events</span>
+          <div class="gallery-overlay">
+            <h3 class="text-xl font-bold mb-2">Cultural Day</h3>
+            <p>Celebrating diversity and cultural heritage through performances and exhibitions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <!-- Logo and Description -->
+        <div>
+          <div class="flex items-center space-x-3 mb-6">
+            <img
+              src="assets/icons/oisLogo.png"
+              alt="OrchardsWood Logo"
+              class="h-10 w-auto"
+            />
+          </div>
+          <p class="text-gray-300 mb-4">
+            Providing quality Christian education in a nurturing environment since 2017.
+          </p>
+          <div class="flex items-center space-x-6">
+            <a href="https://wa.me/+256780394344" class="text-gray-300 hover:text-white transition-all duration-300 social-icon-glow">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/ois_uganda/" class="text-gray-300 hover:text-white transition-all duration-300 social-icon-glow">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+            <a href="https://x.com/ois_uganda" class="text-gray-300 hover:text-white transition-all duration-300 social-icon-glow">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300">Home</a></li>
+            <li><a href="about.html" class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300">About Us</a></li>
+            <li><a href="apply.html" class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300">Admissions</a></li>
+            <li><a href="gallery.html" class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300">Gallery</a></li>
+            <li><a href="calendar.html" class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300">Calendar</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Contact Info</h3>
+          <ul class="space-y-4">
+            <li>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=OrchardsWood+International+School+Buziga+Parish+Makindye+Division+Kampala+Uganda" 
+                 target="_blank" 
+                 class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300 cursor-pointer flex items-center group">
+                <span>Buziga Parish, Makindye Division, off Wavamuno Road, Mawanga</span>
+                <svg class="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+256706236688" class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300">
+                +256706236688 | +256780394344
+              </a>
+            </li>
+            <li>
+              <a href="mailto:info@ois.ug" class="text-gray-300 contact-glow hover:text-red-500 transition-all duration-300">
+                info@ois.ug
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- School Hours -->
+        <div>
+          <h3 class="text-xl font-semibold mb-4">School Hours</h3>
+          <ul class="space-y-2">
+            <li class="text-gray-300">Monday - Friday</li>
+            <li class="text-gray-300">8:00 AM - 4:00 PM</li>
+            <li class="text-gray-300 mt-4">Weekend</li>
+            <li class="text-gray-300">Closed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-8">
+        <div class="text-center text-gray-400">
+          <p>&copy; 2024 OrchardsWood International School. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+
+      // Initialize GSAP and ScrollTrigger
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Animate navigation links
+      gsap.from('.nav-link', {
+        opacity: 0,
+        y: -20,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power2.out'
+      });
+
+      // Gallery filtering functionality
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove active class from all buttons
+          filterBtns.forEach(b => b.classList.remove('active'));
+          // Add active class to clicked button
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+
+          galleryItems.forEach(item => {
+            const category = item.getAttribute('data-category');
+            
+            if (filter === 'all' || filter === category) {
+              gsap.to(item, {
+                scale: 1,
+                opacity: 1,
+                duration: 0.5,
+                ease: 'power2.out'
+              });
+              item.style.display = 'block';
+            } else {
+              gsap.to(item, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.5,
+                ease: 'power2.out',
+                onComplete: () => {
+                  item.style.display = 'none';
+                }
+              });
+            }
+          });
+        });
+      });
+
+      // Animate gallery items on scroll
+      galleryItems.forEach((item, index) => {
+        gsap.from(item, {
+          scrollTrigger: {
+            trigger: item,
+            start: 'top bottom-=100',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 50,
+          duration: 0.8,
+          delay: index * 0.2
+        });
+      });
+
+      // Animate filter buttons
+      gsap.from('.filter-btn', {
+        scrollTrigger: {
+          trigger: '.filter-btn',
+          start: 'top bottom-=50',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.5,
+        stagger: 0.1
+      });
+
+      // Animate heading and description
+      gsap.from('.hero-text', {
+        scrollTrigger: {
+          trigger: '.hero-text',
+          start: 'top bottom-=100',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: 50,
+        duration: 1
+      });
+
+      gsap.from('.fade-in', {
+        scrollTrigger: {
+          trigger: '.fade-in',
+          start: 'top bottom-=50',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        delay: 0.3
+      });
+    });
+  </script>
+</body>
+</html> 
