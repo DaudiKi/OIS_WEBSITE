@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
     <style>
+        /* Base animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -37,69 +38,26 @@
             100% { background-position: 0% 50%; }
         }
 
-        .fade-in {
-            animation: fadeInUp 0.6s ease-out forwards;
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(44, 100, 172, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(44, 100, 172, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(44, 100, 172, 0); }
         }
 
-        .form-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease-out;
-            border-left: 4px solid #2c64ac;
-            padding-left: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .form-section.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .input-field {
-            @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2c64ac] focus:border-transparent transition-all duration-300;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .input-field:hover {
-            @apply border-[#2c64ac];
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(44, 100, 172, 0.1);
-        }
-
-        .submit-button {
-            @apply bg-gradient-to-r from-[#2c64ac] to-[#63b647] text-white px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2c64ac];
-            background-size: 200% auto;
-            animation: gradientBG 3s ease infinite;
-            box-shadow: 0 4px 15px rgba(44, 100, 172, 0.2);
-        }
-
-        .submit-button:hover {
-            background-position: right center;
-            box-shadow: 0 8px 25px rgba(44, 100, 172, 0.3);
-        }
-
-        .form-label {
-            @apply block text-sm font-medium text-gray-700 mb-2;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .form-group {
-            @apply mb-6 relative;
-        }
-
-        .required-star {
-            @apply text-red-500;
-            animation: float 3s ease-in-out infinite;
+        /* Form container styles */
+        .application-container {
+            @apply max-w-4xl mx-auto px-4 py-8;
+            perspective: 1000px;
         }
 
         .form-card {
-            @apply bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300;
+            @apply bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-500;
             background: linear-gradient(145deg, #ffffff, #f5f7fa);
             border: 1px solid rgba(44, 100, 172, 0.1);
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
         }
 
         .form-card::before {
@@ -109,7 +67,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(99, 182, 71, 0.1) 0%, rgba(44, 100, 172, 0.1) 100%);
+            background: radial-gradient(circle, rgba(99, 182, 71, 0.05) 0%, rgba(44, 100, 172, 0.05) 100%);
             animation: rotate 20s linear infinite;
             z-index: 0;
         }
@@ -119,28 +77,85 @@
             z-index: 1;
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* Section styles */
+        .form-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid #2c64ac;
+            padding: 2rem 1.5rem;
+            margin-bottom: 2.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 0.5rem;
+        }
+
+        .form-section.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-title {
             @apply text-2xl font-semibold text-gray-800 mb-6;
             position: relative;
             display: inline-block;
+            padding-bottom: 0.5rem;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: 0;
             left: 0;
             width: 100%;
             height: 3px;
             background: linear-gradient(to right, #2c64ac, #63b647);
             border-radius: 3px;
+            transform: scaleX(0.7);
+            transition: transform 0.3s ease;
         }
 
+        .section-title:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Input field styles */
+        .form-group {
+            @apply mb-6 relative;
+            transition: transform 0.3s ease;
+        }
+
+        .form-group:hover {
+            transform: translateY(-2px);
+        }
+
+        .form-label {
+            @apply block text-sm font-medium mb-2;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .input-field {
+            @apply w-full px-4 py-3 border rounded-lg transition-all duration-300;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border-color: #e5e7eb;
+        }
+
+        .input-field:focus {
+            @apply outline-none ring-2 ring-[#2c64ac] border-transparent;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(44, 100, 172, 0.1);
+        }
+
+        .input-field:hover {
+            @apply border-[#2c64ac];
+            box-shadow: 0 2px 4px rgba(44, 100, 172, 0.1);
+        }
+
+        /* Select field custom styling */
         select.input-field {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232c64ac'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -152,20 +167,68 @@
             appearance: none;
         }
 
+        /* Textarea custom styling */
         textarea.input-field {
             resize: vertical;
             min-height: 100px;
+            line-height: 1.5;
         }
 
-        /* Progress indicator styles */
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: #e2e8f0;
-            margin-bottom: 2rem;
-            border-radius: 2px;
+        /* Required field indicator */
+        .required-star {
+            @apply text-red-500;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+            margin-left: 2px;
+        }
+
+        /* Submit button styles */
+        .submit-button {
+            @apply text-white px-8 py-3 rounded-lg transition-all duration-500 transform;
+            background: linear-gradient(45deg, #2c64ac, #63b647);
+            background-size: 200% auto;
+            box-shadow: 0 4px 15px rgba(44, 100, 172, 0.2);
             position: relative;
             overflow: hidden;
+        }
+
+        .submit-button:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 100, 172, 0.3);
+        }
+
+        .submit-button:active {
+            transform: translateY(1px);
+        }
+
+        .submit-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+            transform: scale(0);
+            opacity: 0;
+            transition: transform 0.6s, opacity 0.6s;
+        }
+
+        .submit-button:hover::after {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Progress bar styles */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            margin: 0 0 2rem;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
         }
 
         .progress-bar::after {
@@ -174,13 +237,61 @@
             top: 0;
             left: 0;
             height: 100%;
-            width: 0;
+            width: var(--progress, 0%);
             background: linear-gradient(to right, #2c64ac, #63b647);
-            transition: width 0.3s ease;
+            transition: width 0.5s ease;
         }
 
-        .form-section[data-active="true"] ~ .progress-bar::after {
-            width: 100%;
+        /* Error message styles */
+        .error-message {
+            @apply text-red-500 text-sm mt-1;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .form-section {
+                padding: 1.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .submit-button {
+                width: 100%;
+            }
+        }
+
+        /* Success modal styles */
+        .success-modal {
+            @apply fixed inset-0 flex items-center justify-center z-50;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            @apply bg-white rounded-lg p-8 max-w-md mx-4 relative z-10;
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+
+        .modal-content.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            @apply animate-spin h-5 w-5 text-white;
+            display: inline-block;
+            border: 2px solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -289,14 +400,18 @@
   </header>
 
     <!-- Main Content -->
-    <main class="py-12">
+    <main class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Apply to OrchardsWood</h1>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Take the first step towards providing your child with quality Christian education. Fill out the form below to begin your application process.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 fade-in" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                    Apply to OrchardsWood
+                </h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto fade-in">
+                    Take the first step towards providing your child with quality Christian education. Fill out the form below to begin your application process.
+                </p>
             </div>
 
-            <div class="max-w-4xl mx-auto">
+            <div class="application-container">
                 <form id="applicationForm" class="form-card" onsubmit="return submitForm(event)">
                     <div class="progress-bar" id="formProgress"></div>
                     
@@ -306,11 +421,11 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-group">
                                 <label class="form-label">Student's First Name <span class="required-star">*</span></label>
-                                <input type="text" name="firstName" class="input-field" required>
+                                <input type="text" name="firstName" class="input-field" required placeholder="Enter first name">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Student's Last Name <span class="required-star">*</span></label>
-                                <input type="text" name="lastName" class="input-field" required>
+                                <input type="text" name="lastName" class="input-field" required placeholder="Enter last name">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Date of Birth <span class="required-star">*</span></label>
@@ -328,35 +443,45 @@
                     </div>
 
                     <!-- Parent/Guardian Information -->
-                    <div class="form-section active" data-section="2">
+                    <div class="form-section" data-section="2">
                         <h2 class="section-title">Parent/Guardian Information</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-group">
                                 <label class="form-label">Parent/Guardian Name <span class="required-star">*</span></label>
-                                <input type="text" name="parentName" class="input-field" required>
+                                <input type="text" name="parentName" class="input-field" required placeholder="Enter full name">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Relationship to Student <span class="required-star">*</span></label>
-                                <input type="text" name="relationship" class="input-field" required>
+                                <select name="relationship" class="input-field" required>
+                                    <option value="">Select Relationship</option>
+                                    <option value="father">Father</option>
+                                    <option value="mother">Mother</option>
+                                    <option value="guardian">Legal Guardian</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Email Address <span class="required-star">*</span></label>
-                                <input type="email" name="email" class="input-field" required>
+                                <input type="email" name="email" class="input-field" required placeholder="Enter email address">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Phone Number <span class="required-star">*</span></label>
-                                <input type="tel" name="phone" class="input-field" required>
+                                <input type="tel" name="phone" class="input-field" required placeholder="e.g., +256 700 000000">
+                            </div>
+                            <div class="form-group md:col-span-2">
+                                <label class="form-label">Physical Address <span class="required-star">*</span></label>
+                                <textarea name="address" class="input-field" required placeholder="Enter your current residential address"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <!-- Academic Information -->
-                    <div class="form-section active" data-section="3">
+                    <div class="form-section" data-section="3">
                         <h2 class="section-title">Academic Information</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-group">
                                 <label class="form-label">Current/Previous School</label>
-                                <input type="text" name="previousSchool" class="input-field">
+                                <input type="text" name="previousSchool" class="input-field" placeholder="Enter school name">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Grade Applying For <span class="required-star">*</span></label>
@@ -381,34 +506,42 @@
                             </div>
                             <div class="form-group md:col-span-2">
                                 <label class="form-label">Any Special Educational Needs or Requirements?</label>
-                                <textarea name="specialNeeds" class="input-field" rows="3"></textarea>
+                                <textarea name="specialNeeds" class="input-field" rows="3" placeholder="Please describe any special needs or requirements"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <!-- Additional Information -->
-                    <div class="form-section active" data-section="4">
+                    <div class="form-section" data-section="4">
                         <h2 class="section-title">Additional Information</h2>
-                        <div class="form-group">
-                            <label class="form-label">How did you hear about OrchardsWood International School?</label>
-                            <select name="referralSource" class="input-field">
-                                <option value="">Select Option</option>
-                                <option value="website">School Website</option>
-                                <option value="socialMedia">Social Media</option>
-                                <option value="friend">Friend/Family</option>
-                                <option value="advertisement">Advertisement</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Any Additional Comments or Questions?</label>
-                            <textarea name="comments" class="input-field" rows="4"></textarea>
+                        <div class="space-y-6">
+                            <div class="form-group">
+                                <label class="form-label">How did you hear about OrchardsWood International School?</label>
+                                <select name="referralSource" class="input-field">
+                                    <option value="">Select Option</option>
+                                    <option value="website">School Website</option>
+                                    <option value="socialMedia">Social Media</option>
+                                    <option value="friend">Friend/Family</option>
+                                    <option value="advertisement">Advertisement</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Any Additional Comments or Questions?</label>
+                                <textarea name="comments" class="input-field" rows="4" placeholder="Share any additional information or questions you may have"></textarea>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Submit Button -->
-                    <div class="text-center mt-8">
-                        <button type="submit" class="submit-button">
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between mt-8">
+                        <button type="button" id="prevBtn" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-all duration-300 hidden">
+                            Previous
+                        </button>
+                        <button type="button" id="nextBtn" class="bg-[#2c64ac] text-white px-6 py-2 rounded-lg hover:bg-[#63b647] transition-all duration-300">
+                            Next
+                        </button>
+                        <button type="submit" id="submitBtn" class="submit-button hidden">
                             Submit Application
                         </button>
                     </div>
@@ -520,13 +653,32 @@
         document.addEventListener('DOMContentLoaded', function() {
             const formSections = document.querySelectorAll('.form-section');
             const progressBar = document.getElementById('formProgress');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
             let currentSection = 0;
             
-            // Initialize form sections
-            formSections.forEach((section, index) => {
-                section.style.display = index === 0 ? 'block' : 'none';
-                section.dataset.active = index === 0 ? 'true' : 'false';
-            });
+            // Initialize form
+            function initForm() {
+                showSection(currentSection);
+                updateButtons();
+                updateProgress();
+            }
+
+            // Show specific section
+            function showSection(index) {
+                formSections.forEach((section, i) => {
+                    section.style.display = i === index ? 'block' : 'none';
+                    section.dataset.active = i === index ? 'true' : 'false';
+                });
+            }
+
+            // Update navigation buttons
+            function updateButtons() {
+                prevBtn.style.display = currentSection > 0 ? 'block' : 'none';
+                nextBtn.style.display = currentSection < formSections.length - 1 ? 'block' : 'none';
+                submitBtn.style.display = currentSection === formSections.length - 1 ? 'block' : 'none';
+            }
 
             // Update progress bar
             function updateProgress() {
@@ -534,7 +686,7 @@
                 progressBar.style.setProperty('--progress', `${progress}%`);
             }
 
-            // Validate section
+            // Validate current section
             function validateSection(section) {
                 const inputs = section.querySelectorAll('input[required], select[required], textarea[required]');
                 let isValid = true;
@@ -562,7 +714,28 @@
                 return isValid;
             }
 
-            // Add input event listeners
+            // Navigation event listeners
+            prevBtn.addEventListener('click', () => {
+                if (currentSection > 0) {
+                    currentSection--;
+                    showSection(currentSection);
+                    updateButtons();
+                    updateProgress();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (validateSection(formSections[currentSection])) {
+                    if (currentSection < formSections.length - 1) {
+                        currentSection++;
+                        showSection(currentSection);
+                        updateButtons();
+                        updateProgress();
+                    }
+                }
+            });
+
+            // Input field animations
             document.querySelectorAll('.input-field').forEach(input => {
                 input.addEventListener('focus', function() {
                     this.classList.add('scale-105');
@@ -583,8 +756,21 @@
                 });
             });
 
+            // Form submission
             function submitForm(event) {
                 event.preventDefault();
+                
+                // Validate all sections before submission
+                let isValid = true;
+                formSections.forEach(section => {
+                    if (!validateSection(section)) {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    return false;
+                }
                 
                 // Get form data
                 const formData = new FormData(event.target);
@@ -592,46 +778,79 @@
                 
                 // Email template for school
                 const schoolEmailBody = `
-                    New Application Received
-                    
-                    Student Information:
-                    - Name: ${data.firstName} ${data.lastName}
-                    - Date of Birth: ${data.dob}
-                    - Gender: ${data.gender}
-                    
-                    Parent/Guardian Information:
-                    - Name: ${data.parentName}
-                    - Relationship: ${data.relationship}
-                    - Email: ${data.email}
-                    - Phone: ${data.phone}
-                    
-                    Academic Information:
-                    - Previous School: ${data.previousSchool}
-                    - Grade Applying For: ${data.gradeApplying}
-                    - Special Needs: ${data.specialNeeds}
-                    
-                    Additional Information:
-                    - Referral Source: ${data.referralSource}
-                    - Comments: ${data.comments}
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <h2 style="color: #2c64ac;">New Application Received</h2>
+                        
+                        <div style="margin: 20px 0; padding: 20px; background-color: #f5f7fa; border-radius: 8px;">
+                            <h3 style="color: #333;">Student Information:</h3>
+                            <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
+                            <p><strong>Date of Birth:</strong> ${data.dob}</p>
+                            <p><strong>Gender:</strong> ${data.gender}</p>
+                        </div>
+                        
+                        <div style="margin: 20px 0; padding: 20px; background-color: #f5f7fa; border-radius: 8px;">
+                            <h3 style="color: #333;">Parent/Guardian Information:</h3>
+                            <p><strong>Name:</strong> ${data.parentName}</p>
+                            <p><strong>Relationship:</strong> ${data.relationship}</p>
+                            <p><strong>Email:</strong> ${data.email}</p>
+                            <p><strong>Phone:</strong> ${data.phone}</p>
+                            <p><strong>Address:</strong> ${data.address}</p>
+                        </div>
+                        
+                        <div style="margin: 20px 0; padding: 20px; background-color: #f5f7fa; border-radius: 8px;">
+                            <h3 style="color: #333;">Academic Information:</h3>
+                            <p><strong>Previous School:</strong> ${data.previousSchool}</p>
+                            <p><strong>Grade Applying For:</strong> ${data.gradeApplying}</p>
+                            <p><strong>Special Needs:</strong> ${data.specialNeeds || 'None specified'}</p>
+                        </div>
+                        
+                        <div style="margin: 20px 0; padding: 20px; background-color: #f5f7fa; border-radius: 8px;">
+                            <h3 style="color: #333;">Additional Information:</h3>
+                            <p><strong>Referral Source:</strong> ${data.referralSource}</p>
+                            <p><strong>Comments:</strong> ${data.comments || 'None'}</p>
+                        </div>
+                    </div>
                 `;
                 
                 // Email template for applicant
                 const applicantEmailBody = `
-                    Dear ${data.parentName},
-                    
-                    Thank you for applying to OrchardsWood International School. We have received your application for ${data.firstName} ${data.lastName}.
-                    
-                    Your application is currently under review. Our admissions team will contact you within 3-5 business days to discuss the next steps in the admission process.
-                    
-                    Application Details:
-                    - Student Name: ${data.firstName} ${data.lastName}
-                    - Grade Applied For: ${data.gradeApplying}
-                    
-                    If you have any questions in the meantime, please don't hesitate to contact us at info@ois.ug or call +256706236688.
-                    
-                    Best regards,
-                    OrchardsWood International School
-                    Admissions Team
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <div style="text-align: center; padding: 20px;">
+                            <img src="assets/icons/oisLogo.png" alt="OrchardsWood Logo" style="max-width: 200px;">
+                        </div>
+                        
+                        <div style="padding: 20px; background-color: #f5f7fa; border-radius: 8px;">
+                            <h2 style="color: #2c64ac;">Application Received</h2>
+                            
+                            <p>Dear ${data.parentName},</p>
+                            
+                            <p>Thank you for applying to OrchardsWood International School. We have received your application for ${data.firstName} ${data.lastName}.</p>
+                            
+                            <p>Your application is currently under review. Our admissions team will contact you within 3-5 business days to discuss the next steps in the admission process.</p>
+                            
+                            <div style="margin: 20px 0; padding: 15px; background-color: white; border-radius: 8px;">
+                                <h3 style="color: #333;">Application Details:</h3>
+                                <p><strong>Student Name:</strong> ${data.firstName} ${data.lastName}</p>
+                                <p><strong>Grade Applied For:</strong> ${data.gradeApplying}</p>
+                            </div>
+                            
+                            <p>If you have any questions in the meantime, please don't hesitate to contact us:</p>
+                            <ul style="list-style: none; padding: 0;">
+                                <li>📧 Email: info@ois.ug</li>
+                                <li>📞 Phone: +256706236688</li>
+                            </ul>
+                            
+                            <p style="margin-top: 20px;">Best regards,<br>
+                            OrchardsWood International School<br>
+                            Admissions Team</p>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 20px; color: #666; font-size: 12px;">
+                            <p>OrchardsWood International School<br>
+                            Buziga Parish, Makindye Division<br>
+                            Kampala, Uganda</p>
+                        </div>
+                    </div>
                 `;
                 
                 // Show loading state
@@ -639,10 +858,7 @@
                 const originalText = submitButton.textContent;
                 submitButton.disabled = true;
                 submitButton.innerHTML = `
-                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                    <div class="spinner mr-2"></div>
                     Submitting...
                 `;
                 
@@ -663,7 +879,7 @@
                         Body: applicantEmailBody
                     })
                 ]).then(() => {
-                    // Show success message with animation
+                    // Show success message
                     submitButton.innerHTML = `
                         <svg class="h-5 w-5 text-white inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -671,42 +887,42 @@
                         Application Submitted!
                     `;
                     
-                    // Reset form after delay
-                    setTimeout(() => {
-                        event.target.reset();
-                        submitButton.disabled = false;
-                        submitButton.textContent = originalText;
-                        
-                        // Show success modal
-                        const modal = document.createElement('div');
-                        modal.className = 'fixed inset-0 flex items-center justify-center z-50';
-                        modal.innerHTML = `
-                            <div class="fixed inset-0 bg-black opacity-50"></div>
-                            <div class="bg-white rounded-lg p-8 max-w-md mx-4 relative z-10 transform scale-95 opacity-0 transition-all duration-300">
-                                <div class="text-center">
-                                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
-                                        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                    </div>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-2">Application Submitted Successfully!</h3>
-                                    <p class="text-sm text-gray-500 mb-6">Thank you for applying to OrchardsWood International School. Please check your email for confirmation.</p>
-                                    <button class="bg-[#2c64ac] text-white px-4 py-2 rounded-lg hover:bg-[#63b647] transition-all duration-300">Close</button>
+                    // Show success modal
+                    const modal = document.createElement('div');
+                    modal.className = 'success-modal';
+                    modal.innerHTML = `
+                        <div class="fixed inset-0 bg-black bg-opacity-50"></div>
+                        <div class="modal-content bg-white rounded-lg p-8 max-w-md mx-4 relative z-10">
+                            <div class="text-center">
+                                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
                                 </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">Application Submitted Successfully!</h3>
+                                <p class="text-sm text-gray-500 mb-6">Thank you for applying to OrchardsWood International School. Please check your email for confirmation.</p>
+                                <button class="bg-[#2c64ac] text-white px-4 py-2 rounded-lg hover:bg-[#63b647] transition-all duration-300">Close</button>
                             </div>
-                        `;
-                        
-                        document.body.appendChild(modal);
-                        requestAnimationFrame(() => {
-                            modal.querySelector('.bg-white').classList.remove('scale-95', 'opacity-0');
-                            modal.querySelector('.bg-white').classList.add('scale-100', 'opacity-100');
-                        });
-                        
-                        modal.querySelector('button').onclick = () => {
-                            modal.querySelector('.bg-white').classList.add('scale-95', 'opacity-0');
-                            setTimeout(() => modal.remove(), 300);
-                        };
-                    }, 2000);
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(modal);
+                    requestAnimationFrame(() => {
+                        modal.querySelector('.modal-content').classList.add('active');
+                    });
+                    
+                    modal.querySelector('button').onclick = () => {
+                        modal.querySelector('.modal-content').classList.remove('active');
+                        setTimeout(() => {
+                            modal.remove();
+                            // Reset form and go back to first section
+                            event.target.reset();
+                            currentSection = 0;
+                            initForm();
+                            submitButton.disabled = false;
+                            submitButton.textContent = originalText;
+                        }, 300);
+                    };
                 }).catch(error => {
                     // Show error message
                     submitButton.innerHTML = `
@@ -723,6 +939,9 @@
                 
                 return false;
             }
+
+            // Initialize form
+            initForm();
 
             // Make submitForm available globally
             window.submitForm = submitForm;
