@@ -81,18 +81,20 @@
         .form-section {
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s ease-out;
             border-left: 4px solid #2c64ac;
             padding: 2rem 1.5rem;
             margin-bottom: 2.5rem;
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 0.5rem;
+            display: none;
         }
 
         .form-section.active {
             opacity: 1;
             transform: translateY(0);
+            display: block;
         }
 
         .section-title {
@@ -292,6 +294,35 @@
             border: 2px solid currentColor;
             border-right-color: transparent;
             border-radius: 50%;
+        }
+
+        /* Navigation button styles */
+        .nav-button {
+            @apply px-6 py-2 rounded-lg transition-all duration-300 flex items-center justify-center;
+            min-width: 120px;
+        }
+
+        .nav-button.prev {
+            @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+        }
+
+        .nav-button.next {
+            @apply bg-[#2c64ac] text-white hover:bg-[#63b647];
+        }
+
+        /* Button container styles */
+        .button-container {
+            @apply flex justify-between items-center mt-8 gap-4;
+        }
+
+        @media (max-width: 640px) {
+            .button-container {
+                @apply flex-col;
+            }
+            
+            .nav-button {
+                @apply w-full;
+            }
         }
     </style>
 </head>
@@ -534,13 +565,9 @@
                     </div>
 
                     <!-- Navigation Buttons -->
-                    <div class="flex justify-between mt-8">
-                        <button type="button" id="prevBtn" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-all duration-300 hidden">
-                            Previous
-                        </button>
-                        <button type="button" id="nextBtn" class="bg-[#2c64ac] text-white px-6 py-2 rounded-lg hover:bg-[#63b647] transition-all duration-300">
-                            Next
-                        </button>
+                    <div class="button-container">
+                        <button type="button" id="prevBtn" class="nav-button prev">Previous</button>
+                        <button type="button" id="nextBtn" class="nav-button next">Next</button>
                         <button type="submit" id="submitBtn" class="submit-button hidden">
                             Submit Application
                         </button>
@@ -660,7 +687,15 @@
             
             // Initialize form
             function initForm() {
-                showSection(currentSection);
+                formSections.forEach((section, index) => {
+                    if (index === currentSection) {
+                        section.style.display = 'block';
+                        section.classList.add('active');
+                    } else {
+                        section.style.display = 'none';
+                        section.classList.remove('active');
+                    }
+                });
                 updateButtons();
                 updateProgress();
             }
@@ -668,16 +703,23 @@
             // Show specific section
             function showSection(index) {
                 formSections.forEach((section, i) => {
-                    section.style.display = i === index ? 'block' : 'none';
-                    section.dataset.active = i === index ? 'true' : 'false';
+                    if (i === index) {
+                        section.style.display = 'block';
+                        setTimeout(() => {
+                            section.classList.add('active');
+                        }, 50);
+                    } else {
+                        section.classList.remove('active');
+                        section.style.display = 'none';
+                    }
                 });
             }
 
             // Update navigation buttons
             function updateButtons() {
-                prevBtn.style.display = currentSection > 0 ? 'block' : 'none';
-                nextBtn.style.display = currentSection < formSections.length - 1 ? 'block' : 'none';
-                submitBtn.style.display = currentSection === formSections.length - 1 ? 'block' : 'none';
+                prevBtn.style.display = currentSection > 0 ? 'inline-flex' : 'none';
+                nextBtn.style.display = currentSection < formSections.length - 1 ? 'inline-flex' : 'none';
+                submitBtn.style.display = currentSection === formSections.length - 1 ? 'inline-flex' : 'none';
             }
 
             // Update progress bar
@@ -692,22 +734,20 @@
                 let isValid = true;
                 
                 inputs.forEach(input => {
+                    const errorMsg = input.parentElement.querySelector('.error-message');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
+                    input.classList.remove('border-red-500');
+
                     if (!input.value.trim()) {
                         isValid = false;
                         input.classList.add('border-red-500');
                         
-                        // Add error message
-                        let errorMsg = input.parentElement.querySelector('.error-message');
-                        if (!errorMsg) {
-                            errorMsg = document.createElement('span');
-                            errorMsg.className = 'error-message text-red-500 text-sm mt-1';
-                            input.parentElement.appendChild(errorMsg);
-                        }
-                        errorMsg.textContent = 'This field is required';
-                    } else {
-                        input.classList.remove('border-red-500');
-                        const errorMsg = input.parentElement.querySelector('.error-message');
-                        if (errorMsg) errorMsg.remove();
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'error-message text-red-500 text-sm mt-1';
+                        errorDiv.textContent = 'This field is required';
+                        input.parentElement.appendChild(errorDiv);
                     }
                 });
                 
@@ -717,25 +757,31 @@
             // Navigation event listeners
             prevBtn.addEventListener('click', () => {
                 if (currentSection > 0) {
-                    currentSection--;
-                    showSection(currentSection);
-                    updateButtons();
-                    updateProgress();
+                    formSections[currentSection].classList.remove('active');
+                    setTimeout(() => {
+                        currentSection--;
+                        showSection(currentSection);
+                        updateButtons();
+                        updateProgress();
+                    }, 300);
                 }
             });
 
             nextBtn.addEventListener('click', () => {
                 if (validateSection(formSections[currentSection])) {
                     if (currentSection < formSections.length - 1) {
-                        currentSection++;
-                        showSection(currentSection);
-                        updateButtons();
-                        updateProgress();
+                        formSections[currentSection].classList.remove('active');
+                        setTimeout(() => {
+                            currentSection++;
+                            showSection(currentSection);
+                            updateButtons();
+                            updateProgress();
+                        }, 300);
                     }
                 }
             });
 
-            // Input field animations
+            // Input field animations and validation
             document.querySelectorAll('.input-field').forEach(input => {
                 input.addEventListener('focus', function() {
                     this.classList.add('scale-105');
@@ -745,13 +791,27 @@
                 input.addEventListener('blur', function() {
                     this.classList.remove('scale-105');
                     this.style.transform = 'translateY(0)';
+                    
+                    // Validate on blur
+                    if (this.hasAttribute('required') && !this.value.trim()) {
+                        this.classList.add('border-red-500');
+                        let errorMsg = this.parentElement.querySelector('.error-message');
+                        if (!errorMsg) {
+                            errorMsg = document.createElement('div');
+                            errorMsg.className = 'error-message text-red-500 text-sm mt-1';
+                            errorMsg.textContent = 'This field is required';
+                            this.parentElement.appendChild(errorMsg);
+                        }
+                    }
                 });
 
                 input.addEventListener('input', function() {
                     if (this.classList.contains('border-red-500')) {
                         this.classList.remove('border-red-500');
                         const errorMsg = this.parentElement.querySelector('.error-message');
-                        if (errorMsg) errorMsg.remove();
+                        if (errorMsg) {
+                            errorMsg.remove();
+                        }
                     }
                 });
             });
