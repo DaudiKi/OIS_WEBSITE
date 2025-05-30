@@ -344,6 +344,45 @@
                 opacity: 1;
             }
         }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #2c64ac, #63b647);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text {
+            opacity: 0;
+            animation: fadeInTitle 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeInTitle {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -454,10 +493,10 @@
     <main class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 fade-in" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
-                    Apply to OrchardsWood
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 hero-text" style="text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);">
+                    <span class="gradient-text">Apply to OrchardsWood</span>
                 </h1>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto fade-in">
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in">
                     Take the first step towards providing your child with quality Christian education. Fill out the form below to begin your application process.
                 </p>
             </div>
