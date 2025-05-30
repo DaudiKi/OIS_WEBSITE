@@ -383,6 +383,76 @@
                 transform: translateY(0);
             }
         }
+
+        /* Navigation styles */
+        .nav-link {
+            position: relative;
+            padding: 4px 0;
+        }
+        .nav-link::after, .nav-link::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #63b647;
+            box-shadow: 0 0 8px #63b647, 0 0 12px #63b647;
+            transition: all 0.3s ease;
+        }
+        .nav-link::after {
+            bottom: 0;
+            left: 0;
+        }
+        .nav-link::before {
+            top: 0;
+            right: 0;
+        }
+        .nav-link:hover::after, .nav-link:hover::before {
+            width: 100%;
+        }
+        .nav-link:hover {
+            text-shadow: 0 0 8px rgba(99, 182, 71, 0.5);
+        }
+
+        /* Mobile menu hover effects */
+        #mobileMenu a {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        #mobileMenu a:hover {
+            background: linear-gradient(to right, rgba(44, 100, 172, 0.1), rgba(99, 182, 71, 0.1));
+            transform: translateX(10px);
+        }
+
+        #mobileMenu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, #2c64ac, #63b647);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        #mobileMenu a:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* AMS Login button hover effect */
+        .ams-login-btn {
+            background: linear-gradient(135deg, #2c64ac, #63b647);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            transition: all 0.3s ease;
+        }
+
+        .ams-login-btn:hover {
+            background-position: 0 0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 100, 172, 0.2);
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -461,7 +531,7 @@
           <a href="calendar.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Calendar</a>
         </nav>
         <div class="hidden md:flex items-center justify-center pl-8 w-[200px]">
-          <a href="https://ams.ois.ug" class="bg-ois-blue text-white px-6 py-2.5 rounded-lg hover:bg-ois-light-blue transition-colors duration-200 font-medium flex items-center space-x-2">
+          <a href="https://ams.ois.ug" class="ams-login-btn text-white px-6 py-2.5 rounded-lg font-medium flex items-center space-x-2">
             <span>AMS Login</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -478,12 +548,12 @@
       <!-- Mobile menu -->
       <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
         <div class="flex flex-col space-y-3">
-          <a href="index.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Home</a>
-          <a href="about.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">About</a>
-          <a href="apply.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Apply</a>
-          <a href="gallery.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Gallery</a>
-          <a href="calendar.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Calendar</a>
-          <a href="https://ams.ois.ug" class="bg-ois-blue text-white px-4 py-2 rounded hover:bg-ois-light-blue mt-2">AMS Login</a>
+          <a href="index.html" class="px-4 py-2 rounded">Home</a>
+          <a href="about.html" class="px-4 py-2 rounded">About</a>
+          <a href="apply.html" class="px-4 py-2 rounded">Apply</a>
+          <a href="gallery.html" class="px-4 py-2 rounded">Gallery</a>
+          <a href="calendar.html" class="px-4 py-2 rounded">Calendar</a>
+          <a href="https://ams.ois.ug" class="ams-login-btn text-white px-4 py-2 rounded mt-2">AMS Login</a>
         </div>
       </div>
     </div>
