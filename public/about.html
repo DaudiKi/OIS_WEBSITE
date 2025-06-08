@@ -360,6 +360,16 @@
             transform: scale(1.05);
             color: #63b647;
         }
+
+        /* Add AMS Login button styles */
+        .ams-login-btn {
+            background: linear-gradient(135deg, #2c64ac, #63b647);
+            transition: all 0.3s ease;
+        }
+        .ams-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 100, 172, 0.3);
+        }
     </style>
 </head>
 <body class="bg-white text-ois-text font-sans">
@@ -437,12 +447,12 @@
           <a href="gallery.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Gallery</a>
           <a href="calendar.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Calendar</a>
         </nav>
-        <div class="hidden md:flex items-center justify-center pl-8 w-[200px]">
-          <a href="https://ams.ois.ug" class="bg-ois-blue text-white px-6 py-2.5 rounded-lg hover:bg-ois-light-blue transition-colors duration-200 font-medium flex items-center space-x-2">
-            <span>AMS Login</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
+        <div class="flex items-center justify-center pl-8 w-[200px]">
+          <a href="https://ams.ois.ug" class="ams-login-btn text-white px-6 py-2.5 rounded-lg font-medium flex items-center space-x-2">
+              <span>AMS Login</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
           </a>
         </div>
         <!-- Mobile menu button -->
@@ -455,12 +465,12 @@
       <!-- Mobile menu -->
       <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
         <div class="flex flex-col space-y-3">
-          <a href="index.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Home</a>
-          <a href="about.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">About</a>
-          <a href="apply.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Apply</a>
-          <a href="gallery.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Gallery</a>
-          <a href="calendar.html" class="hover:bg-ois-light-blue px-4 py-2 rounded">Calendar</a>
-          <a href="https://ams.ois.ug" class="bg-ois-blue text-white px-4 py-2 rounded hover:bg-ois-light-blue mt-2">AMS Login</a>
+            <a href="index.html" class="px-4 py-2 rounded">Home</a>
+            <a href="about.html" class="px-4 py-2 rounded">About</a>
+            <a href="apply.html" class="px-4 py-2 rounded">Apply</a>
+            <a href="gallery.html" class="px-4 py-2 rounded">Gallery</a>
+            <a href="calendar.html" class="px-4 py-2 rounded">Calendar</a>
+            <a href="https://ams.ois.ug" class="ams-login-btn text-white px-4 py-2 rounded mt-2">AMS Login</a>
         </div>
             </div>
         </div>

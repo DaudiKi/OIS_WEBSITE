@@ -44,6 +44,32 @@
             100% { box-shadow: 0 0 0 0 rgba(44, 100, 172, 0); }
         }
 
+        @keyframes fadeInOutLeft {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animated-text span {
+            display: inline-block;
+            animation: fadeInOutLeft 6s ease-in-out infinite;
+        }
+
+        .animated-text span:nth-child(1) { animation-delay: 0s; }
+        .animated-text span:nth-child(2) { animation-delay: 0.2s; }
+        .animated-text span:nth-child(3) { animation-delay: 0.4s; }
+        .animated-text span:nth-child(4) { animation-delay: 0.6s; }
+        .animated-text span:nth-child(5) { animation-delay: 0.8s; }
+        .animated-text span:nth-child(6) { animation-delay: 1s; }
+        .animated-text span:nth-child(7) { animation-delay: 1.2s; }
+        .animated-text span:nth-child(8) { animation-delay: 1.4s; }
+        .animated-text span:nth-child(9) { animation-delay: 1.6s; }
+
         /* Form container styles */
         .application-container {
             @apply max-w-4xl mx-auto px-4 py-8;
@@ -649,7 +675,7 @@
           <a href="gallery.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Gallery</a>
           <a href="calendar.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Calendar</a>
         </nav>
-        <div class="hidden md:flex items-center justify-center pl-8 w-[200px]">
+        <div class="flex items-center justify-center pl-8 w-[200px]">
           <a href="https://ams.ois.ug" class="ams-login-btn text-white px-6 py-2.5 rounded-lg font-medium flex items-center space-x-2">
             <span>AMS Login</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
