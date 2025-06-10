@@ -1226,15 +1226,41 @@
 
                 // Get form data
                 const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
-
+                
                 // Show loading state
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<div class="spinner"></div> Submitting...';
 
                 try {
-                    // Simulate API call (replace with actual API endpoint)
-                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    // Replace this URL with your actual Google Form submission URL
+                    const googleFormUrl = 'YOUR_GOOGLE_FORM_URL';
+                    
+                    // Create the form data object that matches Google Form field names
+                    const googleFormData = new FormData();
+                    
+                    // Map your form fields to Google Form fields
+                    // Replace 'entry.XXXXXX' with actual Google Form field IDs
+                    googleFormData.append('entry.XXXXXX', formData.get('firstName')); // First Name
+                    googleFormData.append('entry.XXXXXX', formData.get('lastName')); // Last Name
+                    googleFormData.append('entry.XXXXXX', formData.get('dob')); // Date of Birth
+                    googleFormData.append('entry.XXXXXX', formData.get('gender')); // Gender
+                    googleFormData.append('entry.XXXXXX', formData.get('parentName')); // Parent Name
+                    googleFormData.append('entry.XXXXXX', formData.get('relationship')); // Relationship
+                    googleFormData.append('entry.XXXXXX', formData.get('email')); // Email
+                    googleFormData.append('entry.XXXXXX', formData.get('phone')); // Phone
+                    googleFormData.append('entry.XXXXXX', formData.get('address')); // Address
+                    googleFormData.append('entry.XXXXXX', formData.get('previousSchool')); // Previous School
+                    googleFormData.append('entry.XXXXXX', formData.get('gradeApplying')); // Grade Applying
+                    googleFormData.append('entry.XXXXXX', formData.get('specialNeeds')); // Special Needs
+                    googleFormData.append('entry.XXXXXX', formData.get('referralSource')); // Referral Source
+                    googleFormData.append('entry.XXXXXX', formData.get('comments')); // Comments
+
+                    // Submit to Google Form
+                    const response = await fetch(googleFormUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: googleFormData
+                    });
 
                     // Show success message
                     const successMessage = document.createElement('div');
@@ -1248,19 +1274,43 @@
                             </button>
                         </div>
                     `;
-                    document.body.appendChild(successMessage);
 
-                    // Handle close button
-                    successMessage.querySelector('button').addEventListener('click', () => {
+                    document.body.appendChild(successMessage);
+                    
+                    // Handle close button click
+                    const closeButton = successMessage.querySelector('button');
+                    closeButton.addEventListener('click', () => {
                         successMessage.remove();
+                        // Reset form
                         form.reset();
                         currentSection = 0;
                         showSection(currentSection);
                     });
 
                 } catch (error) {
-                    alert('Error submitting application. Please try again.');
+                    console.error('Error submitting form:', error);
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
+                    errorMessage.innerHTML = `
+                        <div class="bg-white p-8 rounded-lg shadow-xl max-w-md mx-4">
+                            <h3 class="text-2xl font-bold text-red-600 mb-4">Submission Error</h3>
+                            <p class="text-gray-600 mb-6">There was an error submitting your application. Please try again later or contact us directly.</p>
+                            <button class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">
+                                Close
+                            </button>
+                        </div>
+                    `;
+
+                    document.body.appendChild(errorMessage);
+                    
+                    // Handle close button click
+                    const closeButton = errorMessage.querySelector('button');
+                    closeButton.addEventListener('click', () => {
+                        errorMessage.remove();
+                    });
                 } finally {
+                    // Reset submit button
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = 'Submit Application';
                 }
