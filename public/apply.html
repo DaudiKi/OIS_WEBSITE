@@ -1232,28 +1232,26 @@
                 submitBtn.innerHTML = '<div class="spinner"></div> Submitting...';
 
                 try {
-                    // Replace this URL with your actual Google Form submission URL
-                    const googleFormUrl = 'YOUR_GOOGLE_FORM_URL';
+                    // Google Form submission URL
+                    const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSc6zPN-vjd1LEnZ0VOQMTqAMzZ3DX5Se3WIi52iE_KNe5KiKw/formResponse';
                     
                     // Create the form data object that matches Google Form field names
                     const googleFormData = new FormData();
                     
-                    // Map your form fields to Google Form fields
-                    // Replace 'entry.XXXXXX' with actual Google Form field IDs
-                    googleFormData.append('entry.XXXXXX', formData.get('firstName')); // First Name
-                    googleFormData.append('entry.XXXXXX', formData.get('lastName')); // Last Name
-                    googleFormData.append('entry.XXXXXX', formData.get('dob')); // Date of Birth
-                    googleFormData.append('entry.XXXXXX', formData.get('gender')); // Gender
-                    googleFormData.append('entry.XXXXXX', formData.get('parentName')); // Parent Name
-                    googleFormData.append('entry.XXXXXX', formData.get('relationship')); // Relationship
-                    googleFormData.append('entry.XXXXXX', formData.get('email')); // Email
-                    googleFormData.append('entry.XXXXXX', formData.get('phone')); // Phone
-                    googleFormData.append('entry.XXXXXX', formData.get('address')); // Address
-                    googleFormData.append('entry.XXXXXX', formData.get('previousSchool')); // Previous School
-                    googleFormData.append('entry.XXXXXX', formData.get('gradeApplying')); // Grade Applying
-                    googleFormData.append('entry.XXXXXX', formData.get('specialNeeds')); // Special Needs
-                    googleFormData.append('entry.XXXXXX', formData.get('referralSource')); // Referral Source
-                    googleFormData.append('entry.XXXXXX', formData.get('comments')); // Comments
+                    // Map your form fields to Google Form fields with correct entry IDs
+                    googleFormData.append('entry.815919982', formData.get('firstName')); // First Name
+                    googleFormData.append('entry.912546999', formData.get('lastName')); // Last Name
+                    googleFormData.append('entry.1821717898', formData.get('dob')); // Date of Birth
+                    googleFormData.append('entry.871581122', formData.get('gender')); // Gender
+                    googleFormData.append('entry.175758084', formData.get('parentName')); // Parent Name
+                    googleFormData.append('entry.2091123842', formData.get('relationship')); // Relationship
+                    googleFormData.append('entry.815035143', formData.get('email')); // Email
+                    googleFormData.append('entry.1465615832', formData.get('phone')); // Phone
+                    googleFormData.append('entry.456194374', formData.get('address')); // Address
+                    googleFormData.append('entry.1088922330', formData.get('previousSchool')); // Previous School
+                    googleFormData.append('entry.895971051', formData.get('gradeApplying')); // Grade Applying
+                    googleFormData.append('entry.2110072755', formData.get('referralSource')); // Referral Source
+                    googleFormData.append('entry.1939134806', formData.get('comments')); // Comments
 
                     // Submit to Google Form
                     const response = await fetch(googleFormUrl, {
