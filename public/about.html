@@ -493,18 +493,32 @@
     <!-- Main Content -->
     <main>
         <!-- Directors  Message Section: New section to highlight the school's guiding principles -->
-        <section class="relative">
-            <div class="container mx-auto px-4">
-                <!-- Two-column layout for image and principles message -->
-                <div class="flex flex-col md:flex-row items-center">
+        <section class="relative py-16 bg-gradient-to-br from-[#f5f7fa] to-[#e3ecfa]">
+            <div class="relative container mx-auto px-4">
+                <!-- Colored side gradients -->
+                <div class="absolute left-0 top-0 h-full w-6 md:w-12 bg-gradient-to-b from-[#63b647] to-[#2c64ac] rounded-l-3xl opacity-60"></div>
+                <div class="absolute right-0 top-0 h-full w-6 md:w-12 bg-gradient-to-t from-[#2c64ac] to-[#63b647] rounded-r-3xl opacity-60"></div>
+                <div class="relative z-10 rounded-3xl border border-[#e3ecfa] bg-white/80 shadow-xl p-6 md:p-12 flex flex-col md:flex-row items-center justify-center backdrop-blur-md">
                     <!-- Image column -->
                     <div class="md:w-1/2 mb-8 md:mb-0 flex justify-center">
-                        <img src="assets/images/Director.jpg" alt="Director's Message" class="w-80 h-auto mx-auto shadow-2xl rounded-xl border-4 border-white object-cover">
+                        <div class="relative flex justify-center items-center">
+                            <div class="absolute w-80 h-80 bg-gradient-to-br from-[#63b64733] to-[#2c64ac33] rounded-full blur-2xl opacity-60 -z-10"></div>
+                            <img src="assets/images/Director.jpg" alt="Director's Message" class="w-80 h-auto mx-auto shadow-2xl rounded-2xl border-4 border-white object-cover transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(44,100,172,0.25)]">
+                        </div>
                     </div>
                     <!-- Text column -->
                     <div class="md:w-1/2 md:pl-8">
-                        <h3 class="text-2xl font-semibold text-gray-800 hover:text-[#2c64ac] transition-colors duration-300 fade-in-title fade-in-delay-1" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Our Director's Message</h3>
-                        <p class="text-gray-600 mt-4 hover:text-[#63b647] transition-colors duration-300 hover:shadow-lg p-4 rounded-lg">At OrchardsWood International School, our principles are rooted in fostering a Christ-centered environment that nurtures academic excellence, spiritual growth, and moral integrity. We are committed to guiding our students to become compassionate, responsible, and purpose-driven individuals who impact the world positively.</p>
+                        <div class="bg-white/80 rounded-2xl shadow-lg p-8 backdrop-blur-md group">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-4 fade-in-title fade-in-delay-1 transition-all duration-500 ease-in-out group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#2c64ac] group-hover:to-[#63b647] group-hover:scale-105" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);">Our Director's Message</h3>
+                            <p class="text-gray-600 mt-2 text-lg leading-relaxed transition-all duration-500 ease-in-out group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#2c64ac] group-hover:to-[#63b647] group-hover:scale-105">
+                                At OrchardsWood International School, our principles are rooted in fostering a Christ-centered environment that nurtures academic excellence, spiritual growth, and moral integrity. We are committed to guiding our students to become compassionate, responsible, and purpose-driven individuals who impact the world positively.
+                            </p>
+                            <div class="text-right mt-6 pr-2">
+                                <p class="text-gray-800 font-semibold">Yours in Christ's Service,</p>
+                                <p class="text-gray-800 font-bold italic">Mrs. Herriet Makumbi</p>
+                                <p class="text-gray-600">Director, OrchardsWood International School</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
