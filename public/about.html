@@ -370,6 +370,83 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(44, 100, 172, 0.3);
         }
+
+        /* Animated border styles */
+        .animated-border {
+            position: relative;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1rem;
+            padding: 6px;
+            background: linear-gradient(45deg, #2c64ac, #63b647, #2c64ac);
+            background-size: 200% 200%;
+            animation: borderAnimation 3s ease-in-out infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        @keyframes borderAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animated-border:hover::before {
+            animation-duration: 1.5s;
+        }
+
+        /* 3D hover effect for vision paragraph */
+        .vision-paragraph {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .vision-paragraph:hover {
+            transform: translateY(-8px) rotateX(5deg) rotateY(2deg);
+            box-shadow: 
+                0 20px 40px rgba(44, 100, 172, 0.3),
+                0 10px 20px rgba(99, 182, 71, 0.2),
+                0 0 0 1px rgba(44, 100, 172, 0.1);
+            background: linear-gradient(135deg, rgba(44, 100, 172, 0.05), rgba(99, 182, 71, 0.05));
+            border-radius: 12px;
+        }
+
+        .vision-paragraph::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(44, 100, 172, 0.1), rgba(99, 182, 71, 0.1));
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .vision-paragraph:hover::before {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-white text-ois-text font-sans">
@@ -493,27 +570,27 @@
     <!-- Main Content -->
     <main>
         <!-- Directors  Message Section: New section to highlight the school's guiding principles -->
-        <section class="relative py-16 bg-gradient-to-br from-[#f5f7fa] to-[#e3ecfa]">
+        <section class="relative py-12 bg-gradient-to-br from-[#f5f7fa] to-[#e3ecfa]">
             <div class="relative container mx-auto px-4">
                 <!-- Colored side gradients -->
                 <div class="absolute left-0 top-0 h-full w-6 md:w-12 bg-gradient-to-b from-[#63b647] to-[#2c64ac] rounded-l-3xl opacity-60"></div>
                 <div class="absolute right-0 top-0 h-full w-6 md:w-12 bg-gradient-to-t from-[#2c64ac] to-[#63b647] rounded-r-3xl opacity-60"></div>
-                <div class="relative z-10 rounded-3xl border border-[#e3ecfa] bg-white/80 shadow-xl p-6 md:p-12 flex flex-col md:flex-row items-center justify-center backdrop-blur-md">
+                <div class="relative z-10 rounded-3xl border border-[#e3ecfa] bg-white/80 shadow-xl p-4 md:p-8 flex flex-col md:flex-row items-center justify-center backdrop-blur-md">
                     <!-- Image column -->
-                    <div class="md:w-1/2 mb-8 md:mb-0 flex justify-center">
+                    <div class="md:w-1/2 mb-6 md:mb-0 flex justify-center">
                         <div class="relative flex justify-center items-center">
-                            <div class="absolute w-80 h-80 bg-gradient-to-br from-[#63b64733] to-[#2c64ac33] rounded-full blur-2xl opacity-60 -z-10"></div>
-                            <img src="assets/images/Director.jpg" alt="Director's Message" class="w-80 h-auto mx-auto shadow-2xl rounded-2xl border-4 border-white object-cover transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(44,100,172,0.25)]">
+                            <div class="absolute w-64 h-64 bg-gradient-to-br from-[#63b64733] to-[#2c64ac33] rounded-full blur-2xl opacity-60 -z-10"></div>
+                            <img src="assets/images/Director.jpg" alt="Director's Message" class="w-64 h-auto mx-auto shadow-2xl rounded-2xl border-4 border-white object-cover transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(44,100,172,0.25)]">
                         </div>
                     </div>
                     <!-- Text column -->
-                    <div class="md:w-1/2 md:pl-8">
-                        <div class="bg-white/80 rounded-2xl shadow-lg p-8 backdrop-blur-md group">
-                            <h3 class="text-2xl font-semibold text-gray-800 mb-4 fade-in-title fade-in-delay-1 transition-all duration-500 ease-in-out group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#2c64ac] group-hover:to-[#63b647] group-hover:scale-105" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);">Our Director's Message</h3>
-                            <p class="text-gray-600 mt-2 text-lg leading-relaxed transition-all duration-500 ease-in-out group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#2c64ac] group-hover:to-[#63b647] group-hover:scale-105">
+                    <div class="md:w-1/2 md:pl-6">
+                        <div class="bg-white/80 rounded-2xl shadow-lg p-6 backdrop-blur-md group">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3 fade-in-title fade-in-delay-1 transition-all duration-500 ease-in-out group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#2c64ac] group-hover:to-[#63b647] group-hover:scale-105" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08);">Our Director's Message</h3>
+                            <p class="text-gray-600 mt-2 text-base leading-relaxed transition-all duration-500 ease-in-out group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#2c64ac] group-hover:to-[#63b647] group-hover:scale-105">
                                 At OrchardsWood International School, our principles are rooted in fostering a Christ-centered environment that nurtures academic excellence, spiritual growth, and moral integrity. We are committed to guiding our students to become compassionate, responsible, and purpose-driven individuals who impact the world positively.
                             </p>
-                            <div class="text-right mt-6 pr-2">
+                            <div class="text-right mt-4 pr-2">
                                 <p class="text-gray-800 font-semibold">Yours in Christ's Service,</p>
                                 <p class="text-gray-800 font-bold italic">Mrs. Herriet Makumbi</p>
                                 <p class="text-gray-600">Director, OrchardsWood International School</p>
@@ -528,13 +605,13 @@
         <section class="bg-gray-100 py-12">
             <div class="container mx-auto px-4">
                 <!-- Two-column layout for vision image and text -->
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/2 md:pr-8">
+                <div class="flex flex-col md:flex-row items-center animated-border">
+                    <div class="md:w-1/2 md:pr-8 relative z-10">
                         <h3 class="text-2xl font-semibold text-gray-800 hover:text-[#2c64ac] transition-colors duration-300 fade-in-title fade-in-delay-2" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Our Vision</h3>
-                        <p class="text-gray-600 mt-4 hover:text-[#63b647] transition-colors duration-300 hover:shadow-lg p-4 rounded-lg">"To be a leading Christian educational institution that develops godly leaders who excel academically, morally, and spiritually, equipped to transform their communities and impact the world for Christ."</p>
+                        <p class="text-gray-600 mt-4 hover:text-[#63b647] transition-colors duration-300 hover:shadow-lg p-4 rounded-lg bg-white relative z-20">"To be a leading Christian educational institution that develops godly leaders who excel academically, morally, and spiritually, equipped to transform their communities and impact the world for Christ."</p>
                     </div>
-                    <div class="md:w-1/2 mb-8 md:mb-0 order-first md:order-last">
-                        <img src="images/vision-image.jpg" alt="Our Vision" class="w-full rounded-lg shadow-lg">
+                    <div class="md:w-1/2 mb-8 md:mb-0 order-first md:order-last flex justify-center relative z-20">
+                        <img src="assets/images/Vision.jpg" alt="Our Vision" class="w-4/5 max-w-md rounded-lg shadow-lg transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:rotate-3 hover:brightness-110 cursor-pointer relative z-30">
                     </div>
                 </div>
             </div>
@@ -544,13 +621,13 @@
         <section class="bg-gray-100 py-12">
             <div class="container mx-auto px-4">
                 <!-- Two-column layout for mission image and text -->
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/2 mb-8 md:mb-0">
-                        <img src="images/mission-image.jpg" alt="Our Mission" class="w-full rounded-lg shadow-lg">
+                <div class="flex flex-col md:flex-row items-center animated-border">
+                    <div class="md:w-1/2 mb-8 md:mb-0 flex justify-center relative z-20">
+                        <img src="assets/images/Mission.jpg" alt="Our Mission" class="w-4/5 max-w-md rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:rotate-1 relative z-30">
                     </div>
-                    <div class="md:w-1/2 md:pl-8">
+                    <div class="md:w-1/2 md:pl-8 relative z-10">
                         <h3 class="text-2xl font-semibold text-gray-800 hover:text-[#2c64ac] transition-colors duration-300 fade-in-title fade-in-delay-3" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Our Mission</h3>
-                        <p class="text-gray-600 mt-4 hover:text-[#63b647] transition-colors duration-300 hover:shadow-lg p-4 rounded-lg">"Equipping children for life and eternity with Christian education"</p>
+                        <p class="text-gray-600 mt-4 hover:text-[#63b647] transition-colors duration-300 hover:shadow-lg p-4 rounded-lg bg-white relative z-20">"Equipping children for life and eternity with Christian education"</p>
                     </div>
                 </div>
             </div>
@@ -660,7 +737,7 @@
                     
                     <!-- Central Image -->
                     <div class="flex justify-center items-center">
-                        <img src="images/tree-by-water.jpg" alt="Tree by the Water" class="w-full max-w-[300px] h-auto rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                        <img src="assets/images/Tree of Life.jpg" alt="Tree of Life" class="w-full max-w-[300px] h-auto rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
                     </div>
                     
                     <!-- Jeremiah 17:7-8 on the right -->
@@ -684,10 +761,17 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                         <!-- International Recognition - Spans full width -->
                         <div class="md:col-span-3 bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-[#2c64ac] hover:bg-green-50 group">
-                            <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6 text-center group-hover:text-green-700">International Recognition</h3>
-                            <div class="space-y-4 text-gray-600 leading-relaxed group-hover:text-green-600">
-                                <p>Orchardswood International School certificates are accredited by the International Christian Certificate of Education Limited (ICCEL), whose offices are in the UK.</p>
-                                <p>ICCEL offers certificates at different levels, recognized by the Universities and Colleges Admission Services in the UK and internationally.</p>
+                            <div class="flex flex-col md:flex-row items-center justify-between">
+                                <div class="md:w-2/3 space-y-4">
+                                    <h3 class="text-2xl font-semibold text-[#2c64ac] mb-6 text-center md:text-left group-hover:text-green-700">International Recognition</h3>
+                                    <div class="text-gray-600 leading-relaxed group-hover:text-green-600">
+                                        <p>Orchardswood International School certificates are accredited by the International Christian Certificate of Education Limited (ICCEL), whose offices are in the UK.</p>
+                                        <p>ICCEL offers certificates at different levels, recognized by the Universities and Colleges Admission Services in the UK and internationally.</p>
+                                    </div>
+                                </div>
+                                <div class="md:w-1/3 flex justify-center mt-6 md:mt-0">
+                                    <img src="assets/images/ICCE Record of achievement.webp" alt="ICCE Record of Achievement" class="h-32 w-auto transform hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                                </div>
                             </div>
                         </div>
 
@@ -740,7 +824,7 @@
                                     </div>
                                 </div>
                                 <div class="md:w-1/3 flex justify-center mt-6 md:mt-0">
-                                    <img src="images/iccel-logo.png" alt="ICCEL Logo" class="h-16 w-auto transform hover:scale-105 transition-transform duration-300">
+                                    <img src="assets/images/ICCE.jpg" alt="ICCE Logo" class="h-16 w-auto transform hover:scale-105 transition-transform duration-300">
                                 </div>
                             </div>
                         </div>
@@ -756,36 +840,64 @@
                 <!-- Main Curriculum Description -->
                 <div class="max-w-4xl mx-auto mb-16 space-y-8">
                     <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-blue-50 group">
-                        <p class="text-gray-600 leading-relaxed mb-6 group-hover:text-blue-600">
-                            OIS uses a Biblically Based Education curriculum. The Accelerated Christian Education Curriculum (ACE) has been in existence for more than 40 years and is internationally recognized. It is a unique teaching system with an individualized learning methodology; which is Progress motivated individualized Programmed Learning, that meets each child's educational needs at their level of performance/potential.
-                        </p>
-                        <p class="text-gray-600 leading-relaxed mb-6 group-hover:text-blue-600">
-                            This allows students to learn at their own Pace which ensures mastery of the subject material. With the learner-centered approach, many learner differences can be taken into account, learners can work at their own pace at the time most convenient to them; different learning styles can be accommodated; learners are more in control of how and what they learn and learning is active and not passive.
-                        </p>
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="md:w-3/4 space-y-4">
+                                <p class="text-gray-600 leading-relaxed mb-6 group-hover:text-blue-600">
+                                    OIS uses a Biblically Based Education curriculum. The Accelerated Christian Education Curriculum (ACE) has been in existence for more than 40 years and is internationally recognized. It is a unique teaching system with an individualized learning methodology; which is Progress motivated individualized Programmed Learning, that meets each child's educational needs at their level of performance/potential.
+                                </p>
+                                <p class="text-gray-600 leading-relaxed mb-6 group-hover:text-blue-600">
+                                    This allows students to learn at their own Pace which ensures mastery of the subject material. With the learner-centered approach, many learner differences can be taken into account, learners can work at their own pace at the time most convenient to them; different learning styles can be accommodated; learners are more in control of how and what they learn and learning is active and not passive.
+                                </p>
+                            </div>
+                            <div class="md:w-1/4 flex justify-center mt-6 md:mt-0">
+                                <img src="assets/images/ACE Logo.jpg" alt="ACE Logo" class="h-24 w-auto transform hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-green-50 group">
-                        <h3 class="text-xl font-semibold text-[#2c64ac] mb-4 group-hover:text-green-700">Self-Paced Learning</h3>
-                        <p class="text-gray-600 leading-relaxed group-hover:text-green-600">
-                            At OIS, the curriculum is Self-Paced, with each student progressing through the Paces at their own rate. <span class="group-hover:text-red-600 font-medium">They set their own goals daily, detailing how much they can complete in each of their subjects.</span> In addition, students do self-assessment, which is tied to personal goals.
-                        </p>
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="md:w-3/4 space-y-4">
+                                <h3 class="text-xl font-semibold text-[#2c64ac] mb-4 group-hover:text-green-700">Self-Paced Learning</h3>
+                                <p class="text-gray-600 leading-relaxed group-hover:text-green-600">
+                                    At OIS, the curriculum is Self-Paced, with each student progressing through the Paces at their own rate. <span class="group-hover:text-red-600 font-medium">They set their own goals daily, detailing how much they can complete in each of their subjects.</span> In addition, students do self-assessment, which is tied to personal goals.
+                                </p>
+                            </div>
+                            <div class="md:w-1/4 flex justify-center mt-6 md:mt-0">
+                                <img src="assets/images/Goal Card.webp" alt="Goal Card" class="h-24 w-auto transform hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-blue-50 group">
-                        <h3 class="text-xl font-semibold text-[#2c64ac] mb-4 group-hover:text-blue-700">Core Subjects & Biblical Integration</h3>
-                        <p class="text-gray-600 leading-relaxed mb-6 group-hover:text-blue-600">
-                            Students benefit from the inbuilt training in Godliness and individual accountability; from the Word of God and the Biblical principles inculcated into the system that develops character in the individual. Students work in core subjects which include Mathematics, English, Literature, Word Building, Social studies(which includes World History, World Geography or European History for higher classes), Science(which include Biology, chemistry, and physics), and other subjects like Computer studies and Art etc.
-                        </p>
-                        <p class="text-gray-600 leading-relaxed group-hover:text-blue-600">
-                            The children work with the help of professional, Spirit filled, dedicated, caring and experienced teachers; who work as Supervisors and Monitors in the Learning Centers and skill classes.
-                        </p>
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="md:w-3/4 space-y-4">
+                                <h3 class="text-xl font-semibold text-[#2c64ac] mb-4 group-hover:text-blue-700">Core Subjects & Biblical Integration</h3>
+                                <p class="text-gray-600 leading-relaxed mb-6 group-hover:text-blue-600">
+                                    Students benefit from the inbuilt training in Godliness and individual accountability; from the Word of God and the Biblical principles inculcated into the system that develops character in the individual. Students work in core subjects which include Mathematics, English, Literature, Word Building, Social studies(which includes World History, World Geography or European History for higher classes), Science(which include Biology, chemistry, and physics), and other subjects like Computer studies and Art etc.
+                                </p>
+                                <p class="text-gray-600 leading-relaxed group-hover:text-blue-600">
+                                    The children work with the help of professional, Spirit filled, dedicated, caring and experienced teachers; who work as Supervisors and Monitors in the Learning Centers and skill classes.
+                                </p>
+                            </div>
+                            <div class="md:w-1/4 flex justify-center mt-6 md:mt-0">
+                                <img src="assets/images/PACE's.jpg" alt="ACE Paces" class="h-24 w-auto transform hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-green-50 group">
-                        <h3 class="text-xl font-semibold text-[#2c64ac] mb-4 group-hover:text-green-700">Christian Point of View</h3>
-                        <p class="text-gray-600 leading-relaxed group-hover:text-green-600">
-                            All learning at OIS takes place from a Christian point of view, with a holistic approach. Teaching is based on character (60 character traits of Jesus), morals and traditional values that underpin all aspects of a student's learning and life in general.
-                        </p>
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="md:w-3/4 space-y-4">
+                                <h3 class="text-xl font-semibold text-[#2c64ac] mb-4 group-hover:text-green-700">Christian Point of View</h3>
+                                <p class="text-gray-600 leading-relaxed group-hover:text-green-600">
+                                    All learning at OIS takes place from a Christian point of view, with a holistic approach. Teaching is based on character (60 character traits of Jesus), morals and traditional values that underpin all aspects of a student's learning and life in general.
+                                </p>
+                            </div>
+                            <div class="md:w-1/4 flex justify-center mt-6 md:mt-0">
+                                <img src="assets/images/Bible.png" alt="Bible" class="h-24 w-auto transform hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-blue-50 group">
@@ -800,8 +912,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
                     <!-- ACE (Accelerated Christian Education) -->
                     <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="h-16 w-16 bg-[#2c64ac] rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <img src="images/ace-icon.png" alt="ACE Icon" class="h-10 w-10 object-contain brightness-0 invert">
+                        <div class="h-16 w-16 bg-[#2c64ac] rounded-full flex items-center justify-center mb-6 mx-auto overflow-hidden">
+                            <img src="assets/images/ACE Logo.jpg" alt="ACE Logo" class="h-full w-full object-cover">
                         </div>
                         <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">ACE (Accelerated Christian Education)</h3>
                         <ul class="space-y-3 text-gray-600">
@@ -834,8 +946,8 @@
 
                     <!-- Skillspro Computer Course -->
                     <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="h-16 w-16 bg-[#63b647] rounded-full flex items-center justify-center mb-6 mx-auto">
-                            <img src="images/computer-icon.png" alt="Computer Icon" class="h-10 w-10 object-contain brightness-0 invert">
+                        <div class="h-16 w-16 bg-[#63b647] rounded-full flex items-center justify-center mb-6 mx-auto overflow-hidden">
+                            <img src="assets/images/Skillspro.png" alt="Skillspro Logo" class="h-full w-full object-cover">
                         </div>
                         <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Skillspro Computer Course</h3>
                         <ul class="space-y-3 text-gray-600">
