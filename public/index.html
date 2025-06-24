@@ -264,7 +264,7 @@
         #2c64ac 270deg,
         #63b647 360deg
       );
-      animation: spiral-rotate 20s linear infinite;
+      animation: spiral-rotate 10s linear infinite;
       transform: translate(-50%, -50%);
       border-radius: 50%;
     }
@@ -297,6 +297,36 @@
     .spiral-content {
       position: relative;
       z-index: 2;
+    }
+
+    /* Sequential yellow star effect for testimonials */
+    .testimonial-card:hover .star:nth-child(1) {
+      color: #FFD700 !important;
+      transition-delay: 0s;
+    }
+    
+    .testimonial-card:hover .star:nth-child(2) {
+      color: #FFD700 !important;
+      transition-delay: 0.2s;
+    }
+    
+    .testimonial-card:hover .star:nth-child(3) {
+      color: #FFD700 !important;
+      transition-delay: 0.4s;
+    }
+    
+    .testimonial-card:hover .star:nth-child(4) {
+      color: #FFD700 !important;
+      transition-delay: 0.6s;
+    }
+    
+    .testimonial-card:hover .star:nth-child(5) {
+      color: #FFD700 !important;
+      transition-delay: 0.8s;
+    }
+    
+    .star {
+      transition: color 0.6s ease;
     }
   </style>
 </head>
@@ -593,24 +623,24 @@
             <div class="absolute inset-0 bg-[#2c64ac] rounded-xl opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
             <div class="flex items-center mb-4">
               <div class="text-[#2c64ac] flex space-x-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
               </div>
             </div>
-            <p class="text-gray-700 italic mb-6 group-hover:text-gray-900 transition-colors duration-300">
+            <p class="text-gray-700 italic mb-6 group-hover:text-gray-900 transition-colors duration-300 font-bold">
               "The teachers at OrchardsWood have been incredible in nurturing our daughter's talents and helping her grow academically and socially. We couldn't be happier with our choice."
             </p>
             <div class="flex items-center">
@@ -620,7 +650,7 @@
               </div>
               <div>
                 <p class="font-semibold text-[#2c64ac]">Sarah Nakimuli</p>
-                <p class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors duration-300">Parent of P4 Student</p>
+                <p class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors duration-300">Parent of Grade 1 Student</p>
               </div>
             </div>
           </div>
@@ -628,24 +658,24 @@
             <div class="absolute inset-0 bg-[#2c64ac] rounded-xl opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
             <div class="flex items-center mb-4">
               <div class="text-[#2c64ac] flex space-x-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
               </div>
             </div>
-            <p class="text-gray-700 italic mb-6 group-hover:text-gray-900 transition-colors duration-300">
+            <p class="text-gray-700 italic mb-6 group-hover:text-gray-900 transition-colors duration-300 font-bold">
               "The facilities and learning environment at OrchardsWood are exceptional. Our twins have developed confidence and leadership skills we never imagined possible at this age."
             </p>
             <div class="flex items-center">
@@ -663,24 +693,24 @@
             <div class="absolute inset-0 bg-[#2c64ac] rounded-xl opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
             <div class="flex items-center mb-4">
               <div class="text-[#2c64ac] flex space-x-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300 star" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
               </div>
             </div>
-            <p class="text-gray-700 italic mb-6 group-hover:text-gray-900 transition-colors duration-300">
+            <p class="text-gray-700 italic mb-6 group-hover:text-gray-900 transition-colors duration-300 font-bold">
               "OrchardsWood has provided our son with a safe and inspiring place to learn. The Christian values instilled here are truly reflected in the school's community."
             </p>
             <div class="flex items-center">
@@ -690,7 +720,7 @@
               </div>
               <div>
                 <p class="font-semibold text-[#2c64ac]">Michael Kizito</p>
-                <p class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors duration-300">Parent of S2 Student</p>
+                <p class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors duration-300">Parent of Grade 9 Student</p>
               </div>
             </div>
           </div>

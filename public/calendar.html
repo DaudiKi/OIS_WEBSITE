@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OIS School Calendar</title>
+  <link rel="stylesheet" href="css/output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f8fafc;
+      color: #22223b;
+      font-family: 'Inter', sans-serif;
+    }
+    .calendar-header {
+      background: linear-gradient(90deg, #63b647 0%, #2c64ac 100%);
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      text-align: center;
+      border-radius: 0 0 2rem 2rem;
+      box-shadow: 0 4px 24px rgba(44, 100, 172, 0.08);
+    }
+    .calendar-title {
+      font-family: 'Righteous', cursive;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+    .calendar-desc {
+      font-size: 1.1rem;
+      color: #e0e0e0;
+      margin-bottom: 1.5rem;
+    }
+    .calendar-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 16px rgba(44, 100, 172, 0.08);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .calendar-embed {
+      width: 100%;
+      min-height: 700px;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(99, 182, 71, 0.08);
+      margin-top: 1rem;
+    }
+    @media (max-width: 600px) {
+      .calendar-title { font-size: 1.5rem; }
+      .calendar-container { padding: 1rem 0.2rem; }
+      .calendar-embed { min-height: 400px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="calendar-header">
+    <div class="calendar-title">OIS School Calendar</div>
+    <div class="calendar-desc">
+      Stay up to date with all school events, holidays, and important dates. This calendar is updated in real time from our official OrchardsWood Google Calendar.
+    </div>
+  </div>
+  <div class="calendar-container">
+    <!-- OrchardsWood Google Calendar - Updates in real time -->
+    <iframe class="calendar-embed" src="https://calendar.google.com/calendar/embed?src=7eb5a9b638028ced87f52d91048bc2a9bac6b47ee2d3191cb8e2647f3e1077d4%40group.calendar.google.com&ctz=Africa%2FNairobi" frameborder="0" scrolling="no"></iframe>
+  </div>
+</body>
+</html> 
