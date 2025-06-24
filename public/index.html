@@ -243,52 +243,60 @@
       width: 100%;
     }
 
-    /* Wave Effect for Testimonials Section */
-    .wave-container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+    /* Spiral effect for testimonials section */
+    .spiral-bg {
+      position: relative;
       overflow: hidden;
     }
-
-    .wave {
+    
+    .spiral-bg::before {
+      content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
+      top: 50%;
+      left: 50%;
       width: 200%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.1);
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        #63b647 0deg,
+        #2c64ac 90deg,
+        #63b647 180deg,
+        #2c64ac 270deg,
+        #63b647 360deg
+      );
+      animation: spiral-rotate 20s linear infinite;
+      transform: translate(-50%, -50%);
       border-radius: 50%;
-      transform-origin: center bottom;
     }
-
-    .wave1 {
-      animation: wave 8s linear infinite;
-      background: rgba(255, 255, 255, 0.15);
+    
+    .spiral-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(
+        circle at center,
+        transparent 30%,
+        rgba(99, 182, 71, 0.8) 70%,
+        rgba(44, 100, 172, 0.9) 100%
+      );
+      z-index: 1;
     }
-
-    .wave2 {
-      animation: wave 10s linear infinite;
-      background: rgba(255, 255, 255, 0.1);
-      animation-delay: -2s;
-    }
-
-    .wave3 {
-      animation: wave 12s linear infinite;
-      background: rgba(255, 255, 255, 0.05);
-      animation-delay: -4s;
-    }
-
-    @keyframes wave {
+    
+    @keyframes spiral-rotate {
       0% {
-        transform: translateX(-50%) translateY(0) rotate(0deg);
-      }
-      50% {
-        transform: translateX(-50%) translateY(-20px) rotate(180deg);
+        transform: translate(-50%, -50%) rotate(0deg);
       }
       100% {
-        transform: translateX(-50%) translateY(0) rotate(360deg);
+        transform: translate(-50%, -50%) rotate(360deg);
       }
+    }
+    
+    .spiral-content {
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
@@ -575,17 +583,8 @@
   </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="py-16 relative overflow-hidden" style="background: linear-gradient(135deg, #63b647 0%, #2c64ac 50%, #63b647 100%);">
-      <!-- Wave Background Effect -->
-      <div class="absolute inset-0 overflow-hidden">
-        <div class="wave-container">
-          <div class="wave wave1"></div>
-          <div class="wave wave2"></div>
-          <div class="wave wave3"></div>
-        </div>
-      </div>
-      
-      <div class="container mx-auto px-4 relative z-10">
+    <section id="testimonials" class="py-16 spiral-bg">
+      <div class="container mx-auto px-4 spiral-content">
         <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12 testimonial-element">
           What Our Parents Say!
         </h2>
@@ -593,7 +592,7 @@
           <div class="testimonial-card bg-white p-8 rounded-xl shadow-lg transition-all duration-500 transform hover:-translate-y-4 hover:shadow-2xl relative group">
             <div class="absolute inset-0 bg-[#2c64ac] rounded-xl opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
             <div class="flex items-center mb-4">
-              <div class="text-yellow-400 flex space-x-1">
+              <div class="text-[#2c64ac] flex space-x-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
@@ -628,7 +627,7 @@
           <div class="testimonial-card bg-white p-8 rounded-xl shadow-lg transition-all duration-500 transform hover:-translate-y-4 hover:shadow-2xl relative group">
             <div class="absolute inset-0 bg-[#2c64ac] rounded-xl opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
             <div class="flex items-center mb-4">
-              <div class="text-yellow-400 flex space-x-1">
+              <div class="text-[#2c64ac] flex space-x-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
@@ -663,7 +662,7 @@
           <div class="testimonial-card bg-white p-8 rounded-xl shadow-lg transition-all duration-500 transform hover:-translate-y-4 hover:shadow-2xl relative group">
             <div class="absolute inset-0 bg-[#2c64ac] rounded-xl opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
             <div class="flex items-center mb-4">
-              <div class="text-yellow-400 flex space-x-1">
+              <div class="text-[#2c64ac] flex space-x-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
