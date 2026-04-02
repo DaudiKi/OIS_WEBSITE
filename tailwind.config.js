@@ -4,10 +4,12 @@ module.exports = {
     extend: {
       colors: {
         'ois': {
-          'blue': '#0072BC',      // Main blue from the logo
-          'green': '#4CAF50',     // Tree green color
-          'light-blue': '#00A0E3', // Lighter blue accent
-          'text': '#333333',      // Dark text color
+          'blue': '#2c64ac',
+          'light-blue': '#3a7bd5',
+          'green': '#63b647',
+          'green-dark': '#4e9236',
+          'red': '#ef4444',
+          'text': '#333333',
         },
         primary: {
           50: '#E3F2FD',
