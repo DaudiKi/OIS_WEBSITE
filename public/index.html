@@ -248,14 +248,14 @@
       position: relative;
       background-color: #2c64ac;
       background-image: 
-        radial-gradient(at 0% 0%, hsla(103,44%,49%,1) 0, transparent 50%), 
-        radial-gradient(at 50% 0%, hsla(215,59%,42%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(103,44%,49%,1) 0, transparent 50%), 
-        radial-gradient(at 0% 50%, hsla(215,59%,42%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 50%, hsla(103,44%,49%,1) 0, transparent 50%), 
-        radial-gradient(at 0% 100%, hsla(215,59%,42%,1) 0, transparent 50%), 
-        radial-gradient(at 50% 100%, hsla(103,44%,49%,1) 0, transparent 50%), 
-        radial-gradient(at 100% 100%, hsla(215,59%,42%,1) 0, transparent 50%);
+        radial-gradient(at 0% 0%, hsla(215,60%,30%,1) 0, transparent 60%), 
+        radial-gradient(at 50% 0%, hsla(103,50%,45%,1) 0, transparent 60%), 
+        radial-gradient(at 100% 0%, hsla(180,50%,40%,1) 0, transparent 60%), 
+        radial-gradient(at 0% 50%, hsla(103,50%,45%,1) 0, transparent 60%), 
+        radial-gradient(at 100% 50%, hsla(215,60%,30%,1) 0, transparent 60%), 
+        radial-gradient(at 0% 100%, hsla(180,50%,40%,1) 0, transparent 60%), 
+        radial-gradient(at 50% 100%, hsla(103,50%,45%,1) 0, transparent 60%), 
+        radial-gradient(at 100% 100%, hsla(215,60%,30%,1) 0, transparent 60%);
       background-size: 200% 200%;
       animation: mesh-rotate 15s ease infinite;
       overflow: hidden;
@@ -274,18 +274,30 @@
 
     /* Glassmorphism Card Style */
     .glass-testimonial {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .glass-testimonial:hover {
-      background: rgba(255, 255, 255, 0.95);
-      transform: translateY(-16px) scale(1.02);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.96);
+      transform: translateY(-20px) scale(1.03);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .quote-icon {
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 100px;
+      line-height: 1;
+      font-family: serif;
+      color: rgba(44, 100, 172, 0.08);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .testimonial-element {
@@ -295,18 +307,19 @@
 
     /* Professional Golden Star Rating */
     .star-rating {
-      color: #E2E8F0; /* Default gray */
-      transition: all 0.3s ease;
+      color: rgba(251, 191, 36, 0.3); /* Soft Gold / Amber-400 at 30% opacity */
+      transition: all 0.4s ease;
     }
     .testimonial-card:hover .star-rating {
-      color: #FACC15; /* Golden Yellow */
+      color: rgba(251, 191, 36, 1); /* Full Bright Gold / Amber-400 */
+      transform: scale(1.1);
     }
     
     .testimonial-card .star-rating:nth-child(1) { transition-delay: 0.1s; }
-    .testimonial-card .star-rating:nth-child(2) { transition-delay: 0.2s; }
-    .testimonial-card .star-rating:nth-child(3) { transition-delay: 0.3s; }
-    .testimonial-card .star-rating:nth-child(4) { transition-delay: 0.4s; }
-    .testimonial-card .star-rating:nth-child(5) { transition-delay: 0.5s; }
+    .testimonial-card .star-rating:nth-child(2) { transition-delay: 0.15s; }
+    .testimonial-card .star-rating:nth-child(3) { transition-delay: 0.2s; }
+    .testimonial-card .star-rating:nth-child(4) { transition-delay: 0.25s; }
+    .testimonial-card .star-rating:nth-child(5) { transition-delay: 0.3s; }
   </style>
 </head>
 <body class="bg-white text-ois-text font-sans">
@@ -598,6 +611,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <!-- Testimonial 1 -->
           <div class="testimonial-card glass-testimonial p-8 rounded-2xl relative group overflow-hidden">
+            <div class="quote-icon">"</div>
             <div class="flex items-center mb-6">
               <div class="flex space-x-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
@@ -607,10 +621,10 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
               </div>
             </div>
-            <p class="text-gray-800 text-lg italic mb-8 leading-relaxed font-medium">
+            <p class="text-gray-800 text-lg italic mb-8 leading-relaxed font-medium relative z-10">
               "The teachers at OrchardsWood have been incredible in nurturing our daughter's talents and helping her grow academically and socially. We couldn't be happier with our choice."
             </p>
-            <div class="flex items-center">
+            <div class="flex items-center relative z-10">
               <div class="relative w-14 h-14 mr-4">
                 <img src="assets/images/parent-1.jpg" alt="Parent" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-sm" />
               </div>
@@ -623,6 +637,7 @@
 
           <!-- Testimonial 2 -->
           <div class="testimonial-card glass-testimonial p-8 rounded-2xl relative group overflow-hidden">
+            <div class="quote-icon">"</div>
             <div class="flex items-center mb-6">
               <div class="flex space-x-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
@@ -632,10 +647,10 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
               </div>
             </div>
-            <p class="text-gray-800 text-lg italic mb-8 leading-relaxed font-medium">
+            <p class="text-gray-800 text-lg italic mb-8 leading-relaxed font-medium relative z-10">
               "The facilities and learning environment at OrchardsWood are exceptional. Our twins have developed confidence and leadership skills we never imagined possible at this age."
             </p>
-            <div class="flex items-center">
+            <div class="flex items-center relative z-10">
               <div class="relative w-14 h-14 mr-4">
                 <img src="assets/images/parent-3.jpg" alt="Parent" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-sm" />
               </div>
@@ -648,19 +663,20 @@
 
           <!-- Testimonial 3 -->
           <div class="testimonial-card glass-testimonial p-8 rounded-2xl relative group overflow-hidden">
+            <div class="quote-icon">"</div>
             <div class="flex items-center mb-6">
               <div class="flex space-x-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 0.27l6.91-1.01L12 2z" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 star-rating" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
               </div>
             </div>
-            <p class="text-gray-800 text-lg italic mb-8 leading-relaxed font-medium">
+            <p class="text-gray-800 text-lg italic mb-8 leading-relaxed font-medium relative z-10">
               "OrchardsWood has provided our son with a safe and inspiring place to learn. The Christian values instilled here are truly reflected in the school's community."
             </p>
-            <div class="flex items-center">
+            <div class="flex items-center relative z-10">
               <div class="relative w-14 h-14 mr-4">
                 <img src="assets/images/parent-2.jpg" alt="Parent" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-sm" />
               </div>
@@ -672,7 +688,7 @@
           </div>
         </div>
       </div>
-    </section>ion>
+    </section>
 
   <!-- Upcoming Events Section -->
   <section id="upcoming-events" class="py-16 bg-white">
