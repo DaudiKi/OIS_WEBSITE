@@ -6,7 +6,9 @@
     <meta name="description" content="Apply to OrchardsWood International School - Quality Christian Education in Buziga, Kampala">
     <meta name="keywords" content="OrchardsWood, international school, Christian education, Buziga, application, admission">
     <title>Apply - OrchardsWood International School</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="stylesheet" href="css/output.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -662,11 +664,16 @@
     <div class="container mx-auto px-4 py-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-center flex-1 max-w-[300px]">
-          <img
-            src="assets/icons/oisLogo.png"
-            alt="OrchardsWood International School Logo"
-            class="h-16 w-auto"
-          />
+          <picture>
+            <source srcset="assets/icons/oisLogo.webp" type="image/webp">
+            <img
+              src="assets/icons/oisLogo.png"
+              alt="OrchardsWood International School Logo"
+              class="h-16 w-auto"
+              width="200"
+              height="64"
+            />
+          </picture>
         </div>
         <nav class="hidden md:flex flex-1 justify-center space-x-8">
           <a href="index.html" class="nav-link hover:text-ois-light-blue transition-colors duration-200 font-medium">Home</a>
