@@ -1,0 +1,61 @@
+/* AMS styles */
+
+.ams-sidebar-link {
+  @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-colors;
+}
+
+.ams-sidebar-link.active {
+  background: linear-gradient(135deg, #2c64ac, #63b647);
+  @apply text-white shadow-md;
+}
+
+.ams-card {
+  @apply bg-white rounded-xl shadow-md p-6;
+}
+
+.ams-input {
+  @apply w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-ois-blue bg-white text-gray-900;
+}
+
+.ams-label {
+  @apply block text-sm font-semibold text-gray-700 mb-1;
+}
+
+.ams-btn-primary {
+  @apply px-4 py-2 rounded-lg text-white font-medium transition-all;
+  background: linear-gradient(135deg, #2c64ac, #63b647);
+}
+.ams-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(44, 100, 172, 0.3);
+}
+.ams-btn-primary:disabled {
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.ams-btn-secondary {
+  @apply px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors;
+}
+
+.ams-btn-danger {
+  @apply px-3 py-1.5 rounded-lg text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 transition-colors;
+}
+
+.ams-table {
+  @apply w-full text-sm text-left;
+}
+.ams-table th {
+  @apply px-4 py-3 font-semibold text-gray-500 uppercase text-xs tracking-wider border-b border-gray-200 bg-gray-50;
+}
+.ams-table td {
+  @apply px-4 py-3 border-b border-gray-100 text-gray-700;
+}
+.ams-table tbody tr:hover {
+  @apply bg-blue-50/50;
+}
+
+.ams-badge {
+  @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold;
+}

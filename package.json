@@ -1,25 +1,34 @@
 {
   "name": "ois_website",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tailwindcss -i ./public/css/styles.css -o ./public/css/output.css",
-    "build:css": "tailwindcss -i ./public/css/styles.css -o ./public/css/output.css --watch"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "school",
     "education",
     "website",
-    "tailwindcss",
-    "firebase"
+    "react",
+    "vite",
+    "tailwindcss"
   ],
   "author": "Daudi Kirabo Makumbi Mawejje",
   "license": "ISC",
   "description": "Website for OrchardsWood International School",
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.5",
@@ -27,9 +36,7 @@
     "globals": "^16.1.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
-    "tailwindcss": "^3.4.17"
-  },
-  "dependencies": {
-    "sharp": "^0.34.5"
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.4.11"
   }
 }

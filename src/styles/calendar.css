@@ -1,0 +1,140 @@
+/* Styles specific to the Calendar page, ported from calendar.html and
+   extended for the interactive calendar. */
+
+body {
+  background: #f8fafc;
+  color: #22223b;
+}
+
+.calendar-header {
+  background: linear-gradient(90deg, #63b647 0%, #2c64ac 100%);
+  color: #fff;
+  padding: 2rem 0 1rem 0;
+  text-align: center;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow: 0 4px 24px rgba(44, 100, 172, 0.08);
+}
+
+.calendar-title {
+  font-family: 'Righteous', cursive;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-desc {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 16px rgba(44, 100, 172, 0.08);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-embed {
+  width: 100%;
+  min-height: 700px;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(99, 182, 71, 0.08);
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .calendar-title { font-size: 1.5rem; }
+  .calendar-container { padding: 1rem 0.2rem; }
+  .calendar-embed { min-height: 400px; }
+}
+
+/* Interactive calendar grid */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  width: 100%;
+}
+
+.cal-cell {
+  min-height: 92px;
+  border-radius: 0.5rem;
+  background: #f8fafc;
+  border: 1px solid #eef2f7;
+  padding: 6px;
+  text-align: left;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cal-cell:hover {
+  border-color: #2c64ac;
+  box-shadow: 0 4px 12px rgba(44, 100, 172, 0.12);
+}
+
+.cal-cell.outside {
+  opacity: 0.4;
+}
+
+.cal-cell.today {
+  border-color: #63b647;
+  background: #f2fbee;
+}
+
+.cal-cell.selected {
+  border-color: #2c64ac;
+  background: #eef4fc;
+}
+
+.cal-event-chip {
+  display: block;
+  width: 100%;
+  font-size: 0.65rem;
+  line-height: 1.2;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.cal-tab {
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+.cal-tab.active {
+  background: #2c64ac;
+  color: white;
+  border-color: #2c64ac;
+  box-shadow: 0 4px 15px rgba(44, 100, 172, 0.3);
+}
+
+@media (max-width: 600px) {
+  .cal-cell {
+    min-height: 56px;
+    padding: 3px;
+  }
+  .cal-event-chip {
+    display: none;
+  }
+  .cal-cell .cal-dot {
+    display: inline-block;
+  }
+}
+
+.cal-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  display: none;
+}
