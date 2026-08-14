@@ -26,7 +26,7 @@ export default function Grades() {
   useEffect(refresh, []);
 
   const studentNames = useMemo(
-    () => Object.fromEntries(students.map((s) => [s.id, `${s.firstName} ${s.lastName}`])),
+    () => Object.fromEntries(students.map((s) => [s.id, `${s.studentNumber} — ${s.firstName} ${s.lastName}`])),
     [students]
   );
 
@@ -68,7 +68,7 @@ export default function Grades() {
           <option value="">All students</option>
           {filterOptions.map((student) => (
             <option key={student.id} value={student.id}>
-              {student.firstName} {student.lastName}
+              {student.studentNumber} — {student.firstName} {student.lastName}
             </option>
           ))}
         </select>
@@ -138,7 +138,7 @@ export default function Grades() {
                 <option value="">Select student…</option>
                 {students.map((student) => (
                   <option key={student.id} value={student.id}>
-                    {student.firstName} {student.lastName}
+                    {student.studentNumber} — {student.firstName} {student.lastName}
                   </option>
                 ))}
               </select>

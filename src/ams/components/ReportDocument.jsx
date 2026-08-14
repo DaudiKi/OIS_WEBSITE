@@ -94,9 +94,17 @@ export default function ReportDocument({ report, student, term, school, supervis
       {/* ------------------------- Page 1: academic ------------------------ */}
       <PageFrame school={school} student={student}>
         <dl className="rc-fields">
-          <div className="rc-field">
-            <dt>Student:</dt>
-            <dd className="rc-underline">{`${student.firstName} ${student.lastName}`}</dd>
+          {/* Name and number share a line: the A4 sheet is a fixed height and
+              an extra full row would push content onto the second page. */}
+          <div className="rc-field rc-field-row">
+            <span>
+              <dt>Student:</dt>
+              <dd className="rc-underline">{`${student.firstName} ${student.lastName}`}</dd>
+            </span>
+            <span>
+              <dt>No:</dt>
+              <dd className="rc-underline rc-narrow">{student.studentNumber || '—'}</dd>
+            </span>
           </div>
           <div className="rc-field">
             <dt>Teachers:</dt>

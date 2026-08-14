@@ -194,6 +194,7 @@ export default function Reports() {
                   <tr key={report.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 font-medium text-gray-800">
                       {student.firstName} {student.lastName}
+                      <span className="block font-mono text-xs text-gray-400">{student.studentNumber}</span>
                     </td>
                     <td className="px-4 py-3 text-gray-500">{klass?.name || '—'}</td>
                     <td className="px-4 py-3 text-center tabular-nums">{computed.pacesCompleted}</td>

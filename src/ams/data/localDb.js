@@ -53,12 +53,12 @@ async function buildSeed() {
   ];
 
   const students = [
-    { id: 'std-1', firstName: 'Anna', lastName: 'Nakato', gender: 'Female', dob: '2019-03-14', classId: 'cls-2', parentName: 'Sarah Nakimuli', parentPhone: '+256701111111', parentEmail: 'sarah@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
-    { id: 'std-2', firstName: 'Brian', lastName: 'Okello', gender: 'Male', dob: '2018-07-02', classId: 'cls-3', parentName: 'James Okello', parentPhone: '+256702222222', parentEmail: 'james@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
-    { id: 'std-3', firstName: 'Cathy', lastName: 'Namuli', gender: 'Female', dob: '2014-01-25', classId: 'cls-4', parentName: 'Grace Namugwanya', parentPhone: '+256703333333', parentEmail: 'grace@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
-    { id: 'std-4', firstName: 'David', lastName: 'Kizito', gender: 'Male', dob: '2010-11-09', classId: 'cls-5', parentName: 'Michael Kizito', parentPhone: '+256704444444', parentEmail: 'michael@example.com', status: 'active', photo: '', icceLevel: 'General', admittedAt: now },
-    { id: 'std-5', firstName: 'Esther', lastName: 'Namatovu', gender: 'Female', dob: '2010-05-19', classId: 'cls-5', parentName: 'Ruth Namatovu', parentPhone: '+256705555555', parentEmail: 'ruth@example.com', status: 'active', photo: '', icceLevel: 'General', admittedAt: now },
-    { id: 'std-6', firstName: 'Frank', lastName: 'Mugisha', gender: 'Male', dob: '2014-09-30', classId: 'cls-4', parentName: 'Paul Mugisha', parentPhone: '+256706666666', parentEmail: 'paul@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
+    { id: 'std-1', studentNumber: 'OIS0001', firstName: 'Anna', lastName: 'Nakato', gender: 'Female', dob: '2019-03-14', classId: 'cls-2', parentName: 'Sarah Nakimuli', parentPhone: '+256701111111', parentEmail: 'sarah@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
+    { id: 'std-2', studentNumber: 'OIS0002', firstName: 'Brian', lastName: 'Okello', gender: 'Male', dob: '2018-07-02', classId: 'cls-3', parentName: 'James Okello', parentPhone: '+256702222222', parentEmail: 'james@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
+    { id: 'std-3', studentNumber: 'OIS0003', firstName: 'Cathy', lastName: 'Namuli', gender: 'Female', dob: '2014-01-25', classId: 'cls-4', parentName: 'Grace Namugwanya', parentPhone: '+256703333333', parentEmail: 'grace@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
+    { id: 'std-4', studentNumber: 'OIS0004', firstName: 'David', lastName: 'Kizito', gender: 'Male', dob: '2010-11-09', classId: 'cls-5', parentName: 'Michael Kizito', parentPhone: '+256704444444', parentEmail: 'michael@example.com', status: 'active', photo: '', icceLevel: 'General', admittedAt: now },
+    { id: 'std-5', studentNumber: 'OIS0005', firstName: 'Esther', lastName: 'Namatovu', gender: 'Female', dob: '2010-05-19', classId: 'cls-5', parentName: 'Ruth Namatovu', parentPhone: '+256705555555', parentEmail: 'ruth@example.com', status: 'active', photo: '', icceLevel: 'General', admittedAt: now },
+    { id: 'std-6', studentNumber: 'OIS0006', firstName: 'Frank', lastName: 'Mugisha', gender: 'Male', dob: '2014-09-30', classId: 'cls-4', parentName: 'Paul Mugisha', parentPhone: '+256706666666', parentEmail: 'paul@example.com', status: 'active', photo: '', icceLevel: '', admittedAt: now },
   ];
 
   const grades = [

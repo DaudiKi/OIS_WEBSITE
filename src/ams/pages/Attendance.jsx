@@ -164,6 +164,7 @@ export default function Attendance() {
                 <tr key={student.id}>
                   <td className="font-semibold text-gray-800">
                     {student.firstName} {student.lastName}
+                    <span className="block font-mono text-xs text-gray-400">{student.studentNumber}</span>
                   </td>
                   <td>
                     <div className="flex flex-wrap gap-2">

@@ -219,6 +219,64 @@ alter table public.students add column if not exists photo text default '';
 alter table public.students add column if not exists "icceLevel" text default '';
 alter table public.classes  add column if not exists "supervisorIds" text[] default array[]::text[];
 
+-- Student numbers -------------------------------------------------------------
+-- The human-readable identifier (OIS0001, OIS0002, ...) staff and families
+-- actually use: printed on the report card, and what an administrator types to
+-- pull up a pupil.
+--
+-- Deliberately not the primary key. grades, attendance, reports and profiles
+-- all reference students.id, and a student number occasionally has to be
+-- corrected; letting that cascade through every academic record is a risk the
+-- school should never have to think about. It is unique and indexed, so a
+-- lookup by number is a single index hit either way.
+
+alter table public.students add column if not exists "studentNumber" text;
+
+create sequence if not exists public.student_number_seq as bigint start with 1 owned by none;
+
+create or replace function public.assign_student_number()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  if new."studentNumber" is null or btrim(new."studentNumber") = '' then
+    -- lpad to 4 for the school's current size; past OIS9999 it simply grows.
+    new."studentNumber" := 'OIS' || lpad(nextval('public.student_number_seq')::text, 4, '0');
+  else
+    new."studentNumber" := upper(btrim(new."studentNumber"));
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists students_assign_number on public.students;
+create trigger students_assign_number
+  before insert on public.students
+  for each row execute function public.assign_student_number();
+
+-- Backfill anyone predating the column, oldest admission first, so numbers
+-- follow the order pupils actually joined the school.
+do $$
+declare s record;
+begin
+  for s in select id from public.students where "studentNumber" is null or btrim("studentNumber") = ''
+           order by "admittedAt", "createdAt" loop
+    update public.students
+       set "studentNumber" = 'OIS' || lpad(nextval('public.student_number_seq')::text, 4, '0')
+     where id = s.id;
+  end loop;
+end $$;
+
+alter table public.students alter column "studentNumber" set not null;
+
+create unique index if not exists students_student_number_key
+  on public.students ("studentNumber");
+
+-- Numbers are issued inside a SECURITY DEFINER trigger, so callers never touch
+-- the sequence directly and need no privileges on it.
+revoke usage, select on sequence public.student_number_seq from public, anon, authenticated;
+
 create table if not exists public.terms (
   id text primary key default ('trm-' || substr(md5(random()::text), 1, 10)),
   name text not null,

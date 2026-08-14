@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { listStudents, saveStudent, deleteStudent, listClasses } from '../data/api.js';
+import { listStudents, saveStudent, deleteStudent, listClasses, getStudentDossier } from '../data/api.js';
 import { Modal, EmptyState, Badge, Spinner } from '../components/ui.jsx';
 import { useAuth } from '../AuthContext.jsx';
 import { ICCE_LEVELS } from '../data/icce.js';
+import StudentDossier from '../components/StudentDossier.jsx';
 
 const EMPTY_STUDENT = {
   firstName: '',
@@ -53,6 +54,8 @@ export default function Students() {
   const [classFilter, setClassFilter] = useState('');
   const [editing, setEditing] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [viewingId, setViewingId] = useState(null);
+  const [dossier, setDossier] = useState(null);
 
   const canEdit = user?.role === 'admin' || user?.role === 'teacher';
 
@@ -65,18 +68,49 @@ export default function Students() {
 
   useEffect(refresh, []);
 
+  useEffect(() => {
+    if (!viewingId) {
+      setDossier(null);
+      return;
+    }
+    let cancelled = false;
+    setDossier(null);
+    getStudentDossier(viewingId).then((result) => {
+      if (!cancelled) setDossier(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [viewingId]);
+
   const classNames = useMemo(() => Object.fromEntries(classes.map((c) => [c.id, c.name])), [classes]);
 
+  // Staff search by student number as often as by name, and may type it loosely
+  // — "ois0001", "OIS 0001", "ois-0001". Stripping separators and folding case
+  // on both sides lets all of those find the pupil. Partial numbers narrow the
+  // list as you type ("001" keeps every number containing it); typing a number
+  // in full opens that pupil outright, which the effect below handles.
   const filtered = useMemo(() => {
     if (!students) return [];
+    const term = query.trim().toLowerCase();
+    const compact = term.replace(/[\s/-]/g, '');
+
     return students.filter((student) => {
+      if (classFilter && student.classId !== classFilter) return false;
+      if (!term) return true;
       const name = `${student.firstName} ${student.lastName}`.toLowerCase();
-      return (
-        (!query || name.includes(query.toLowerCase())) &&
-        (!classFilter || student.classId === classFilter)
-      );
+      return name.includes(term) || (student.studentNumber || '').toLowerCase().includes(compact);
     });
   }, [students, query, classFilter]);
+
+  // An exact student-number match opens the pupil straight away, which is the
+  // whole point of the number: type it, see everything.
+  useEffect(() => {
+    const compact = query.trim().toUpperCase().replace(/[\s/-]/g, '');
+    if (!compact || !students) return;
+    const exact = students.find((s) => (s.studentNumber || '').toUpperCase() === compact);
+    if (exact) setViewingId(exact.id);
+  }, [query, students]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -116,7 +150,7 @@ export default function Students() {
         <div className="flex flex-col sm:flex-row gap-3 flex-1">
           <input
             className="ams-input sm:max-w-xs"
-            placeholder="Search students…"
+            placeholder="Student number or name…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -143,6 +177,7 @@ export default function Students() {
           <table className="ams-table">
             <thead>
               <tr>
+                <th>Student No.</th>
                 <th>Name</th>
                 <th>Class</th>
                 <th>Gender</th>
@@ -155,8 +190,19 @@ export default function Students() {
             <tbody>
               {filtered.map((student) => (
                 <tr key={student.id}>
+                  <td>
+                    <span className="font-mono text-sm font-semibold text-ois-blue">
+                      {student.studentNumber || '—'}
+                    </span>
+                  </td>
                   <td className="font-semibold text-gray-800">
-                    {student.firstName} {student.lastName}
+                    <button
+                      type="button"
+                      className="hover:underline text-left"
+                      onClick={() => setViewingId(student.id)}
+                    >
+                      {student.firstName} {student.lastName}
+                    </button>
                   </td>
                   <td>{classNames[student.classId] || '—'}</td>
                   <td>{student.gender || '—'}</td>
@@ -170,6 +216,9 @@ export default function Students() {
                   </td>
                   {canEdit && (
                     <td className="whitespace-nowrap">
+                      <button className="text-ois-blue text-sm font-semibold hover:underline mr-3" onClick={() => setViewingId(student.id)}>
+                        View
+                      </button>
                       <button className="text-ois-blue text-sm font-semibold hover:underline mr-3" onClick={() => setEditing({ ...student })}>
                         Edit
                       </button>
@@ -185,9 +234,36 @@ export default function Students() {
         )}
       </div>
 
+      {viewingId && (
+        <Modal
+          title={dossier ? `${dossier.student.studentNumber} — ${dossier.student.firstName} ${dossier.student.lastName}` : 'Student record'}
+          onClose={() => setViewingId(null)}
+          wide
+        >
+          {dossier ? (
+            <StudentDossier
+              dossier={dossier}
+              onEdit={canEdit ? () => { setEditing({ ...dossier.student }); setViewingId(null); } : null}
+            />
+          ) : (
+            <Spinner />
+          )}
+        </Modal>
+      )}
+
       {editing && (
         <Modal title={editing.id ? 'Edit Student' : 'Add Student'} onClose={() => setEditing(null)} wide>
           <form onSubmit={submit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="sm:col-span-2">
+              <label className="ams-label">Student Number</label>
+              <div className="ams-input bg-gray-50 font-mono text-gray-600">
+                {editing.studentNumber || 'Assigned automatically on save'}
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                The school issues this number once and it stays with the pupil for life. It is
+                printed on the report card and is what staff type to look them up.
+              </p>
+            </div>
             <div>
               <label className="ams-label">First Name</label>
               <input required className="ams-input" value={editing.firstName} onChange={set('firstName')} />

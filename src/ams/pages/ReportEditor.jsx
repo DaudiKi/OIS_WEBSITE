@@ -230,7 +230,8 @@ export default function ReportEditor() {
               {student.firstName} {student.lastName}
             </h2>
             <p className="text-sm text-gray-500">
-              {term?.name} {term?.year} · {statusMeta?.description}
+              <span className="font-mono">{student.studentNumber}</span> · {term?.name} {term?.year} ·{' '}
+              {statusMeta?.description}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">

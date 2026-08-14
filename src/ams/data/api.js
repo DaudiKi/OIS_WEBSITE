@@ -141,6 +141,16 @@ async function listLocal(collection) {
   return [...(db[collection] || [])];
 }
 
+// Demo-mode counterpart of the database's assign_student_number trigger, so a
+// student added offline gets the same OIS0001-style number.
+export function nextStudentNumber(students) {
+  const highest = students.reduce((max, student) => {
+    const digits = /^OIS(\d+)$/i.exec((student.studentNumber || '').trim());
+    return digits ? Math.max(max, Number(digits[1])) : max;
+  }, 0);
+  return `OIS${String(highest + 1).padStart(4, '0')}`;
+}
+
 async function saveLocal(collection, prefix, record) {
   return mutate((db) => {
     const items = db[collection];
@@ -152,6 +162,9 @@ async function saveLocal(collection, prefix, record) {
       }
     }
     const created = { ...record, id: record.id || newId(prefix), createdAt: record.createdAt || new Date().toISOString() };
+    if (collection === 'students') {
+      created.studentNumber = (created.studentNumber || '').trim().toUpperCase() || nextStudentNumber(items);
+    }
     items.push(created);
     return created;
   });
@@ -368,6 +381,59 @@ export async function listReportsForUser(user, { termId } = {}) {
   // Families only ever see published reports, and only their own.
   const own = user.role === 'student' ? [user.studentId] : user.childIds || [];
   return all.filter((r) => own.includes(r.studentId) && r.status === 'published');
+}
+
+/* --------------------------- Student lookup ------------------------------ */
+
+/** Find one student by the number staff actually type, e.g. OIS0001. */
+export async function findStudentByNumber(number) {
+  const wanted = String(number || '').trim().toUpperCase();
+  if (!wanted) return null;
+  const students = await listStudents();
+  return students.find((s) => (s.studentNumber || '').toUpperCase() === wanted) || null;
+}
+
+/**
+ * Everything the school holds on one pupil, gathered for the student-number
+ * lookup: their class, their teacher, and their academic record.
+ */
+export async function getStudentDossier(studentId) {
+  const [students, classes, teachers, grades, terms, reports, attendance] = await Promise.all([
+    listStudents(),
+    listClasses(),
+    listTeachers(),
+    listGrades(),
+    listTerms(),
+    listReports({ studentId }),
+    listAttendance(),
+  ]);
+
+  const student = students.find((s) => s.id === studentId);
+  if (!student) return null;
+
+  const studentClass = classes.find((c) => c.id === student.classId) || null;
+  const mine = attendance.filter((a) => a.studentId === studentId);
+  const present = mine.filter((a) => a.status === 'present' || a.status === 'late').length;
+
+  return {
+    student,
+    studentClass,
+    teacher: studentClass ? teachers.find((t) => t.id === studentClass.teacherId) || null : null,
+    grades: grades
+      .filter((g) => g.studentId === studentId)
+      .sort((a, b) => String(b.recordedAt || '').localeCompare(String(a.recordedAt || ''))),
+    reports: reports
+      .map((r) => ({ ...r, term: terms.find((t) => t.id === r.termId) || null }))
+      .sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || ''))),
+    attendance: {
+      total: mine.length,
+      present,
+      absent: mine.filter((a) => a.status === 'absent').length,
+      late: mine.filter((a) => a.status === 'late').length,
+      excused: mine.filter((a) => a.status === 'excused').length,
+      rate: mine.length ? Math.round((present / mine.length) * 100) : null,
+    },
+  };
 }
 
 /* ------------------------- Public site helpers -------------------------- */
