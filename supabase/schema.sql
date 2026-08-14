@@ -356,6 +356,18 @@ begin
 end;
 $$;
 
+-- Bootstrapping the first administrator ---------------------------------------
+-- Signups with role 'teacher' or 'admin' start as 'pending', and promoting a
+-- profile requires an already-active admin. On a fresh project nobody can
+-- approve the first one, so it has to be made active here. Sign up through the
+-- app first, then run this once with that address:
+--
+--   update public.profiles
+--      set role = 'admin', status = 'active'
+--    where email = 'you@example.com';
+--
+-- Every later teacher and admin is approved from inside the AMS.
+
 -- Function privileges ---------------------------------------------------------
 -- Postgres grants EXECUTE on new functions to the PUBLIC pseudo-role, which
 -- exposes them at /rest/v1/rpc/<name>. Revoking from anon/authenticated alone
