@@ -133,6 +133,20 @@ export function createAdapter(config) {
       return rows?.[0];
     },
 
+    // Insert without reading the row back. Anonymous visitors may submit an
+    // admissions application but may not select from the table, and PostgREST
+    // applies the SELECT policy to the representation it returns — so asking
+    // for one turns a legitimate insert into an RLS failure.
+    async insertOnly(table, record) {
+      const { id, ...insert } = record;
+      await request(`${restUrl}/${table}`, {
+        method: 'POST',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify(insert),
+      });
+      return true;
+    },
+
     async update(table, id, patch) {
       const rows = await request(`${restUrl}/${table}?id=eq.${id}`, {
         method: 'PATCH',

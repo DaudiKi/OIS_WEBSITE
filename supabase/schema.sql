@@ -356,6 +356,28 @@ begin
 end;
 $$;
 
+-- Function privileges ---------------------------------------------------------
+-- Postgres grants EXECUTE on new functions to the PUBLIC pseudo-role, which
+-- exposes them at /rest/v1/rpc/<name>. Revoking from anon/authenticated alone
+-- does nothing while that inherited PUBLIC grant remains, so revoke from
+-- PUBLIC and grant back only what each role genuinely needs.
+
+-- A trigger function has no business being callable over REST. EXECUTE is
+-- checked at CREATE TRIGGER time rather than on each fire, so signup still works.
+revoke execute on function public.handle_new_user() from public, anon, authenticated;
+
+-- The report lifecycle belongs to signed-in staff. transition_report also
+-- checks is_staff() internally; this additionally removes it from the
+-- anonymous API surface instead of relying on that check alone.
+revoke execute on function public.transition_report(text, text, text, text) from public, anon, authenticated;
+grant execute on function public.transition_report(text, text, text, text) to authenticated;
+
+-- public.is_staff() deliberately keeps its PUBLIC grant. The "for all" staff
+-- write policies on events and gallery_items evaluate their USING clause even
+-- for anonymous visitors, so revoking it would break the public website feeds.
+-- It discloses nothing: it reads only the caller's own profile row and returns
+-- a boolean.
+
 -- Seed the default ICCE grading scale (Handbook Africa 2021 Rev 0W, p.39).
 insert into public.settings (id, value) values ('school', jsonb_build_object(
   'school', jsonb_build_object(

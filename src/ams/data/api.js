@@ -380,6 +380,10 @@ export async function submitApplication(form) {
     status: 'new',
     submittedAt: new Date().toISOString(),
   };
+  // The visitor submitting this is anonymous and cannot read applications back,
+  // so insert without requesting the created row. Going through the generic
+  // save() would ask for a representation and fail the staff-only read policy.
+  if (!isDemoMode()) return (await remote()).insertOnly(COLLECTIONS.applications, record);
   return saveApplication(record);
 }
 
