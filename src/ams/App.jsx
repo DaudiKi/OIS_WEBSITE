@@ -15,6 +15,10 @@ import Announcements from './pages/Announcements.jsx';
 import Applications from './pages/Applications.jsx';
 import GalleryAdmin from './pages/GalleryAdmin.jsx';
 import Users from './pages/Users.jsx';
+import Reports from './pages/Reports.jsx';
+import ReportEditor from './pages/ReportEditor.jsx';
+import ReportCardView from './pages/ReportCardView.jsx';
+import Settings from './pages/Settings.jsx';
 
 function Protected({ roles, title, children }) {
   const { user, loading } = useAuth();
@@ -66,6 +70,10 @@ export default function App() {
           <Route path="/calendar" element={<Protected title="School Calendar"><AmsCalendar /></Protected>} />
           <Route path="/announcements" element={<Protected title="Announcements"><Announcements /></Protected>} />
           <Route path="/applications" element={<Protected roles={['admin']} title="Admission Applications"><Applications /></Protected>} />
+          <Route path="/reports" element={<Protected title="Report Cards"><Reports /></Protected>} />
+          <Route path="/reports/:id" element={<Protected roles={['admin', 'teacher']} title="Report Card"><ReportEditor /></Protected>} />
+          <Route path="/reports/:id/card" element={<Protected title="Report Card"><ReportCardView /></Protected>} />
+          <Route path="/settings" element={<Protected roles={['admin']} title="School Settings"><Settings /></Protected>} />
           <Route path="/gallery" element={<Protected roles={['admin', 'teacher']} title="Gallery Manager"><GalleryAdmin /></Protected>} />
           <Route path="/users" element={<Protected roles={['admin']} title="User Accounts"><Users /></Protected>} />
 

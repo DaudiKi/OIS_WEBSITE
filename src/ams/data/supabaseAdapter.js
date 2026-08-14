@@ -165,5 +165,55 @@ export function createAdapter(config) {
       }
       return true;
     },
+
+    /* School settings — a single row keyed 'school'. */
+    async getSettings() {
+      const rows = await request(`${restUrl}/settings?id=eq.school&select=*`);
+      return rows?.[0]?.value || null;
+    },
+
+    async saveSettings(patch) {
+      const current = (await request(`${restUrl}/settings?id=eq.school&select=*`))?.[0]?.value || {};
+      const value = { ...current, ...patch };
+      await request(`${restUrl}/settings`, {
+        method: 'POST',
+        headers: { Prefer: 'resolution=merge-duplicates' },
+        body: JSON.stringify({ id: 'school', value }),
+      });
+      return value;
+    },
+
+    /* Report cards */
+    async listReports({ termId, studentId } = {}) {
+      const filters = ['select=*'];
+      if (termId) filters.push(`termId=eq.${termId}`);
+      if (studentId) filters.push(`studentId=eq.${studentId}`);
+      // Row-level security in schema.sql decides which rows come back: staff
+      // see their classes, families only their own published reports.
+      return (await request(`${restUrl}/reports?${filters.join('&')}`)) || [];
+    },
+
+    async getReport(id) {
+      const rows = await request(`${restUrl}/reports?id=eq.${id}&select=*`);
+      return rows?.[0] || null;
+    },
+
+    async saveReport(record) {
+      return this.save('reports', record);
+    },
+
+    async deleteReport(id) {
+      return this.remove('reports', id);
+    },
+
+    async transitionReport(id, action, { actor, note } = {}) {
+      // Runs server-side so the state machine and audit trail cannot be
+      // bypassed by a modified client.
+      const rows = await request(`${restUrl}/rpc/transition_report`, {
+        method: 'POST',
+        body: JSON.stringify({ report_id: id, action, actor: actor || null, note: note || null }),
+      });
+      return Array.isArray(rows) ? rows[0] : rows;
+    },
   };
 }

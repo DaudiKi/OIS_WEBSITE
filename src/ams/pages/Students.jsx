@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { listStudents, saveStudent, deleteStudent, listClasses } from '../data/api.js';
 import { Modal, EmptyState, Badge, Spinner } from '../components/ui.jsx';
 import { useAuth } from '../AuthContext.jsx';
+import { ICCE_LEVELS } from '../data/icce.js';
 
 const EMPTY_STUDENT = {
   firstName: '',
@@ -13,7 +14,36 @@ const EMPTY_STUDENT = {
   parentPhone: '',
   parentEmail: '',
   status: 'active',
+  photo: '',
+  icceLevel: '',
 };
+
+// Report-card photos are stored inline with the student record, so they are
+// downscaled to a passport-sized JPEG first — a phone photo would otherwise
+// be several megabytes.
+const PHOTO_MAX_W = 400;
+const PHOTO_MAX_H = 480;
+
+function resizePhoto(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Could not read that image.'));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('That file is not a readable image.'));
+      img.onload = () => {
+        const ratio = Math.min(PHOTO_MAX_W / img.width, PHOTO_MAX_H / img.height, 1);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * ratio);
+        canvas.height = Math.round(img.height * ratio);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.82));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 export default function Students() {
   const { user } = useAuth();
@@ -69,6 +99,16 @@ export default function Students() {
   if (!students) return <Spinner />;
 
   const set = (key) => (e) => setEditing((prev) => ({ ...prev, [key]: e.target.value }));
+
+  const handlePhoto = async (file) => {
+    if (!file) return;
+    try {
+      const photo = await resizePhoto(file);
+      setEditing((prev) => ({ ...prev, photo }));
+    } catch (err) {
+      window.alert(err.message);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -198,6 +238,48 @@ export default function Students() {
             <div className="sm:col-span-2">
               <label className="ams-label">Parent Email</label>
               <input type="email" className="ams-input" value={editing.parentEmail} onChange={set('parentEmail')} />
+            </div>
+            <div>
+              <label className="ams-label">ICCE enrolment</label>
+              <select className="ams-input" value={editing.icceLevel || ''} onChange={set('icceLevel')}>
+                {ICCE_LEVELS.map((level) => (
+                  <option key={level.value} value={level.value}>
+                    {level.label}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-gray-400 mt-1">
+                ICCE students get the moderation notice printed on their report card.
+              </p>
+            </div>
+            <div>
+              <label className="ams-label">Photo for the report card</label>
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-16 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                  {editing.photo ? (
+                    <img src={editing.photo} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-gray-400 text-xs">None</span>
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="text-sm w-full"
+                    onChange={(e) => handlePhoto(e.target.files?.[0])}
+                  />
+                  {editing.photo && (
+                    <button
+                      type="button"
+                      className="text-xs text-red-600 hover:underline mt-1"
+                      onClick={() => setEditing((prev) => ({ ...prev, photo: '' }))}
+                    >
+                      Remove photo
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="sm:col-span-2 flex justify-end gap-3 mt-2">
               <button type="button" className="ams-btn-secondary" onClick={() => setEditing(null)}>

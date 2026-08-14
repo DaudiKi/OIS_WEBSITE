@@ -209,3 +209,172 @@ create policy "applications_public_insert" on public.applications for insert wit
 create policy "applications_staff_read" on public.applications for select using (public.is_staff());
 create policy "applications_staff_update" on public.applications for update using (public.is_staff());
 create policy "applications_staff_delete" on public.applications for delete using (public.is_staff());
+
+-- ===========================================================================
+-- ICCE report cards
+-- ===========================================================================
+
+-- Columns the report card needs on existing tables. Safe to re-run.
+alter table public.students add column if not exists photo text default '';
+alter table public.students add column if not exists "icceLevel" text default '';
+alter table public.classes  add column if not exists "supervisorIds" text[] default array[]::text[];
+
+create table if not exists public.terms (
+  id text primary key default ('trm-' || substr(md5(random()::text), 1, 10)),
+  name text not null,
+  number int,
+  year int not null,
+  "startDate" date,
+  "endDate" date,
+  status text not null default 'planned',   -- planned | open | closed
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.settings (
+  id text primary key,
+  value jsonb not null default '{}'::jsonb,
+  "updatedAt" timestamptz not null default now()
+);
+
+create table if not exists public.reports (
+  id text primary key default ('rpt-' || substr(md5(random()::text), 1, 10)),
+  "studentId" text not null references public.students(id) on delete cascade,
+  "termId" text not null references public.terms(id) on delete cascade,
+  status text not null default 'draft',     -- draft|submitted|returned|verified|published
+  subjects jsonb not null default '[]'::jsonb,   -- [{ name, scores: [number] }]
+  traits jsonb not null default '{}'::jsonb,
+  "bibleMemory" jsonb not null default '[]'::jsonb,
+  comments text default '',
+  attendance jsonb default '{}'::jsonb,
+  "returnNote" text,
+  history jsonb not null default '[]'::jsonb,
+  "submittedAt" timestamptz,
+  "verifiedAt" timestamptz,
+  "publishedAt" timestamptz,
+  "returnedAt" timestamptz,
+  "submittedBy" text,
+  "verifiedBy" text,
+  "createdAt" timestamptz not null default now(),
+  "updatedAt" timestamptz,
+  unique ("studentId", "termId")
+);
+
+alter table public.terms enable row level security;
+alter table public.settings enable row level security;
+alter table public.reports enable row level security;
+
+-- Terms and settings: everyone signed in can read, staff can change.
+create policy "terms_read" on public.terms for select using (auth.role() = 'authenticated');
+create policy "terms_write" on public.terms for all using (public.is_staff()) with check (public.is_staff());
+create policy "settings_read" on public.settings for select using (auth.role() = 'authenticated');
+create policy "settings_write" on public.settings for all using (public.is_staff()) with check (public.is_staff());
+
+-- Reports: staff see everything; a family sees only PUBLISHED reports
+-- belonging to their own children. This is enforced in the database, so a
+-- modified client cannot reach another family's records.
+create policy "reports_staff_read" on public.reports for select using (public.is_staff());
+
+create policy "reports_family_read" on public.reports for select using (
+  status = 'published'
+  and exists (
+    select 1 from public.profiles p
+    where p.id = auth.uid()
+      and (
+        p."studentId" = public.reports."studentId"
+        or public.reports."studentId" = any (coalesce(p."childIds", array[]::text[]))
+      )
+  )
+);
+
+create policy "reports_staff_write" on public.reports for all
+  using (public.is_staff()) with check (public.is_staff());
+
+-- The report lifecycle runs server-side so the allowed transitions and the
+-- audit trail cannot be bypassed from the browser.
+create or replace function public.transition_report(
+  report_id text,
+  action text,
+  actor text default null,
+  note text default null
+) returns public.reports
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  r public.reports;
+  next_status text;
+  allowed text[];
+begin
+  if not public.is_staff() then
+    raise exception 'Only school staff may change a report''s status.';
+  end if;
+
+  select * into r from public.reports where id = report_id for update;
+  if not found then
+    raise exception 'Report not found.';
+  end if;
+
+  case action
+    when 'submit'    then next_status := 'submitted'; allowed := array['draft', 'returned'];
+    when 'return'    then next_status := 'returned';  allowed := array['submitted', 'verified'];
+    when 'verify'    then next_status := 'verified';  allowed := array['submitted'];
+    when 'publish'   then next_status := 'published'; allowed := array['verified'];
+    when 'unpublish' then next_status := 'verified';  allowed := array['published'];
+    else raise exception 'Unknown report action: %', action;
+  end case;
+
+  if not (r.status = any (allowed)) then
+    raise exception 'A report that is "%" cannot be %ed.', r.status, action;
+  end if;
+
+  -- Verifying and publishing are the administrator's alone.
+  if action in ('verify', 'publish', 'unpublish') and not exists (
+    select 1 from public.profiles p
+    where p.id = auth.uid() and p.role = 'admin' and p.status = 'active'
+  ) then
+    raise exception 'Only an administrator may % a report.', action;
+  end if;
+
+  update public.reports set
+    status = next_status,
+    "submittedAt"  = case when action = 'submit'  then now() else "submittedAt"  end,
+    "returnedAt"   = case when action = 'return'  then now() else "returnedAt"   end,
+    "verifiedAt"   = case when action = 'verify'  then now() else "verifiedAt"   end,
+    "publishedAt"  = case when action = 'publish' then now() else "publishedAt"  end,
+    "returnNote"   = case when action = 'return'  then note  else "returnNote"   end,
+    "submittedBy"  = case when action = 'submit'  then auth.uid()::text else "submittedBy" end,
+    "verifiedBy"   = case when action = 'verify'  then auth.uid()::text else "verifiedBy"  end,
+    history = history || jsonb_build_object(
+      'at', now(), 'by', coalesce(actor, 'Unknown'), 'action', action, 'note', coalesce(note, '')
+    ),
+    "updatedAt" = now()
+  where id = report_id
+  returning * into r;
+
+  return r;
+end;
+$$;
+
+-- Seed the default ICCE grading scale (Handbook Africa 2021 Rev 0W, p.39).
+insert into public.settings (id, value) values ('school', jsonb_build_object(
+  'school', jsonb_build_object(
+    'name', 'OrchardsWood International School',
+    'address', 'Wavamunno Rd., Kampala, Uganda',
+    'email', 'orchardswoodis@gmail.com',
+    'phone', '+256 780394344',
+    'website', 'www.ois.ug',
+    'motto', 'Equipping this generation for Life'
+  ),
+  'gradeScale', jsonb_build_array(
+    jsonb_build_object('grade', 'A*', 'min', 98, 'max', 100),
+    jsonb_build_object('grade', 'A',  'min', 96, 'max', 97.99),
+    jsonb_build_object('grade', 'B',  'min', 92, 'max', 95.99),
+    jsonb_build_object('grade', 'C',  'min', 88, 'max', 91.99),
+    jsonb_build_object('grade', 'D',  'min', 84, 'max', 87.99),
+    jsonb_build_object('grade', 'E',  'min', 80, 'max', 83.99)
+  ),
+  'subjects', jsonb_build_array(
+    'Maths', 'English', 'Science', 'Social Studies', 'Word Building', 'Literature', 'Bible Reading'
+  )
+)) on conflict (id) do nothing;
