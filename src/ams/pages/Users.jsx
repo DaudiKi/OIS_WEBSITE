@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { listUsers, updateUser, deleteUser, resetDemoData, isDemoMode } from '../data/api.js';
+import { listUsers, updateUser, deleteUser, resetDemoData, isDemoMode, adminSetPassword } from '../data/api.js';
 import { EmptyState, Badge, Spinner } from '../components/ui.jsx';
 import { useAuth } from '../AuthContext.jsx';
+import CreateAccountModal from '../components/CreateAccountModal.jsx';
 
 export default function Users() {
   const { user: me } = useAuth();
   const [users, setUsers] = useState(null);
+  const [creating, setCreating] = useState(false);
 
   const refresh = () => listUsers().then(setUsers);
   useEffect(() => {
@@ -15,6 +17,19 @@ export default function Users() {
   const setStatus = async (target, status) => {
     await updateUser(target.id, { status });
     refresh();
+  };
+
+  const resetPassword = async (target) => {
+    const next = window.prompt(
+      `Set a new password for ${target.name}. They can change it after signing in.`
+    );
+    if (next === null) return;
+    try {
+      await adminSetPassword(target.id, next.trim());
+      window.alert(`Password updated for ${target.name}.`);
+    } catch (err) {
+      window.alert(err.message || 'Could not reset that password.');
+    }
   };
 
   const remove = async (target) => {
@@ -35,14 +50,19 @@ export default function Users() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <p className="text-sm text-gray-500 max-w-xl">
-          Approve pending staff signups and manage portal accounts. Teacher and admin registrations require approval
-          before they can sign in.
+          Every AMS login is created here — there is no public signup, so only people the school adds
+          can reach the portal. Students sign in with their student number.
         </p>
-        {isDemoMode() && (
-          <button className="ams-btn-danger" onClick={handleReset}>
-            Reset demo data
+        <div className="flex items-center gap-3">
+          {isDemoMode() && (
+            <button className="ams-btn-danger" onClick={handleReset}>
+              Reset demo data
+            </button>
+          )}
+          <button className="ams-btn-primary" onClick={() => setCreating(true)}>
+            + Create account
           </button>
-        )}
+        </div>
       </div>
 
       <div className="ams-card overflow-x-auto p-0">
@@ -98,6 +118,12 @@ export default function Users() {
                         Re-enable
                       </button>
                     )}
+                    <button
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-blue-50 text-ois-blue hover:bg-blue-100 transition-colors"
+                      onClick={() => resetPassword(account)}
+                    >
+                      Reset password
+                    </button>
                     {account.id !== me?.id && (
                       <button className="ams-btn-danger" onClick={() => remove(account)}>
                         Delete
@@ -110,6 +136,10 @@ export default function Users() {
           </table>
         )}
       </div>
+
+      {creating && (
+        <CreateAccountModal onClose={() => setCreating(false)} onCreated={refresh} />
+      )}
     </div>
   );
 }

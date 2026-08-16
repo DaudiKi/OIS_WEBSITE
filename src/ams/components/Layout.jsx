@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext.jsx';
 import { isDemoMode } from '../data/api.js';
+import ChangePasswordModal from './ChangePasswordModal.jsx';
 
 const NAV = [
   { to: '/dashboard', label: 'Dashboard', roles: ['admin', 'teacher', 'parent', 'student'], icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -31,6 +32,7 @@ export default function Layout({ children, title }) {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
 
   const items = NAV.filter((item) => item.roles.includes(user?.role));
 
@@ -72,6 +74,10 @@ export default function Layout({ children, title }) {
             <NavIcon d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
             Back to Website
           </a>
+          <button onClick={() => setChangingPassword(true)} className="ams-sidebar-link w-full text-left">
+            <NavIcon d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            Change Password
+          </button>
           <button onClick={handleSignOut} className="ams-sidebar-link w-full text-left">
             <NavIcon d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             Sign Out
@@ -115,6 +121,8 @@ export default function Layout({ children, title }) {
         </header>
         <main className="flex-1 p-4 md:p-8">{children}</main>
       </div>
+
+      {changingPassword && <ChangePasswordModal onClose={() => setChangingPassword(false)} />}
     </div>
   );
 }

@@ -34,13 +34,28 @@ async function remote() {
 
 /* ------------------------------- Auth ---------------------------------- */
 
-export async function signIn(email, password) {
-  if (!isDemoMode()) return (await remote()).signIn(email, password);
+// Students sign in with their student number (OIS0001) rather than an email.
+// Mirrors studentNumberToEmail in supabaseAdapter.js and admin_create_user in
+// the database — all three must build the same address.
+const STUDENT_EMAIL_DOMAIN = 'students.ois.ug';
+
+// Issued to a new student login when the school hasn't set its own default.
+// Students are prompted to change it after first sign-in.
+export const DEFAULT_STUDENT_PASSWORD = 'OIS2027';
+
+export function studentNumberToEmail(identifier) {
+  const compact = String(identifier || '').trim().replace(/[\s/-]/g, '');
+  return /^OIS\d+$/i.test(compact) ? `${compact.toLowerCase()}@${STUDENT_EMAIL_DOMAIN}` : null;
+}
+
+export async function signIn(identifier, password) {
+  if (!isDemoMode()) return (await remote()).signIn(identifier, password);
   const db = await loadDb();
+  const email = studentNumberToEmail(identifier) || identifier;
   const passwordHash = await hashPassword(password);
   const user = db.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
   if (!user || user.passwordHash !== passwordHash) {
-    throw new Error('Invalid email or password.');
+    throw new Error('Invalid login or password.');
   }
   if (user.status === 'pending') {
     throw new Error('Your account is awaiting approval by the school administrator.');
@@ -53,28 +68,82 @@ export async function signIn(email, password) {
   return sanitizeUser(user);
 }
 
-export async function signUp({ name, email, password, role, phone }) {
-  if (!isDemoMode()) return (await remote()).signUp({ name, email, password, role, phone });
-  const db = await loadDb();
-  if (db.users.some((u) => u.email.toLowerCase() === email.toLowerCase())) {
-    throw new Error('An account with this email already exists.');
+/**
+ * Create an account. Only an administrator may do this — the AMS has no public
+ * signup, so nobody outside the school can give themselves a login. Students
+ * are identified by their student number instead of an email address.
+ */
+export async function adminCreateUser({ role, name, phone, email, studentId, password }) {
+  if (!isDemoMode()) {
+    return (await remote()).adminCreateUser({ role, name, phone, email, studentId, password });
   }
-  const needsApproval = role === 'teacher' || role === 'admin';
+
+  const db = await loadDb();
+  let resolvedEmail = (email || '').trim().toLowerCase();
+  let studentNumber = null;
+
+  if (role === 'student') {
+    const student = db.students.find((s) => s.id === studentId);
+    if (!student) throw new Error('Select which student this login belongs to.');
+    if (db.users.some((u) => u.studentId === studentId && u.role === 'student')) {
+      throw new Error('This student already has a login.');
+    }
+    studentNumber = student.studentNumber;
+    resolvedEmail = `${studentNumber.toLowerCase()}@${STUDENT_EMAIL_DOMAIN}`;
+  } else if (!resolvedEmail) {
+    throw new Error('An email address is required for this role.');
+  }
+
+  const resolvedPassword =
+    (password || '').trim() || db.settings?.students?.defaultPassword || DEFAULT_STUDENT_PASSWORD;
+  if (resolvedPassword.length < 6) throw new Error('Password must be at least 6 characters.');
+  if (db.users.some((u) => u.email.toLowerCase() === resolvedEmail)) {
+    throw new Error(
+      role === 'student' ? 'This student already has a login.' : 'An account with this email already exists.'
+    );
+  }
+
   const user = {
     id: newId('usr'),
     name,
-    email,
+    email: resolvedEmail,
     phone: phone || '',
     role,
-    status: needsApproval ? 'pending' : 'active',
-    passwordHash: await hashPassword(password),
+    status: 'active',
+    studentId: role === 'student' ? studentId : undefined,
+    passwordHash: await hashPassword(resolvedPassword),
     createdAt: new Date().toISOString(),
   };
   await mutate((data) => data.users.push(user));
-  if (!needsApproval) {
-    setSession({ userId: user.id, signedInAt: new Date().toISOString() });
-  }
-  return { user: sanitizeUser(user), needsApproval };
+  return { ...sanitizeUser(user), password: resolvedPassword, studentNumber };
+}
+
+/** An administrator resetting somebody else's password. */
+export async function adminSetPassword(userId, password) {
+  if (password.length < 6) throw new Error('Password must be at least 6 characters.');
+  if (!isDemoMode()) return (await remote()).adminSetPassword(userId, password);
+  const passwordHash = await hashPassword(password);
+  return mutate((db) => {
+    const user = db.users.find((u) => u.id === userId);
+    if (!user) throw new Error('Account not found.');
+    user.passwordHash = passwordHash;
+    return true;
+  });
+}
+
+/** A signed-in user changing their own password. */
+export async function changePassword(newPassword) {
+  if (newPassword.length < 6) throw new Error('Password must be at least 6 characters.');
+  if (!isDemoMode()) return (await remote()).changePassword(newPassword);
+  const session = getSession();
+  if (!session) throw new Error('You are not signed in.');
+  const passwordHash = await hashPassword(newPassword);
+  return mutate((db) => {
+    const user = db.users.find((u) => u.id === session.userId);
+    if (!user) throw new Error('Account not found.');
+    user.passwordHash = passwordHash;
+    return true;
+  });
 }
 
 export async function signOut() {
@@ -93,7 +162,8 @@ export async function currentUser() {
 }
 
 function sanitizeUser(user) {
-  const { passwordHash, ...rest } = user;
+  const rest = { ...user };
+  delete rest.passwordHash;
   return rest;
 }
 

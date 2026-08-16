@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext.jsx';
 import { isDemoMode } from '../data/api.js';
 
@@ -7,7 +7,7 @@ const DEMO_ACCOUNTS = [
   { role: 'Admin', email: 'admin@ois.ug', password: 'admin123' },
   { role: 'Teacher', email: 'j.kisitu@ois.ug', password: 'teacher123' },
   { role: 'Parent', email: 'parent@ois.ug', password: 'parent123' },
-  { role: 'Student', email: 'student@ois.ug', password: 'student123' },
+  { role: 'Student', email: 'OIS0004', password: 'student123' },
 ];
 
 export default function Login() {
@@ -53,16 +53,20 @@ export default function Login() {
 
           <form onSubmit={submit} className="space-y-4">
             <div>
-              <label className="ams-label" htmlFor="email">Email Address</label>
+              <label className="ams-label" htmlFor="email">Email or Student Number</label>
               <input
                 id="email"
-                type="email"
+                type="text"
                 required
                 className="ams-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="you@example.com or OIS0001"
+                autoComplete="username"
               />
+              <p className="text-xs text-gray-400 mt-1">
+                Students sign in with their student number, e.g. OIS0001.
+              </p>
             </div>
             <div>
               <label className="ams-label" htmlFor="password">Password</label>
@@ -82,10 +86,8 @@ export default function Login() {
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            New to OIS?{' '}
-            <Link to="/signup" className="text-ois-blue font-semibold hover:underline">
-              Create an account
-            </Link>
+            Accounts are created by the school. Contact the school office if you need access
+            or have forgotten your password.
           </p>
         </div>
 

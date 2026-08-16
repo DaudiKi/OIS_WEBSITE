@@ -22,16 +22,10 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  const signIn = useCallback(async (email, password) => {
-    const signedIn = await api.signIn(email, password);
+  const signIn = useCallback(async (identifier, password) => {
+    const signedIn = await api.signIn(identifier, password);
     setUser(signedIn);
     return signedIn;
-  }, []);
-
-  const signUp = useCallback(async (details) => {
-    const result = await api.signUp(details);
-    if (!result.needsApproval) setUser(result.user);
-    return result;
   }, []);
 
   const signOut = useCallback(async () => {
@@ -39,8 +33,11 @@ export function AuthProvider({ children }) {
     setUser(null);
   }, []);
 
+  // There is deliberately no signUp: accounts are created by an administrator
+  // from inside the AMS, so nobody outside the school can enrol themselves.
+
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

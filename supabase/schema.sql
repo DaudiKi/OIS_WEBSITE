@@ -414,6 +414,159 @@ begin
 end;
 $$;
 
+-- Account creation (administrators only) --------------------------------------
+-- The AMS has no public signup: every login is created from inside the portal
+-- by an administrator, so nobody outside the school can enrol themselves.
+--
+-- Students rarely have a school email address, so their login is their student
+-- number. A synthetic address is derived from it (OIS0001 ->
+-- ois0001@students.ois.ug) purely so GoTrue has something to authenticate
+-- against; the same transform lives in supabaseAdapter.js and api.js, and all
+-- three must agree.
+
+-- Starting password issued to a new student login. The school can change it.
+update public.settings
+   set value = jsonb_set(value, '{students}', '{"defaultPassword": "OIS2027"}'::jsonb, true)
+ where id = 'school' and not (value ? 'students');
+
+create or replace function public.admin_create_user(
+  p_role text,
+  p_name text,
+  p_phone text default '',
+  p_email text default null,
+  p_student_id text default null,
+  p_password text default null
+) returns jsonb
+language plpgsql
+security definer
+-- pgcrypto lives in the extensions schema on Supabase, so crypt()/gen_salt()
+-- are not resolvable under search_path = public alone.
+set search_path = public, extensions
+as $$
+declare
+  v_uid uuid := gen_random_uuid();
+  v_email text;
+  v_password text;
+  v_number text;
+begin
+  if not exists (
+    select 1 from public.profiles where id = auth.uid() and role = 'admin' and status = 'active'
+  ) then
+    raise exception 'Only an administrator may create accounts.';
+  end if;
+
+  if p_role not in ('admin', 'teacher', 'parent', 'student') then
+    raise exception 'Unknown role: %', p_role;
+  end if;
+
+  if p_role = 'student' then
+    if p_student_id is null then
+      raise exception 'Select which student this login belongs to.';
+    end if;
+    select "studentNumber" into v_number from public.students where id = p_student_id;
+    if v_number is null then
+      raise exception 'Student not found.';
+    end if;
+    if exists (select 1 from public.profiles where "studentId" = p_student_id and role = 'student') then
+      raise exception 'This student already has a login.';
+    end if;
+    v_email := lower(v_number) || '@students.ois.ug';
+    v_password := coalesce(
+      nullif(btrim(p_password), ''),
+      (select value #>> '{students,defaultPassword}' from public.settings where id = 'school'),
+      'OIS2027'
+    );
+  else
+    if p_email is null or btrim(p_email) = '' then
+      raise exception 'An email address is required for this role.';
+    end if;
+    v_email := lower(btrim(p_email));
+    v_password := p_password;
+  end if;
+
+  if v_password is null or length(v_password) < 6 then
+    raise exception 'Password must be at least 6 characters.';
+  end if;
+  if p_name is null or btrim(p_name) = '' then
+    raise exception 'Name is required.';
+  end if;
+
+  begin
+    insert into auth.users (
+      instance_id, id, aud, role, email, encrypted_password,
+      email_confirmed_at, created_at, updated_at,
+      raw_app_meta_data, raw_user_meta_data
+    ) values (
+      '00000000-0000-0000-0000-000000000000', v_uid, 'authenticated', 'authenticated',
+      v_email, crypt(v_password, gen_salt('bf')),
+      now(), now(), now(),
+      '{"provider":"email","providers":["email"]}'::jsonb,
+      jsonb_build_object('name', p_name, 'phone', coalesce(p_phone, ''), 'role', p_role)
+    );
+  exception when unique_violation then
+    if p_role = 'student' then
+      raise exception 'This student already has a login (%).', v_email;
+    else
+      raise exception 'An account with this email already exists.';
+    end if;
+  end;
+
+  insert into auth.identities (
+    provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at
+  ) values (
+    v_uid::text, v_uid,
+    jsonb_build_object('sub', v_uid::text, 'email', v_email, 'email_verified', true, 'phone_verified', false),
+    'email', now(), now(), now()
+  );
+
+  -- The signup trigger just created this profile (pending for teacher/admin).
+  -- An account an administrator created is trusted immediately, so activate it
+  -- and record the student link here.
+  update public.profiles
+     set status = 'active', role = p_role, "studentId" = p_student_id
+   where id = v_uid;
+
+  return jsonb_build_object(
+    'id', v_uid, 'email', v_email, 'password', v_password,
+    'name', p_name, 'role', p_role, 'studentNumber', v_number
+  );
+end;
+$$;
+
+revoke execute on function public.admin_create_user(text, text, text, text, text, text) from public, anon, authenticated;
+grant execute on function public.admin_create_user(text, text, text, text, text, text) to authenticated;
+
+-- Password reset performed by an administrator on somebody else's account.
+create or replace function public.admin_set_password(
+  p_user_id uuid,
+  p_password text
+) returns void
+language plpgsql
+security definer
+set search_path = public, extensions
+as $$
+begin
+  if not exists (
+    select 1 from public.profiles where id = auth.uid() and role = 'admin' and status = 'active'
+  ) then
+    raise exception 'Only an administrator may reset a password.';
+  end if;
+  if p_password is null or length(p_password) < 6 then
+    raise exception 'Password must be at least 6 characters.';
+  end if;
+  if not exists (select 1 from auth.users where id = p_user_id) then
+    raise exception 'Account not found.';
+  end if;
+
+  update auth.users
+     set encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = now()
+   where id = p_user_id;
+end;
+$$;
+
+revoke execute on function public.admin_set_password(uuid, text) from public, anon, authenticated;
+grant execute on function public.admin_set_password(uuid, text) to authenticated;
+
 -- Bootstrapping the first administrator ---------------------------------------
 -- Signups with role 'teacher' or 'admin' start as 'pending', and promoting a
 -- profile requires an already-active admin. On a fresh project nobody can

@@ -6,9 +6,10 @@ import { AMS_DB_KEY } from '../../lib/events.js';
 import { DEFAULT_GRADE_SCALE, DEFAULT_SUBJECTS } from './icce.js';
 
 const SESSION_KEY = 'ois.ams.session.v1';
-// Bumped to 2 when ICCE report cards, terms and settings were added; a lower
-// stored version is reseeded so demo browsers pick up the new collections.
-const DB_VERSION = 2;
+// Bumped to 2 when ICCE report cards, terms and settings were added, and to 3
+// for student numbers and student-number logins; a lower stored version is
+// reseeded so demo browsers pick up the new fields.
+const DB_VERSION = 3;
 
 function uid(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
@@ -143,7 +144,9 @@ async function buildSeed() {
     {
       id: 'usr-student',
       name: 'David Kizito',
-      email: 'student@ois.ug',
+      // Students sign in with their student number; the address is derived
+      // from it (std-4 is OIS0004), matching admin_create_user in the schema.
+      email: 'ois0004@students.ois.ug',
       role: 'student',
       status: 'active',
       studentId: 'std-4',

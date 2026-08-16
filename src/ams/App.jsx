@@ -3,7 +3,6 @@ import { AuthProvider, useAuth } from './AuthContext.jsx';
 import Layout from './components/Layout.jsx';
 import { Spinner } from './components/ui.jsx';
 import Login from './pages/Login.jsx';
-import Signup from './pages/Signup.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Students from './pages/Students.jsx';
 import Teachers from './pages/Teachers.jsx';
@@ -59,7 +58,6 @@ export default function App() {
       <HashRouter>
         <Routes>
           <Route path="/login" element={<PublicOnly><Login /></PublicOnly>} />
-          <Route path="/signup" element={<PublicOnly><Signup /></PublicOnly>} />
 
           <Route path="/dashboard" element={<Protected title="Dashboard"><Dashboard /></Protected>} />
           <Route path="/students" element={<Protected roles={['admin', 'teacher']} title="Students"><Students /></Protected>} />

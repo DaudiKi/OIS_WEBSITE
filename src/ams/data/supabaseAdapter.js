@@ -5,6 +5,16 @@
 
 const ACCESS_TOKEN_KEY = 'ois.ams.supabase.token';
 
+// Student logins are keyed on the student number, so the AMS derives a stable
+// address from it. Kept in one place because admin_create_user in the database
+// builds the same string — the two must agree exactly.
+export const STUDENT_EMAIL_DOMAIN = 'students.ois.ug';
+
+export function studentNumberToEmail(identifier) {
+  const compact = String(identifier || '').trim().replace(/[\s/-]/g, '');
+  return /^OIS\d+$/i.test(compact) ? `${compact.toLowerCase()}@${STUDENT_EMAIL_DOMAIN}` : null;
+}
+
 export function createAdapter(config) {
   if (!config) throw new Error('Supabase configuration missing');
   const { supabaseUrl, supabaseAnonKey } = config;
@@ -62,7 +72,11 @@ export function createAdapter(config) {
 
   return {
     /* Auth */
-    async signIn(email, password) {
+    async signIn(identifier, password) {
+      // Students sign in with their student number rather than an email address
+      // — most don't have one. admin_create_user mints the matching synthetic
+      // address, so resolving it here is a pure string transform.
+      const email = studentNumberToEmail(identifier) || identifier;
       const data = await request(`${authUrl}/token?grant_type=password`, {
         method: 'POST',
         body: JSON.stringify({ email, password }),
@@ -73,17 +87,43 @@ export function createAdapter(config) {
         setToken(null);
         throw new Error('Your account is awaiting approval by the school administrator.');
       }
+      if (profile?.status === 'disabled') {
+        setToken(null);
+        throw new Error('This account has been disabled. Please contact the school office.');
+      }
       return { id: data.user.id, email: data.user.email, ...profile };
     },
 
-    async signUp({ name, email, password, role, phone }) {
-      const data = await request(`${authUrl}/signup`, {
+    /* Accounts are created by an administrator only — there is no self-signup. */
+    async adminCreateUser({ role, name, phone, email, studentId, password }) {
+      return request(`${restUrl}/rpc/admin_create_user`, {
         method: 'POST',
-        body: JSON.stringify({ email, password, data: { name, role, phone } }),
+        body: JSON.stringify({
+          p_role: role,
+          p_name: name,
+          p_phone: phone || '',
+          p_email: email || null,
+          p_student_id: studentId || null,
+          p_password: password || null,
+        }),
       });
-      const needsApproval = role === 'teacher' || role === 'admin';
-      if (data.access_token) setToken(data);
-      return { user: { id: data.user?.id || data.id, email, name, role }, needsApproval };
+    },
+
+    async adminSetPassword(userId, password) {
+      await request(`${restUrl}/rpc/admin_set_password`, {
+        method: 'POST',
+        body: JSON.stringify({ p_user_id: userId, p_password: password }),
+      });
+      return true;
+    },
+
+    /* A signed-in user changing their own password. */
+    async changePassword(newPassword) {
+      await request(`${authUrl}/user`, {
+        method: 'PUT',
+        body: JSON.stringify({ password: newPassword }),
+      });
+      return true;
     },
 
     async signOut() {
@@ -124,7 +164,8 @@ export function createAdapter(config) {
         });
         if (rows?.length) return rows[0];
       }
-      const { id, ...insert } = record;
+      const insert = { ...record };
+      delete insert.id;
       const rows = await request(`${restUrl}/${table}`, {
         method: 'POST',
         headers: { Prefer: 'return=representation' },
@@ -138,7 +179,8 @@ export function createAdapter(config) {
     // applies the SELECT policy to the representation it returns — so asking
     // for one turns a legitimate insert into an RLS failure.
     async insertOnly(table, record) {
-      const { id, ...insert } = record;
+      const insert = { ...record };
+      delete insert.id;
       await request(`${restUrl}/${table}`, {
         method: 'POST',
         headers: { Prefer: 'return=minimal' },
