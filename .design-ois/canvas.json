@@ -1,0 +1,59 @@
+{
+  "pages": [
+    { "id": "foundations", "name": "Foundations" },
+    { "id": "public", "name": "Public website" },
+    { "id": "dashboards", "name": "Portal — dashboards" },
+    { "id": "records", "name": "Portal — records" },
+    { "id": "reportcards", "name": "Portal — report cards" },
+    { "id": "operations", "name": "Portal — school operations" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html", "page": "foundations", "title": "Six decisions", "x": 0, "y": 0, "w": 1280, "h": 1500 },
+
+    { "file": "Home.dc.html", "page": "public", "title": "Home", "x": 0, "y": 0, "w": 1280, "h": 2300 },
+    { "file": "About.dc.html", "page": "public", "title": "About", "x": 1400, "y": 0, "w": 1280, "h": 1980 },
+    { "file": "Apply.dc.html", "page": "public", "title": "Admissions", "x": 2800, "y": 0, "w": 1280, "h": 1220 },
+    { "file": "Gallery.dc.html", "page": "public", "title": "Gallery", "x": 4200, "y": 0, "w": 1280, "h": 1240 },
+    { "file": "Calendar.dc.html", "page": "public", "title": "Calendar", "x": 5600, "y": 0, "w": 1280, "h": 1260 },
+
+    { "file": "Login.dc.html", "page": "dashboards", "title": "Sign in", "x": 0, "y": 0, "w": 1280, "h": 860 },
+    { "file": "DashAdmin.dc.html", "page": "dashboards", "title": "Dashboard — Administrator", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "DashTeacher.dc.html", "page": "dashboards", "title": "Dashboard — Supervisor", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+    { "file": "DashParent.dc.html", "page": "dashboards", "title": "Dashboard — Parent", "x": 4200, "y": 0, "w": 1280, "h": 880 },
+    { "file": "DashStudent.dc.html", "page": "dashboards", "title": "Dashboard — Student", "x": 5600, "y": 0, "w": 1280, "h": 880 },
+
+    { "file": "Students.dc.html", "page": "records", "title": "Students", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Teachers.dc.html", "page": "records", "title": "Supervisors", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Classes.dc.html", "page": "records", "title": "Learning centres", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Attendance.dc.html", "page": "records", "title": "Attendance", "x": 4200, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Grades.dc.html", "page": "records", "title": "Grade book", "x": 5600, "y": 0, "w": 1280, "h": 880 },
+
+    { "file": "Reports.dc.html", "page": "reportcards", "title": "Report cards", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "ReportEditor.dc.html", "page": "reportcards", "title": "Report editor", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "ReportCard.dc.html", "page": "reportcards", "title": "Printed report card (A4)", "x": 2800, "y": 0, "w": 794, "h": 1123, "print": "fixed" },
+
+    { "file": "Announcements.dc.html", "page": "operations", "title": "Announcements", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "AmsCalendar.dc.html", "page": "operations", "title": "School calendar", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Applications.dc.html", "page": "operations", "title": "Admissions inbox", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+    { "file": "GalleryAdmin.dc.html", "page": "operations", "title": "Gallery manager", "x": 4200, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Settings.dc.html", "page": "operations", "title": "School settings", "x": 5600, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Users.dc.html", "page": "operations", "title": "Accounts — create parent", "x": 7000, "y": 0, "w": 1280, "h": 880 }
+  ],
+  "annotations": [
+    { "id": "note-foundations", "page": "foundations", "x": 1340, "y": 0, "w": 300, "text": "Direction: refine what already exists.\n\nThe blue and green stay — parents recognise them. What changes is discipline. Each decision here is reversible on its own, so you can take five of six if one does not suit." },
+
+    { "id": "note-public", "page": "public", "x": 0, "y": -150, "w": 420, "text": "The public site, rebuilt on the refined palette.\n\nHome replaces the three broken testimonial photographs with initial monograms — no missing files, and nothing waiting on a photo shoot before launch." },
+    { "id": "note-apply", "page": "public", "x": 2800, "y": -150, "w": 380, "text": "Admissions now confirms DELIVERY, not just submission. Today a failed save to the school's own list is swallowed silently and the visitor still sees success." },
+
+    { "id": "note-parent", "page": "dashboards", "x": 4200, "y": -190, "w": 400, "text": "The parent dashboard as it would look once a parent can actually be linked to their children.\n\nToday this screen renders nothing at all — no child, no report, not even an explanation — because nothing in the live system ever sets that link." },
+    { "id": "note-teacherdash", "page": "dashboards", "x": 2800, "y": -190, "w": 380, "text": "Same story for supervisors: 'my students' and 'my classes' read zero today because accounts have no field connecting them to a staff record." },
+
+    { "id": "note-records", "page": "records", "x": 1400, "y": -150, "w": 380, "text": "The Supervisors screen adds a 'portal login linked' badge — making visible the connection whose absence quietly empties a teacher's whole dashboard." },
+
+    { "id": "note-reports", "page": "reportcards", "x": 0, "y": -160, "w": 400, "text": "The report workflow is the best-built part of the system and needs no rework — only a term to exist, and clearer feedback when one does not. The five states now carry a fixed colour everywhere they appear." },
+
+    { "id": "note-ops", "page": "operations", "x": 4200, "y": -160, "w": 380, "text": "Gallery gains real file upload — today staff must supply a path to an image already hosted elsewhere, which in practice means asking a developer." },
+    { "id": "note-users", "page": "operations", "x": 7000, "y": -160, "w": 380, "text": "Create Account gains the child picker. This one field is the difference between a working parent portal and an empty one." }
+  ],
+  "launch": { "view": "canvas", "page": "foundations" }
+}

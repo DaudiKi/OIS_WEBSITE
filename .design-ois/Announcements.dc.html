@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Figtree:wght@400;500;600;700;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Figtree', ui-sans-serif, system-ui, sans-serif; color:#1A1F26; background:#F5F7F9; }
+    h1,h2,h3 { margin:0; font-family:'Newsreader', Georgia, serif; font-weight:600; }
+    p { margin:0; }
+    .rail { width:38px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.5); }
+    .rail.on { background:rgba(255,255,255,0.13); color:#FFFFFF; }
+    .card { background:#FFFFFF; border:1px solid #DDE3E9; border-radius:12px; }
+    .lbl { font-size:12px; font-weight:600; color:#3D4650; }
+  </style>
+</helmet>
+
+<div style="width:1280px; height:880px; display:flex; box-sizing:border-box; overflow:hidden;">
+
+  <div style="width:60px;flex:none;background:#12283F;padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:4px;">
+    <div style="width:32px;height:32px;border-radius:8px;background:#2c64ac;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><span style="color:#FFF;font-weight:800;font-size:10.5px;">OIS</span></div>
+    <div class="rail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg></div>
+    <div class="rail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0"></path></svg></div>
+    <div class="rail on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3Z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg></div>
+    <div class="rail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div>
+    <div style="margin-top:auto;width:30px;height:30px;border-radius:50%;background:#2c64ac;display:flex;align-items:center;justify-content:center;color:#FFF;font-weight:700;font-size:11.5px;">HM</div>
+  </div>
+
+  <div style="flex-grow:1; display:flex; flex-direction:column; min-width:0;">
+    <div style="height:62px;flex:none;background:#FFFFFF;border-bottom:1px solid #DDE3E9;display:flex;align-items:center;justify-content:space-between;padding:0 24px;">
+      <h1 style="font-size:20px;">Announcements</h1>
+      <span style="display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:7px;background:#2c64ac;color:#FFF;font-size:13.5px;font-weight:600;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>New announcement</span>
+    </div>
+
+    <div style="flex-grow:1; padding:22px 24px; display:grid; grid-template-columns:380px minmax(0,1fr); gap:20px; align-items:start;">
+
+      <!-- COMPOSER -->
+      <div class="card" style="padding:20px; display:flex; flex-direction:column; gap:14px;">
+        <h2 style="font-size:18px;">Write an announcement</h2>
+
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span class="lbl">Title</span>
+          <div style="height:38px; border:1.5px solid #C9D2DB; border-radius:8px; background:#FFF; display:flex; align-items:center; padding:0 12px; font-size:13.5px;">Term 2 report cards released Friday</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span class="lbl">Message</span>
+          <div style="min-height:112px; border:1.5px solid #C9D2DB; border-radius:8px; background:#FFF; padding:11px 12px; font-size:13.5px; line-height:1.6; color:#3D4650;">Parents will be able to download Term 2 reports from the portal from 3:00 PM on Friday. If you have not yet received your login details, please ring the office.</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:7px;">
+          <span class="lbl">Who sees this?</span>
+          <div style="display:flex; gap:7px; flex-wrap:wrap;">
+            <span style="display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:20px;background:#2c64ac;color:#FFF;font-size:12.5px;font-weight:600;">Parents</span>
+            <span style="display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:20px;border:1px solid #DDE3E9;font-size:12.5px;font-weight:600;color:#5A6572;">Students</span>
+            <span style="display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:20px;border:1px solid #DDE3E9;font-size:12.5px;font-weight:600;color:#5A6572;">Staff</span>
+          </div>
+          <span style="font-size:11.5px; color:#5A6572;">Reaches 186 parent accounts.</span>
+        </div>
+
+        <div style="display:flex; gap:9px; margin-top:4px;">
+          <span style="flex-grow:1; display:inline-flex; align-items:center; justify-content:center; height:40px; border-radius:8px; border:1px solid #C9D2DB; font-size:13.5px; font-weight:600;">Save draft</span>
+          <span style="flex-grow:1; display:inline-flex; align-items:center; justify-content:center; height:40px; border-radius:8px; background:#2c64ac; color:#FFF; font-size:13.5px; font-weight:600;">Post now</span>
+        </div>
+      </div>
+
+      <!-- LIST -->
+      <div style="display:flex; flex-direction:column; gap:14px;">
+
+        <div class="card" style="padding:20px;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              <h3 style="font-size:17px;">Term 2 report cards released Friday</h3>
+              <p style="font-size:13.5px; line-height:1.65; color:#5A6572;">Parents will be able to download Term 2 reports from the portal from 3:00 PM on Friday.</p>
+              <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                <span style="font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:20px; background:#EAF1F9; color:#1B4478;">Parents</span>
+                <span style="font-size:12px; color:#98A2AE;">Herriet Makumbi · 14 Sep</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:7px; flex:none;">
+              <span style="width:32px;height:32px;border-radius:7px;border:1px solid #C9D2DB;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3D4650" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span>
+              <span style="width:32px;height:32px;border-radius:7px;border:1px solid #C9D2DB;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B23A2E" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"></path></svg></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:20px;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              <h3 style="font-size:17px;">Sports day volunteers needed</h3>
+              <p style="font-size:13.5px; line-height:1.65; color:#5A6572;">We need six parents to help run the field events on 4 September. Please let the office know.</p>
+              <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                <span style="font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:20px; background:#EAF1F9; color:#1B4478;">Parents</span>
+                <span style="font-size:12px; color:#98A2AE;">Joshua Kisitu · 11 Sep</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:7px; flex:none;">
+              <span style="width:32px;height:32px;border-radius:7px;border:1px solid #C9D2DB;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3D4650" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span>
+              <span style="width:32px;height:32px;border-radius:7px;border:1px solid #C9D2DB;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B23A2E" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"></path></svg></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:20px;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+            <div style="display:flex; flex-direction:column; gap:5px;">
+              <h3 style="font-size:17px;">Staff briefing moved to Wednesday</h3>
+              <p style="font-size:13.5px; line-height:1.65; color:#5A6572;">This week's briefing moves to Wednesday 8:00 AM in Learning Center A.</p>
+              <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                <span style="font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:20px; background:#E8F3E3; color:#35661F;">Staff</span>
+                <span style="font-size:12px; color:#98A2AE;">Herriet Makumbi · 8 Sep</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:7px; flex:none;">
+              <span style="width:32px;height:32px;border-radius:7px;border:1px solid #C9D2DB;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3D4650" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></span>
+              <span style="width:32px;height:32px;border-radius:7px;border:1px solid #C9D2DB;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B23A2E" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"></path></svg></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:16px 20px; border-left:3px solid #B23A2E; display:flex; align-items:center; gap:12px;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B23A2E" stroke-width="2.2" stroke-linecap="round" style="flex:none;"><path d="M12 9v4M12 17h.01"></path><circle cx="12" cy="12" r="9"></circle></svg>
+          <p style="font-size:13px; line-height:1.55; color:#3D4650;">Deleting or saving now shows a confirmation — or a plain error if it fails. Today these actions fail silently, so staff cannot tell whether a post actually went out.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

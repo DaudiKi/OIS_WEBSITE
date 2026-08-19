@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Figtree:wght@400;500;600;700;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Figtree', ui-sans-serif, system-ui, sans-serif; color:#1A1F26; background:#F5F7F9; }
+    h1,h2,h3 { margin:0; font-family:'Newsreader', Georgia, serif; font-weight:600; }
+    p { margin:0; }
+    .rail { width:38px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.5); }
+    .rail.on { background:rgba(255,255,255,0.13); color:#FFFFFF; }
+    .card { background:#FFFFFF; border:1px solid #DDE3E9; border-radius:12px; }
+    .num { font-variant-numeric:tabular-nums; }
+    .lbl { font-size:12px; font-weight:600; color:#3D4650; }
+    .fld { height:38px; border:1.5px solid #C9D2DB; border-radius:8px; background:#FFF; display:flex; align-items:center; padding:0 12px; font-size:13.5px; }
+    .tab { padding:11px 4px; font-size:13.5px; font-weight:600; color:#5A6572; border-bottom:2px solid transparent; }
+    .tab.on { color:#1A1F26; border-bottom-color:#2c64ac; }
+  </style>
+</helmet>
+
+<div style="width:1280px; height:880px; display:flex; box-sizing:border-box; overflow:hidden;">
+
+  <div style="width:60px;flex:none;background:#12283F;padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:4px;">
+    <div style="width:32px;height:32px;border-radius:8px;background:#2c64ac;display:flex;align-items:center;justify-content:center;margin-bottom:10px;"><span style="color:#FFF;font-weight:800;font-size:10.5px;">OIS</span></div>
+    <div class="rail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg></div>
+    <div class="rail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0"></path></svg></div>
+    <div class="rail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M9 9h6M9 13h6"></path></svg></div>
+    <div class="rail on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path></svg></div>
+    <div style="margin-top:auto;width:30px;height:30px;border-radius:50%;background:#2c64ac;display:flex;align-items:center;justify-content:center;color:#FFF;font-weight:700;font-size:11.5px;">HM</div>
+  </div>
+
+  <div style="flex-grow:1; display:flex; flex-direction:column; min-width:0;">
+    <div style="flex:none; background:#FFFFFF; border-bottom:1px solid #DDE3E9; padding:0 24px;">
+      <div style="height:56px; display:flex; align-items:center; justify-content:space-between;">
+        <h1 style="font-size:20px;">School settings</h1>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:#35661F; font-weight:600;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4e9236" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>All changes saved</span>
+      </div>
+      <div style="display:flex; gap:22px;">
+        <span class="tab on">Academic terms</span>
+        <span class="tab">Grading scale</span>
+        <span class="tab">Subjects</span>
+        <span class="tab">School details</span>
+        <span class="tab">Accounts</span>
+      </div>
+    </div>
+
+    <div style="flex-grow:1; padding:22px 24px; display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:20px; align-items:start;">
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card" style="padding:20px;">
+          <div style="display:flex; align-items:baseline; justify-content:space-between;">
+            <div style="display:flex; flex-direction:column; gap:3px;">
+              <h2 style="font-size:18px;">Academic terms</h2>
+              <p style="font-size:13px; color:#5A6572;">Report cards belong to a term — at least one must exist before any can be created.</p>
+            </div>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:7px;background:#2c64ac;color:#FFF;font-size:13px;font-weight:600;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Add term</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
+            <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border-radius:10px; border:1px solid #C6D8EC; background:#F7FAFD;">
+              <div style="display:flex; flex-direction:column; line-height:1.35; flex-grow:1;">
+                <span style="font-size:14.5px; font-weight:700;">Term 2, 2026</span>
+                <span class="num" style="font-size:12.5px; color:#5A6572;">1 Sep – 5 Dec 2026</span>
+              </div>
+              <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; padding:4px 11px; border-radius:20px; background:#E8F3E3; color:#35661F;"><span style="width:6px;height:6px;border-radius:50%;background:#4e9236;"></span>Open</span>
+              <span style="font-size:12.5px; font-weight:600; color:#2c64ac;">Edit</span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border-radius:10px; border:1px solid #DDE3E9;">
+              <div style="display:flex; flex-direction:column; line-height:1.35; flex-grow:1;">
+                <span style="font-size:14.5px; font-weight:700;">Term 1, 2026</span>
+                <span class="num" style="font-size:12.5px; color:#5A6572;">13 Jan – 2 May 2026</span>
+              </div>
+              <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; padding:4px 11px; border-radius:20px; background:#EEF1F4; color:#6B7580;"><span style="width:6px;height:6px;border-radius:50%;background:#6B7580;"></span>Closed</span>
+              <span style="font-size:12.5px; font-weight:600; color:#2c64ac;">Edit</span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border-radius:10px; border:1px dashed #C9D2DB;">
+              <div style="display:flex; flex-direction:column; line-height:1.35; flex-grow:1;">
+                <span style="font-size:14.5px; font-weight:700; color:#5A6572;">Term 3, 2026</span>
+                <span class="num" style="font-size:12.5px; color:#5A6572;">Dates not set</span>
+              </div>
+              <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; padding:4px 11px; border-radius:20px; background:#EEF1F4; color:#6B7580;">Planned</span>
+              <span style="font-size:12.5px; font-weight:600; color:#2c64ac;">Edit</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- THE FIX: default student password -->
+        <div class="card" style="padding:20px;">
+          <h2 style="font-size:18px;">New student logins</h2>
+          <p style="font-size:13px; color:#5A6572; margin-top:4px;">The starting password issued when the office creates a pupil's login.</p>
+          <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:end; margin-top:16px;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <span class="lbl">Default password</span>
+              <div class="fld num" style="justify-content:space-between;">
+                <span>OIS2027</span>
+                <span style="font-size:12px; font-weight:600; color:#2c64ac;">Change</span>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:9px; height:38px;">
+              <div style="width:38px; height:22px; border-radius:20px; background:#4e9236; display:flex; align-items:center; padding:0 3px; justify-content:flex-end;">
+                <div style="width:16px; height:16px; border-radius:50%; background:#FFF;"></div>
+              </div>
+              <span style="font-size:13px; font-weight:500;">Force change on first sign-in</span>
+            </div>
+          </div>
+          <p style="font-size:12px; line-height:1.55; color:#5A6572; margin-top:12px; padding:10px 12px; border-radius:8px; background:#F5F7F9;">Today this value exists only in the database and the source code — there is no way to change it from the portal. Putting it here means the office can rotate it each intake without a developer.</p>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card" style="padding:20px;">
+          <h3 style="font-size:16.5px;">Grading scale</h3>
+          <p style="font-size:12.5px; color:#5A6572; margin-top:3px;">Used by every report card.</p>
+          <div style="display:flex; flex-direction:column; gap:7px; margin-top:14px;">
+            <div style="display:flex; align-items:center; gap:9px;"><span style="width:30px; font-size:13.5px; font-weight:700;">A*</span><div class="fld num" style="flex-grow:1; height:32px;">98</div><span style="font-size:12px; color:#5A6572;">to</span><div class="fld num" style="flex-grow:1; height:32px;">100</div></div>
+            <div style="display:flex; align-items:center; gap:9px;"><span style="width:30px; font-size:13.5px; font-weight:700;">A</span><div class="fld num" style="flex-grow:1; height:32px;">96</div><span style="font-size:12px; color:#5A6572;">to</span><div class="fld num" style="flex-grow:1; height:32px;">97.99</div></div>
+            <div style="display:flex; align-items:center; gap:9px;"><span style="width:30px; font-size:13.5px; font-weight:700;">B</span><div class="fld num" style="flex-grow:1; height:32px;">92</div><span style="font-size:12px; color:#5A6572;">to</span><div class="fld num" style="flex-grow:1; height:32px;">95.99</div></div>
+            <div style="display:flex; align-items:center; gap:9px;"><span style="width:30px; font-size:13.5px; font-weight:700;">C</span><div class="fld num" style="flex-grow:1; height:32px;">88</div><span style="font-size:12px; color:#5A6572;">to</span><div class="fld num" style="flex-grow:1; height:32px;">91.99</div></div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; margin-top:13px; padding-top:12px; border-top:1px solid #EEF1F4;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#35661F" stroke-width="2.4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span style="font-size:12px; color:#35661F; font-weight:600;">No gaps or overlaps between bands</span>
+          </div>
+        </div>
+
+        <div class="card" style="padding:20px;">
+          <h3 style="font-size:16.5px;">Subjects</h3>
+          <p style="font-size:12.5px; color:#5A6572; margin-top:3px;">Added to every new report card.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:13px;">
+            <span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 6px 0 11px; border-radius:20px; background:#EAF1F9; font-size:12.5px; font-weight:600; color:#1B4478;">Maths <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+            <span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 6px 0 11px; border-radius:20px; background:#EAF1F9; font-size:12.5px; font-weight:600; color:#1B4478;">English <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+            <span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 6px 0 11px; border-radius:20px; background:#EAF1F9; font-size:12.5px; font-weight:600; color:#1B4478;">Science <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+            <span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 6px 0 11px; border-radius:20px; background:#EAF1F9; font-size:12.5px; font-weight:600; color:#1B4478;">Social Studies <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+            <span style="display:inline-flex; align-items:center; gap:7px; height:30px; padding:0 6px 0 11px; border-radius:20px; background:#EAF1F9; font-size:12.5px; font-weight:600; color:#1B4478;">Word Building <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+            <span style="display:inline-flex; align-items:center; height:30px; padding:0 12px; border-radius:20px; border:1px dashed #C9D2DB; font-size:12.5px; font-weight:600; color:#5A6572;">+ Add</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
