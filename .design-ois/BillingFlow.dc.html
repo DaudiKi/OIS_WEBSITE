@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { margin:0; font-family:'Figtree', ui-sans-serif, system-ui, sans-serif; color:#1A1F26; background:#FFFFFF; -webkit-font-smoothing:antialiased; }
+    a { color:#2c64ac; } a:hover { color:#1B4478; }
+    h1,h2,h3,h4 { margin:0; font-family:'Newsreader', Georgia, serif; font-weight:600; text-wrap:balance; }
+    p { margin:0; }
+    .mono { font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+    .st { display:inline-flex; align-items:center; gap:7px; padding:6px 13px; border-radius:20px; font-size:12.5px; font-weight:600; }
+    .dec { border:1px solid #DDE3E9; border-radius:11px; padding:17px 19px; display:flex; flex-direction:column; gap:7px; background:#FFFFFF; }
+    .dnum { font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; color:#FFFFFF; background:#1B4478; padding:2px 7px; border-radius:4px; }
+  </style>
+</helmet>
+
+<div style="width:1280px; padding:48px 56px 64px; box-sizing:border-box; background:#FFFFFF;">
+
+  <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:10px;">
+    <span style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#4e9236;">Billing lifecycle</span>
+    <span style="height:1px; flex-grow:1; background:#DDE3E9;"></span>
+  </div>
+  <h1 style="font-size:38px; line-height:1.1; letter-spacing:-0.01em;">From package to paid</h1>
+  <p style="margin-top:12px; max-width:88ch; font-size:15.5px; line-height:1.7; color:#5A6572;">The administrator only ever does one thing: decide what a pupil is getting. Everything downstream — the itemised statement, the portal access, the club register, the parent's balance — follows from that automatically.</p>
+
+  <!-- FLOW -->
+  <div style="margin-top:32px; display:flex; flex-direction:column; gap:0;">
+
+    <div style="display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:12px;">
+      <div style="border:1.5px solid #C6D8EC; border-radius:11px; background:#F7FAFD; padding:15px;">
+        <span class="mono" style="font-size:10.5px; font-weight:600; color:#1B4478;">STEP 1</span>
+        <h3 style="font-size:15.5px; margin-top:6px;">Assemble</h3>
+        <p style="font-size:12px; line-height:1.55; color:#5A6572; margin-top:5px;">Admin picks items for the pupil — 12 PACEs, swimming, one e-learning module.</p>
+      </div>
+      <div style="border:1.5px solid #C6D8EC; border-radius:11px; background:#F7FAFD; padding:15px;">
+        <span class="mono" style="font-size:10.5px; font-weight:600; color:#1B4478;">STEP 2</span>
+        <h3 style="font-size:15.5px; margin-top:6px;">Enrol</h3>
+        <p style="font-size:12px; line-height:1.55; color:#5A6572; margin-top:5px;">One enrolment per item, each freezing today's price.</p>
+      </div>
+      <div style="border:1.5px solid #E8C98A; border-radius:11px; background:#FFFDF8; padding:15px;">
+        <span class="mono" style="font-size:10.5px; font-weight:600; color:#B4740A;">STEP 3</span>
+        <h3 style="font-size:15.5px; margin-top:6px;">Draft statement</h3>
+        <p style="font-size:12px; line-height:1.55; color:#5A6572; margin-top:5px;">Lines regenerate freely while the invoice is a draft.</p>
+      </div>
+      <div style="border:1.5px solid #E8C98A; border-radius:11px; background:#FFFDF8; padding:15px;">
+        <span class="mono" style="font-size:10.5px; font-weight:600; color:#B4740A;">STEP 4</span>
+        <h3 style="font-size:15.5px; margin-top:6px;">Issue</h3>
+        <p style="font-size:12px; line-height:1.55; color:#5A6572; margin-top:5px;">Lines freeze. From here corrections are credit notes.</p>
+      </div>
+      <div style="border:1.5px solid #CFE3C6; border-radius:11px; background:#FBFDFA; padding:15px;">
+        <span class="mono" style="font-size:10.5px; font-weight:600; color:#35661F;">STEP 5</span>
+        <h3 style="font-size:15.5px; margin-top:6px;">Provision</h3>
+        <p style="font-size:12px; line-height:1.55; color:#5A6572; margin-top:5px;">Portal access granted; club registers updated.</p>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:12px; margin:16px 0 0; padding:13px 16px; border-radius:10px; background:#F5F7F9; border:1px solid #DDE3E9;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2c64ac" stroke-width="2.2" stroke-linecap="round" style="flex:none;"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+      <p style="font-size:13px; line-height:1.55; color:#3D4650;">Steps 3–5 are database triggers, not screens anybody visits. The only human action is step 1 — which is why the package builder is the one screen that has to be genuinely good.</p>
+    </div>
+  </div>
+
+  <!-- INVOICE STATES -->
+  <div style="margin-top:34px;">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:16px;">
+      <h2 style="font-size:23px;">Invoice states</h2>
+      <span style="height:1px; flex-grow:1; background:#DDE3E9;"></span>
+    </div>
+
+    <div style="display:flex; align-items:center; flex-wrap:wrap; gap:11px;">
+      <span class="st" style="background:#EEF1F4; color:#6B7580;"><span style="width:7px;height:7px;border-radius:50%;background:#6B7580;"></span>draft</span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#98A2AE" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+      <span class="st" style="background:#EAF1F9; color:#1B4478;"><span style="width:7px;height:7px;border-radius:50%;background:#2c64ac;"></span>issued</span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#98A2AE" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+      <span class="st" style="background:#FBF0DC; color:#B4740A;"><span style="width:7px;height:7px;border-radius:50%;background:#B4740A;"></span>part paid</span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#98A2AE" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+      <span class="st" style="background:#E8F3E3; color:#35661F;"><span style="width:7px;height:7px;border-radius:50%;background:#4e9236;"></span>paid</span>
+      <span style="width:26px;"></span>
+      <span class="st" style="background:#FBE7E4; color:#B23A2E;"><span style="width:7px;height:7px;border-radius:50%;background:#B23A2E;"></span>void</span>
+      <span style="font-size:12.5px; color:#5A6572;">— cancels the whole document; never used to fix one line</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; margin-top:18px;">
+      <div style="border:1px solid #DDE3E9; border-radius:11px; padding:17px 19px;">
+        <h3 style="font-size:16.5px;">While it is a draft</h3>
+        <p style="font-size:13px; line-height:1.65; color:#5A6572; margin-top:6px;">Lines are a pure function of the pupil's enrolments. Add swimming, the line appears. Remove it, the line vanishes. Nothing to reconcile, because nothing has been promised to anyone yet.</p>
+      </div>
+      <div style="border:1px solid #E8C98A; border-radius:11px; padding:17px 19px; background:#FFFDF8;">
+        <h3 style="font-size:16.5px;">Once it is issued</h3>
+        <p style="font-size:13px; line-height:1.65; color:#5A6572; margin-top:6px;">The parent has seen a number. Lines become immutable; withdrawing a pupil from swimming raises a credit note instead of quietly rewriting history. This is the single rule that keeps the fee ledger auditable.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORE VS EXTRAS -->
+  <div style="margin-top:34px;">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:16px;">
+      <h2 style="font-size:23px;">Inside the fees document, and outside it</h2>
+      <span style="height:1px; flex-grow:1; background:#DDE3E9;"></span>
+    </div>
+    <p style="font-size:14.5px; line-height:1.7; color:#5A6572; max-width:92ch;">One flag on the catalogue item — <span class="mono" style="font-size:13px;">billing_group</span> — decides which section of the statement a line lands in. It is one statement either way, so a parent sees a single balance; the split is presentational and by section total, not two separate debts.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; margin-top:16px;">
+      <div style="border:1px solid #C6D8EC; border-radius:11px; overflow:hidden;">
+        <div style="padding:12px 16px; background:#EAF1F9; display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:14.5px; font-weight:700; color:#1B4478;">core — school fees proper</span>
+          <span class="mono" style="font-size:11.5px; color:#1B4478;">billing_group = core</span>
+        </div>
+        <div style="padding:14px 16px; display:flex; flex-direction:column; gap:7px;">
+          <span style="font-size:13px; color:#3D4650;">Tuition · PACE materials · lunch · transport · examination fees</span>
+          <p style="font-size:12.5px; line-height:1.6; color:#5A6572; margin-top:3px;">Charged to every pupil as a matter of course. Appears in the top section, and is what "school fees" means in conversation with a parent.</p>
+        </div>
+      </div>
+      <div style="border:1px solid #CFE3C6; border-radius:11px; overflow:hidden;">
+        <div style="padding:12px 16px; background:#E8F3E3; display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:14.5px; font-weight:700; color:#35661F;">extra — chosen, not assumed</span>
+          <span class="mono" style="font-size:11.5px; color:#35661F;">billing_group = extra</span>
+        </div>
+        <div style="padding:14px 16px; display:flex; flex-direction:column; gap:7px;">
+          <span style="font-size:13px; color:#3D4650;">Clubs · swimming · e-learning modules · training · event tickets</span>
+          <p style="font-size:12.5px; line-height:1.6; color:#5A6572; margin-top:3px;">Opted into for this pupil, this term. Listed separately so a parent can see exactly what the optional part of the bill is — and drop it next term without touching the core.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECISIONS -->
+  <div style="margin-top:36px;">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:8px;">
+      <h2 style="font-size:23px;">Eight things to settle before anyone writes code</h2>
+      <span style="height:1px; flex-grow:1; background:#DDE3E9;"></span>
+    </div>
+    <p style="font-size:14px; line-height:1.65; color:#5A6572; max-width:92ch; margin-bottom:18px;">The first three are not opinions — getting them wrong corrupts the fee ledger in ways that are painful to unwind. The rest are genuine policy choices that only the school can make.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px;">
+
+      <div class="dec" style="border-color:#EFC9C1; background:#FFFBFA;">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum" style="background:#B23A2E;">01</span><h3 style="font-size:16px;">Freeze the price at assignment</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">An invoice line must carry the price it was sold at, not a pointer to today's catalogue price. Otherwise raising swimming fees next term silently rewrites last term's issued invoices — and every reconciliation after it.</p>
+      </div>
+
+      <div class="dec" style="border-color:#EFC9C1; background:#FFFBFA;">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum" style="background:#B23A2E;">02</span><h3 style="font-size:16px;">Money is an integer</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">Store UGX as <span class="mono">bigint</span>, never a float. Floating point cannot represent money exactly, and the error compounds across hundreds of pupils until a termly total is visibly wrong by a few shillings that nobody can account for.</p>
+      </div>
+
+      <div class="dec" style="border-color:#EFC9C1; background:#FFFBFA;">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum" style="background:#B23A2E;">03</span><h3 style="font-size:16px;">Parents must be linkable to children first</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">This is already the system's biggest gap, and billing makes it fatal rather than merely awkward: a parent who cannot be linked to a pupil cannot be shown an invoice at all. Fix that before building any of this.</p>
+      </div>
+
+      <div class="dec">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum">04</span><h3 style="font-size:16px;">Does non-payment close the portal?</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">If an e-learning module is unpaid, does the pupil lose access mid-term? Cutting a child off from schoolwork over a parent's arrears is a policy question, not an engineering one — but the answer changes what provisioning has to watch.</p>
+      </div>
+
+      <div class="dec">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum">05</span><h3 style="font-size:16px;">Who may add an extra?</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">If a parent can sign their child up for swimming from the portal, they are creating a charge on their own bill. That is convenient and it is also a commitment — decide whether it needs an administrator to confirm before it becomes billable.</p>
+      </div>
+
+      <div class="dec">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum">06</span><h3 style="font-size:16px;">Consent is not payment</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">Swimming and off-site trips need a parent's permission as well as their money. Keep the two states separate: paid-but-unconsented and consented-but-unpaid are both real, and both must block the child going in the water.</p>
+      </div>
+
+      <div class="dec">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum">07</span><h3 style="font-size:16px;">Club capacity belongs in the database</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">Twenty places and two parents signing up at once will both pass an application-level check. Enforce the limit with a constraint, and decide now whether the loser is refused or waitlisted.</p>
+      </div>
+
+      <div class="dec">
+        <div style="display:flex; align-items:center; gap:9px;"><span class="dnum">08</span><h3 style="font-size:16px;">A secret ballot needs two tables</h3></div>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572;">Record <em>that</em> a pupil voted separately from <em>what</em> the vote was. Put both in one row and any administrator can see how each child voted for their own student council — which is exactly what a ballot is supposed to prevent.</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

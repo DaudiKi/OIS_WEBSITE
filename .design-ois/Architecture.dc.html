@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { margin:0; font-family:'Figtree', ui-sans-serif, system-ui, sans-serif; color:#1A1F26; background:#FFFFFF; -webkit-font-smoothing:antialiased; }
+    a { color:#2c64ac; } a:hover { color:#1B4478; }
+    h1,h2,h3,h4 { margin:0; font-family:'Newsreader', Georgia, serif; font-weight:600; text-wrap:balance; }
+    p { margin:0; }
+    .mono { font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+    .ent { border:1px solid #DDE3E9; border-radius:10px; overflow:hidden; background:#FFFFFF; }
+    .ent > .hd { padding:8px 12px; border-bottom:1px solid #DDE3E9; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .ent > .bd { padding:9px 12px; display:flex; flex-direction:column; gap:5px; }
+    .f { display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:11.5px; }
+    .f > .n { font-family:'IBM Plex Mono', monospace; color:#1A1F26; }
+    .f > .t { color:#7A8590; font-size:10.5px; }
+    .key { color:#B4740A !important; font-weight:600; }
+    .lyr { font-size:10.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; }
+  </style>
+</helmet>
+
+<div style="width:1280px; padding:48px 56px 64px; box-sizing:border-box; background:#FFFFFF;">
+
+  <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:10px;">
+    <span style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#4e9236;">Backend architecture</span>
+    <span style="height:1px; flex-grow:1; background:#DDE3E9;"></span>
+  </div>
+  <h1 style="font-size:38px; line-height:1.1; letter-spacing:-0.01em;">One catalogue, one ledger</h1>
+  <p style="margin-top:12px; max-width:88ch; font-size:15.5px; line-height:1.7; color:#5A6572;">A PACE, a football club, a swimming slot, an e-learning module, a leadership course, a lunch plan and an event ticket look like seven different features. For billing they are one thing: <strong style="color:#1A1F26;">something the school offers, that a student is given, which costs money and is delivered somehow.</strong> Model that once and every new offering — including ones nobody has thought of yet — bills correctly for free.</p>
+
+  <!-- THE SPINE -->
+  <div style="margin-top:32px; display:flex; align-items:stretch; gap:0;">
+
+    <div style="flex-grow:1; border:1.5px solid #C6D8EC; border-radius:11px; background:#F7FAFD; padding:16px 18px;">
+      <span class="lyr" style="color:#1B4478;">1 · Catalogue</span>
+      <h3 style="font-size:17px; margin-top:7px;">What the school offers</h3>
+      <p style="font-size:12.5px; line-height:1.55; color:#5A6572; margin-top:5px;">One row per purchasable thing, whatever its kind.</p>
+    </div>
+
+    <div style="flex:none; width:44px; display:flex; align-items:center; justify-content:center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A2AE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+    </div>
+
+    <div style="flex-grow:1; border:1.5px solid #C6D8EC; border-radius:11px; background:#F7FAFD; padding:16px 18px;">
+      <span class="lyr" style="color:#1B4478;">2 · Assignment</span>
+      <h3 style="font-size:17px; margin-top:7px;">What this pupil gets</h3>
+      <p style="font-size:12.5px; line-height:1.55; color:#5A6572; margin-top:5px;">An enrolment ties a pupil to an item for a term.</p>
+    </div>
+
+    <div style="flex:none; width:44px; display:flex; align-items:center; justify-content:center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A2AE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+    </div>
+
+    <div style="flex-grow:1; border:1.5px solid #E8C98A; border-radius:11px; background:#FFFDF8; padding:16px 18px;">
+      <span class="lyr" style="color:#B4740A;">3 · Billing</span>
+      <h3 style="font-size:17px; margin-top:7px;">What it costs</h3>
+      <p style="font-size:12.5px; line-height:1.55; color:#5A6572; margin-top:5px;">Every enrolment becomes an itemised line.</p>
+    </div>
+
+    <div style="flex:none; width:44px; display:flex; align-items:center; justify-content:center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#98A2AE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+    </div>
+
+    <div style="flex-grow:1; border:1.5px solid #CFE3C6; border-radius:11px; background:#FBFDFA; padding:16px 18px;">
+      <span class="lyr" style="color:#35661F;">4 · Delivery</span>
+      <h3 style="font-size:17px; margin-top:7px;">How it reaches them</h3>
+      <p style="font-size:12.5px; line-height:1.55; color:#5A6572; margin-top:5px;">At school, or provisioned in the portal.</p>
+    </div>
+  </div>
+
+  <!-- ENTITY TABLES -->
+  <div style="margin-top:26px; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; align-items:start;">
+
+    <!-- CATALOGUE -->
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="ent">
+        <div class="hd" style="background:#EAF1F9;">
+          <span class="mono" style="font-size:12.5px; font-weight:600; color:#1B4478;">catalogue_item</span>
+        </div>
+        <div class="bd">
+          <div class="f"><span class="n key">id</span><span class="t">uuid</span></div>
+          <div class="f"><span class="n">kind</span><span class="t">enum</span></div>
+          <div class="f"><span class="n">name</span><span class="t">text</span></div>
+          <div class="f"><span class="n">delivery</span><span class="t">physical·portal</span></div>
+          <div class="f"><span class="n">billing_group</span><span class="t">core·extra</span></div>
+          <div class="f"><span class="n">billing_cycle</span><span class="t">term·unit·once</span></div>
+          <div class="f"><span class="n">unit_price</span><span class="t">bigint UGX</span></div>
+          <div class="f"><span class="n">unit_label</span><span class="t">"per PACE"</span></div>
+          <div class="f"><span class="n">capacity</span><span class="t">int?</span></div>
+          <div class="f"><span class="n">eligibility</span><span class="t">jsonb</span></div>
+          <div class="f"><span class="n">needs_consent</span><span class="t">bool</span></div>
+          <div class="f"><span class="n">active</span><span class="t">bool</span></div>
+        </div>
+      </div>
+      <div style="padding:11px 13px; border-radius:9px; background:#F5F7F9; border:1px solid #DDE3E9;">
+        <span style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#5A6572;">kind</span>
+        <p style="font-size:11.5px; line-height:1.6; color:#3D4650; margin-top:5px;"><span class="mono">academic</span>, <span class="mono">club</span>, <span class="mono">activity</span>, <span class="mono">elearning</span>, <span class="mono">training</span>, <span class="mono">service</span>, <span class="mono">ticket</span> — adding a kind never touches billing code.</p>
+      </div>
+    </div>
+
+    <!-- ASSIGNMENT -->
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="ent">
+        <div class="hd" style="background:#EAF1F9;">
+          <span class="mono" style="font-size:12.5px; font-weight:600; color:#1B4478;">enrolment</span>
+        </div>
+        <div class="bd">
+          <div class="f"><span class="n key">id</span><span class="t">uuid</span></div>
+          <div class="f"><span class="n key">student_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n key">item_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n key">term_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n">quantity</span><span class="t">numeric</span></div>
+          <div class="f" style="background:#FBF0DC; margin:0 -6px; padding:2px 6px; border-radius:4px;"><span class="n" style="font-weight:600;">unit_price_snap</span><span class="t" style="color:#B4740A; font-weight:600;">bigint</span></div>
+          <div class="f" style="background:#FBF0DC; margin:0 -6px; padding:2px 6px; border-radius:4px;"><span class="n" style="font-weight:600;">group_snap</span><span class="t" style="color:#B4740A; font-weight:600;">enum</span></div>
+          <div class="f"><span class="n">status</span><span class="t">enum</span></div>
+          <div class="f"><span class="n">source</span><span class="t">admin·form</span></div>
+          <div class="f"><span class="n">consent_state</span><span class="t">enum?</span></div>
+          <div class="f"><span class="n">created_by</span><span class="t">fk</span></div>
+        </div>
+      </div>
+      <div class="ent">
+        <div class="hd" style="background:#F5F7F9;">
+          <span class="mono" style="font-size:12px; font-weight:600; color:#3D4650;">package · package_item</span>
+        </div>
+        <div class="bd">
+          <p style="font-size:11.5px; line-height:1.6; color:#5A6572;">A saved bundle — "Grade 9 standard" — that an administrator applies in one click, creating many enrolments at once. A template, never a billing record itself.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLING -->
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="ent">
+        <div class="hd" style="background:#FBF0DC;">
+          <span class="mono" style="font-size:12.5px; font-weight:600; color:#B4740A;">invoice</span>
+        </div>
+        <div class="bd">
+          <div class="f"><span class="n key">id</span><span class="t">uuid</span></div>
+          <div class="f"><span class="n key">student_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n key">term_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n">number</span><span class="t">text uniq</span></div>
+          <div class="f"><span class="n">status</span><span class="t">draft→paid</span></div>
+          <div class="f"><span class="n">issued_at</span><span class="t">timestamptz</span></div>
+          <div class="f"><span class="n">due_date</span><span class="t">date</span></div>
+          <div class="f"><span class="n">core_total</span><span class="t">bigint</span></div>
+          <div class="f"><span class="n">extras_total</span><span class="t">bigint</span></div>
+        </div>
+      </div>
+      <div class="ent">
+        <div class="hd" style="background:#FBF0DC;">
+          <span class="mono" style="font-size:12.5px; font-weight:600; color:#B4740A;">invoice_line</span>
+        </div>
+        <div class="bd">
+          <div class="f"><span class="n key">invoice_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n">enrolment_id</span><span class="t">fk?</span></div>
+          <div class="f"><span class="n">description</span><span class="t">text</span></div>
+          <div class="f"><span class="n">quantity</span><span class="t">numeric</span></div>
+          <div class="f"><span class="n">unit_price</span><span class="t">bigint</span></div>
+          <div class="f"><span class="n">amount</span><span class="t">bigint</span></div>
+          <div class="f"><span class="n">billing_group</span><span class="t">core·extra</span></div>
+        </div>
+      </div>
+      <div class="ent">
+        <div class="hd" style="background:#F5F7F9;">
+          <span class="mono" style="font-size:12px; font-weight:600; color:#3D4650;">payment · allocation · credit_note</span>
+        </div>
+        <div class="bd">
+          <p style="font-size:11.5px; line-height:1.6; color:#5A6572;">Money in, matched against lines. Corrections after issue are credit notes — never edits.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELIVERY -->
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="ent">
+        <div class="hd" style="background:#E8F3E3;">
+          <span class="mono" style="font-size:12px; font-weight:600; color:#35661F;">module_access · progress</span>
+          <span style="font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:20px; background:#FFF; color:#35661F; border:1px solid #CFE3C6;">PORTAL</span>
+        </div>
+        <div class="bd">
+          <div class="f"><span class="n key">student_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n key">module_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n">granted_at</span><span class="t">timestamptz</span></div>
+          <div class="f"><span class="n">granted_by</span><span class="t">system</span></div>
+          <div class="f"><span class="n">expires_at</span><span class="t">timestamptz?</span></div>
+          <div class="f"><span class="n">unit_status</span><span class="t">enum</span></div>
+          <div class="f"><span class="n">score</span><span class="t">numeric?</span></div>
+        </div>
+      </div>
+      <div class="ent">
+        <div class="hd" style="background:#E8F3E3;">
+          <span class="mono" style="font-size:12px; font-weight:600; color:#35661F;">club_membership · attendance</span>
+          <span style="font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:20px; background:#FFF; color:#35661F; border:1px solid #CFE3C6;">AT SCHOOL</span>
+        </div>
+        <div class="bd">
+          <div class="f"><span class="n key">student_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n key">item_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n">joined_at</span><span class="t">timestamptz</span></div>
+          <div class="f"><span class="n">session_id</span><span class="t">fk</span></div>
+          <div class="f"><span class="n">present</span><span class="t">bool</span></div>
+        </div>
+      </div>
+      <div style="padding:11px 13px; border-radius:9px; background:#F5F7F9; border:1px solid #DDE3E9;">
+        <p style="font-size:11.5px; line-height:1.6; color:#3D4650;"><strong style="color:#1A1F26;">Provisioning is a consequence, not a step.</strong> An enrolment going <span class="mono">active</span> fires it. Portal items grant access; physical items create a membership.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SATELLITES -->
+  <div style="margin-top:34px;">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
+      <h2 style="font-size:23px;">The three that hang off the same spine</h2>
+      <span style="height:1px; flex-grow:1; background:#DDE3E9;"></span>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px;">
+
+      <div style="border:1px solid #DDE3E9; border-radius:11px; padding:18px;">
+        <h3 style="font-size:17px;">Events &amp; tickets</h3>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572; margin-top:6px;">A ticket type <em>is</em> a catalogue item of kind <span class="mono">ticket</span>. Issuing a ticket creates an enrolment, so a paid ticket lands on the fee statement exactly like swimming does — and a free one simply prices at zero.</p>
+        <div style="display:flex; flex-direction:column; gap:4px; margin-top:12px; padding-top:11px; border-top:1px solid #EEF1F4;">
+          <div class="f"><span class="n">event · ticket_type</span><span class="t">catalogue-backed</span></div>
+          <div class="f"><span class="n">ticket</span><span class="t">serial, holder, state</span></div>
+          <div class="f"><span class="n">check_in</span><span class="t">scanned_at, by</span></div>
+        </div>
+      </div>
+
+      <div style="border:1px solid #DDE3E9; border-radius:11px; padding:18px;">
+        <h3 style="font-size:17px;">Forms &amp; surveys</h3>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572; margin-top:6px;">A survey collects answers. A <em>sign-up</em> form does one thing more: on submit it creates an enrolment. That single rule turns "sign my child up for swimming" into a priced line without anyone re-keying it.</p>
+        <div style="display:flex; flex-direction:column; gap:4px; margin-top:12px; padding-top:11px; border-top:1px solid #EEF1F4;">
+          <div class="f"><span class="n">form · form_field</span><span class="t">definition</span></div>
+          <div class="f"><span class="n">form_response</span><span class="t">answers</span></div>
+          <div class="f"><span class="n">form_action</span><span class="t">→ enrolment</span></div>
+        </div>
+      </div>
+
+      <div style="border:1px solid #DDE3E9; border-radius:11px; padding:18px;">
+        <h3 style="font-size:17px;">Ballots</h3>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572; margin-top:6px;">Student council voting is the one thing here that is <strong style="color:#1A1F26;">not</strong> billable and must not reuse the spine. It needs the opposite property: a vote that cannot be traced back to the voter.</p>
+        <div style="display:flex; flex-direction:column; gap:4px; margin-top:12px; padding-top:11px; border-top:1px solid #EEF1F4;">
+          <div class="f"><span class="n">ballot · option</span><span class="t">definition</span></div>
+          <div class="f"><span class="n">voter_roll</span><span class="t">who may vote</span></div>
+          <div class="f"><span class="n">vote</span><span class="t">option only</span></div>
+          <div class="f"><span class="n">voted_marker</span><span class="t">separate table</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
