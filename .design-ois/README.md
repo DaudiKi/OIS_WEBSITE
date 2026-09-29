@@ -4,14 +4,39 @@ Mockups for the public website, the AMS portal, and a proposed backend for
 fees, clubs, e-learning, events, forms and ballots. Drawn as a proposal, not
 as code to ship — nothing here is wired into the app; `src/` is untouched.
 
-## Rebuilding / republishing the canvas
+## Two ways to look at these screens
 
-The published canvas is **generated** and is not tracked (see `.gitignore`).
-It is assembled by the `/design` skill's helper, which only exists after that
-skill is invoked — so re-seeding must be started by a person running
-`/design` in a session, not by Claude on its own.
+**1. The viewer** (read-only, works today) —
+`https://claude.ai/artifact/P2qwYnWggw6CW3N54trGWe`
 
-Once the skill's base directory is available:
+A plain gallery: sidebar grouped by area, arrow keys to step through, fit/100%
+zoom, and each screen openable on its own. Good for review and for sending to
+someone. It cannot be edited by clicking.
+
+Rebuild it from the artboard sources:
+
+```bash
+cd .design-ois
+node viewer/build-screens.mjs . viewer/screens
+```
+
+That unwraps every `*.dc.html` into a standalone page under `viewer/screens/`
+(generated, not tracked) and writes `viewer/screens.json`. The viewer shell is
+`viewer/index.html`; it carries its own hard-coded screen list, so **add a new
+artboard and you must add it to the `GROUPS` array there too.** Publish
+`viewer/index.html` with all of `viewer/screens/*.html` as supporting files.
+
+**2. The design canvas** (editable, needs re-seeding) —
+`https://claude.ai/code/artifact/6c6b6554-1a4f-463f-82b6-4d18bbf21b39`
+
+Click-to-select, properties panel, inline text editing. Currently shows only
+the first 25 artboards; the 11 architecture and billing screens are not on it
+yet.
+
+The canvas is assembled by the `/design` skill's helper, which only exists
+once that skill has been invoked — so re-seeding has to be started by a person
+running `/design`, not by Claude on its own. Once the skill's base directory is
+available:
 
 ```bash
 cd .design-ois
@@ -24,11 +49,7 @@ node "<skill base>/seed-canvas.mjs" \
 node "<skill base>/seed-canvas.mjs" --check orchardswood-redesign.html
 ```
 
-Then publish with the Artifact tool to the **existing** URL so the link stays
-stable: `https://claude.ai/code/artifact/6c6b6554-1a4f-463f-82b6-4d18bbf21b39`
-
-The live artifact currently shows the first 25 artboards. The 11 architecture
-and billing screens below are in this directory but not yet published.
+Then publish to the **existing** canvas URL above so the link stays stable.
 
 ## Pages
 
