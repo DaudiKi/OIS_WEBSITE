@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Figtree:wght@400;500;600;700;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Figtree', ui-sans-serif, system-ui, sans-serif; color:#1A1F26; background:#FFFFFF; -webkit-font-smoothing:antialiased; }
+    a { color:#2c64ac; } a:hover { color:#1B4478; }
+    h1,h2,h3,h4 { margin:0; font-family:'Newsreader', Georgia, serif; font-weight:600; text-wrap:balance; }
+    p { margin:0; }
+    .mono { font-variant-numeric:tabular-nums; }
+  </style>
+</helmet>
+
+<div style="width:1280px; padding:56px 64px 72px; box-sizing:border-box; background:#FFFFFF;">
+
+  <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:10px;">
+    <span style="font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#4e9236;">OrchardsWood — Design Foundations</span>
+    <span style="height:1px; flex-grow:1; background:#DDE3E9;"></span>
+  </div>
+  <h1 style="font-size:40px; line-height:1.1; letter-spacing:-0.01em;">Refining what's already there</h1>
+  <p style="margin-top:12px; max-width:62ch; font-size:16px; line-height:1.6; color:#5A6572;">The blue and green stay — parents recognise them. What changes is discipline: the gradient retires, the two brand colours get distinct jobs, and type gets a real hierarchy. Six decisions, each with a reason.</p>
+
+  <!-- DECISION 1 -->
+  <div style="margin-top:44px; display:flex; flex-direction:column; gap:28px;">
+
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:32px; align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:'Figtree'; font-size:11px; font-weight:700; color:#FFFFFF; background:#2c64ac; padding:3px 8px; border-radius:4px; letter-spacing:0.05em;">01</span>
+          <h3 style="font-size:19px;">The gradient retires</h3>
+        </div>
+        <p style="font-size:14.5px; line-height:1.6; color:#5A6572;">The blue-to-green gradient appears in more than fifteen places across every stylesheet — page headers, buttons, cards, dividers. It is the single most dating element in the current design, and it makes text sitting on it hard to read. Flat colour replaces it everywhere.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#B23A2E;">Before</span>
+          <div style="height:64px; border-radius:10px; background:linear-gradient(135deg,#2c64ac,#63b647); display:flex; align-items:center; padding:0 18px;">
+            <span style="color:#FFFFFF; font-weight:700; font-size:16px;">Welcome back, Herriet!</span>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#35661F;">After</span>
+          <div style="height:64px; border-radius:10px; background:#1B4478; display:flex; align-items:center; padding:0 18px;">
+            <span style="color:#FFFFFF; font-weight:700; font-size:16px;">Welcome back, Herriet!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DECISION 2 -->
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:32px; align-items:start; border-top:1px solid #DDE3E9; padding-top:28px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:'Figtree'; font-size:11px; font-weight:700; color:#FFFFFF; background:#2c64ac; padding:3px 8px; border-radius:4px; letter-spacing:0.05em;">02</span>
+          <h3 style="font-size:19px;">Blue and green get separate jobs</h3>
+        </div>
+        <p style="font-size:14.5px; line-height:1.6; color:#5A6572;">Today the two brand colours are used interchangeably, so neither means anything. From here: <strong style="color:#1A1F26;">blue is interaction</strong> — links, buttons, focus, anything you can click. <strong style="color:#1A1F26;">Green is affirmation</strong> — published, present, accepted, passed. Colour starts carrying information.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; gap:10px; align-items:center;">
+          <div style="width:44px; height:44px; border-radius:8px; background:#2c64ac;"></div>
+          <div style="display:flex; flex-direction:column;">
+            <span style="font-size:13.5px; font-weight:600;">OIS Blue — interaction</span>
+            <span class="mono" style="font-size:12px; color:#5A6572;">#2c64ac · unchanged</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <div style="width:44px; height:44px; border-radius:8px; background:#4e9236;"></div>
+          <div style="display:flex; flex-direction:column;">
+            <span style="font-size:13.5px; font-weight:600;">OIS Green — affirmation</span>
+            <span class="mono" style="font-size:12px; color:#5A6572;">#4e9236 · fills &amp; icons</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <div style="width:44px; height:44px; border-radius:8px; background:#35661F;"></div>
+          <div style="display:flex; flex-direction:column;">
+            <span style="font-size:13.5px; font-weight:600;">Green, darkened for text</span>
+            <span class="mono" style="font-size:12px; color:#5A6572;">#35661F · see decision 03</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DECISION 3 -->
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:32px; align-items:start; border-top:1px solid #DDE3E9; padding-top:28px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:'Figtree'; font-size:11px; font-weight:700; color:#FFFFFF; background:#B23A2E; padding:3px 8px; border-radius:4px; letter-spacing:0.05em;">03</span>
+          <h3 style="font-size:19px;">The bright green fails contrast — so it never carries text</h3>
+        </div>
+        <p style="font-size:14.5px; line-height:1.6; color:#5A6572;">This one is a genuine accessibility fault, not a taste call. <span class="mono">#63b647</span> on white measures about 2.4:1 — well under the 4.5:1 minimum for body text. It stays for fills and icons; a darkened green takes over wherever green becomes words.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="border:1px solid #DDE3E9; border-radius:10px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+          <span style="font-size:15px; font-weight:600; color:#63b647;">Report published</span>
+          <span class="mono" style="font-size:12px; font-weight:600; color:#B23A2E; background:#FBE7E4; padding:3px 8px; border-radius:20px;">2.4:1 — fails</span>
+        </div>
+        <div style="border:1px solid #DDE3E9; border-radius:10px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+          <span style="font-size:15px; font-weight:600; color:#35661F;">Report published</span>
+          <span class="mono" style="font-size:12px; font-weight:600; color:#35661F; background:#E8F3E3; padding:3px 8px; border-radius:20px;">6.1:1 — passes</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DECISION 4 -->
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:32px; align-items:start; border-top:1px solid #DDE3E9; padding-top:28px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:'Figtree'; font-size:11px; font-weight:700; color:#FFFFFF; background:#2c64ac; padding:3px 8px; border-radius:4px; letter-spacing:0.05em;">04</span>
+          <h3 style="font-size:19px;">A display face with a voice</h3>
+        </div>
+        <p style="font-size:14.5px; line-height:1.6; color:#5A6572;">Righteous is a novelty face doing serious work — it appears on page headings across the site. Newsreader replaces it for headings: warm, editorial, and readable at every size. Figtree carries body and interface text, with tabular figures for the AMS.</p>
+        <p style="font-size:13px; line-height:1.6; color:#5A6572; background:#F5F7F9; border-radius:8px; padding:10px 12px;">The <strong style="color:#1A1F26;">OIS wordmark itself is untouched</strong> — that is a brand asset, not interface type.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#5A6572;">Display — Newsreader</span>
+          <span style="font-family:'Newsreader',Georgia,serif; font-size:34px; font-weight:600; line-height:1.15;">Equipping this generation</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#5A6572;">Interface — Figtree</span>
+          <span style="font-size:15px; line-height:1.6; color:#1A1F26;">Term 2 report cards are ready for verification.</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#5A6572;">Data — Figtree, tabular</span>
+          <span class="mono" style="font-size:15px; font-weight:600;">94.25%&nbsp;&nbsp;·&nbsp;&nbsp;88.00%&nbsp;&nbsp;·&nbsp;&nbsp;A*</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DECISION 5 -->
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:32px; align-items:start; border-top:1px solid #DDE3E9; padding-top:28px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:'Figtree'; font-size:11px; font-weight:700; color:#FFFFFF; background:#2c64ac; padding:3px 8px; border-radius:4px; letter-spacing:0.05em;">05</span>
+          <h3 style="font-size:19px;">Status colour, separate from brand colour</h3>
+        </div>
+        <p style="font-size:14.5px; line-height:1.6; color:#5A6572;">The report workflow has five states and today they are told apart mostly by reading. Each gets a fixed colour and a fixed shape, used identically everywhere it appears — dashboard, list, editor.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:5px 11px; border-radius:20px; background:#EEF1F4; color:#6B7580;"><span style="width:6px;height:6px;border-radius:50%;background:#6B7580;"></span>Draft</span>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:5px 11px; border-radius:20px; background:#FBF0DC; color:#B4740A;"><span style="width:6px;height:6px;border-radius:50%;background:#B4740A;"></span>Submitted</span>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:5px 11px; border-radius:20px; background:#FBE7E4; color:#B23A2E;"><span style="width:6px;height:6px;border-radius:50%;background:#B23A2E;"></span>Returned</span>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:5px 11px; border-radius:20px; background:#EAF1F9; color:#1B4478;"><span style="width:6px;height:6px;border-radius:50%;background:#2c64ac;"></span>Verified</span>
+        <span style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:5px 11px; border-radius:20px; background:#E8F3E3; color:#35661F;"><span style="width:6px;height:6px;border-radius:50%;background:#4e9236;"></span>Published</span>
+      </div>
+    </div>
+
+    <!-- DECISION 6 -->
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:32px; align-items:start; border-top:1px solid #DDE3E9; padding-top:28px;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:'Figtree'; font-size:11px; font-weight:700; color:#FFFFFF; background:#2c64ac; padding:3px 8px; border-radius:4px; letter-spacing:0.05em;">06</span>
+          <h3 style="font-size:19px;">One identity, two densities</h3>
+        </div>
+        <p style="font-size:14.5px; line-height:1.6; color:#5A6572;">The public site breathes — generous margins, large type, room around images. The AMS is a tool people use all day, so it tightens: 36px controls, 14px data type, more rows on screen. Same palette, same faces, different rhythm.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="border:1px solid #DDE3E9; border-radius:10px; padding:16px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#5A6572;">Public — roomy</span>
+          <div style="margin-top:10px; display:flex; gap:10px;">
+            <span style="display:inline-flex; align-items:center; padding:0 22px; height:48px; border-radius:8px; background:#2c64ac; color:#FFF; font-weight:600; font-size:15.5px;">Apply now</span>
+            <span style="display:inline-flex; align-items:center; padding:0 22px; height:48px; border-radius:8px; border:1.5px solid #DDE3E9; color:#1A1F26; font-weight:600; font-size:15.5px;">Visit us</span>
+          </div>
+        </div>
+        <div style="border:1px solid #DDE3E9; border-radius:10px; padding:16px; background:#F5F7F9;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#5A6572;">AMS — tight</span>
+          <div style="margin-top:10px; display:flex; gap:8px;">
+            <span style="display:inline-flex; align-items:center; padding:0 14px; height:36px; border-radius:7px; background:#2c64ac; color:#FFF; font-weight:600; font-size:13.5px;">Save register</span>
+            <span style="display:inline-flex; align-items:center; padding:0 14px; height:36px; border-radius:7px; border:1px solid #C9D2DB; background:#FFF; color:#1A1F26; font-weight:600; font-size:13.5px;">All present</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

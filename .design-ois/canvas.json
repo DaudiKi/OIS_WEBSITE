@@ -1,0 +1,88 @@
+{
+  "pages": [
+    { "id": "foundations", "name": "Foundations" },
+    { "id": "architecture", "name": "Backend architecture" },
+    { "id": "fees", "name": "Portal — fees & enrolment" },
+    { "id": "activities", "name": "Portal — clubs & e-learning" },
+    { "id": "engagement", "name": "Portal — events, forms & ballots" },
+    { "id": "public", "name": "Public website" },
+    { "id": "dashboards", "name": "Portal — dashboards" },
+    { "id": "records", "name": "Portal — records" },
+    { "id": "reportcards", "name": "Portal — report cards" },
+    { "id": "operations", "name": "Portal — school operations" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html", "page": "foundations", "title": "Six decisions", "x": 0, "y": 0, "w": 1280, "h": 1500 },
+
+    { "file": "Architecture.dc.html", "page": "architecture", "title": "Domain model", "x": 0, "y": 0, "w": 1280, "h": 1300 },
+    { "file": "BillingFlow.dc.html", "page": "architecture", "title": "Billing lifecycle & decisions", "x": 1400, "y": 0, "w": 1280, "h": 1700 },
+
+    { "file": "PackageBuilder.dc.html", "page": "fees", "title": "Package builder", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "FeeStatement.dc.html", "page": "fees", "title": "Fee statement (A4)", "x": 1400, "y": 0, "w": 794, "h": 1123, "print": "fixed" },
+    { "file": "ParentFees.dc.html", "page": "fees", "title": "Parent — fees", "x": 2320, "y": 0, "w": 1280, "h": 880 },
+
+    { "file": "Clubs.dc.html", "page": "activities", "title": "Clubs & activities", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Elearning.dc.html", "page": "activities", "title": "E-learning admin", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "StudentModule.dc.html", "page": "activities", "title": "Student — working a module", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+
+    { "file": "Events.dc.html", "page": "engagement", "title": "Events & ticketing", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Surveys.dc.html", "page": "engagement", "title": "Forms & surveys", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Voting.dc.html", "page": "engagement", "title": "Student council ballot", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+
+    { "file": "Home.dc.html", "page": "public", "title": "Home", "x": 0, "y": 0, "w": 1280, "h": 2300 },
+    { "file": "About.dc.html", "page": "public", "title": "About", "x": 1400, "y": 0, "w": 1280, "h": 1980 },
+    { "file": "Apply.dc.html", "page": "public", "title": "Admissions", "x": 2800, "y": 0, "w": 1280, "h": 1220 },
+    { "file": "Gallery.dc.html", "page": "public", "title": "Gallery", "x": 4200, "y": 0, "w": 1280, "h": 1240 },
+    { "file": "Calendar.dc.html", "page": "public", "title": "Calendar", "x": 5600, "y": 0, "w": 1280, "h": 1260 },
+
+    { "file": "Login.dc.html", "page": "dashboards", "title": "Sign in", "x": 0, "y": 0, "w": 1280, "h": 860 },
+    { "file": "DashAdmin.dc.html", "page": "dashboards", "title": "Dashboard — Administrator", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "DashTeacher.dc.html", "page": "dashboards", "title": "Dashboard — Supervisor", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+    { "file": "DashParent.dc.html", "page": "dashboards", "title": "Dashboard — Parent", "x": 4200, "y": 0, "w": 1280, "h": 880 },
+    { "file": "DashStudent.dc.html", "page": "dashboards", "title": "Dashboard — Student", "x": 5600, "y": 0, "w": 1280, "h": 880 },
+
+    { "file": "Students.dc.html", "page": "records", "title": "Students", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Teachers.dc.html", "page": "records", "title": "Supervisors", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Classes.dc.html", "page": "records", "title": "Learning centres", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Attendance.dc.html", "page": "records", "title": "Attendance", "x": 4200, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Grades.dc.html", "page": "records", "title": "Grade book", "x": 5600, "y": 0, "w": 1280, "h": 880 },
+
+    { "file": "Reports.dc.html", "page": "reportcards", "title": "Report cards", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "ReportEditor.dc.html", "page": "reportcards", "title": "Report editor", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "ReportCard.dc.html", "page": "reportcards", "title": "Printed report card (A4)", "x": 2800, "y": 0, "w": 794, "h": 1123, "print": "fixed" },
+
+    { "file": "Announcements.dc.html", "page": "operations", "title": "Announcements", "x": 0, "y": 0, "w": 1280, "h": 880 },
+    { "file": "AmsCalendar.dc.html", "page": "operations", "title": "School calendar", "x": 1400, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Applications.dc.html", "page": "operations", "title": "Admissions inbox", "x": 2800, "y": 0, "w": 1280, "h": 880 },
+    { "file": "GalleryAdmin.dc.html", "page": "operations", "title": "Gallery manager", "x": 4200, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Settings.dc.html", "page": "operations", "title": "School settings", "x": 5600, "y": 0, "w": 1280, "h": 880 },
+    { "file": "Users.dc.html", "page": "operations", "title": "Accounts — create parent", "x": 7000, "y": 0, "w": 1280, "h": 880 }
+  ],
+  "annotations": [
+    { "id": "note-foundations", "page": "foundations", "x": 1340, "y": 0, "w": 300, "text": "Direction: refine what already exists.\n\nThe blue and green stay — parents recognise them. What changes is discipline. Each decision here is reversible on its own, so you can take five of six if one does not suit." },
+
+    { "id": "note-arch", "page": "architecture", "x": 0, "y": -210, "w": 460, "text": "The whole proposal rests on one idea.\n\nA PACE, a club, swimming, an e-learning module, a training course and an event ticket are not six features — they are six rows in one catalogue. A pupil gets one through an enrolment; every enrolment produces a billable line.\n\nGet that spine right and the seventh offering, whatever it turns out to be, bills correctly without new billing code." },
+    { "id": "note-arch-decisions", "page": "architecture", "x": 1400, "y": -170, "w": 420, "text": "Read the eight decisions before costing any of this.\n\nThe first three are not matters of taste — getting price-snapshotting, integer money or the parent link wrong corrupts the fee ledger in ways that are slow and painful to unwind. The other five are policy only the school can settle." },
+
+    { "id": "note-fees", "page": "fees", "x": 0, "y": -180, "w": 420, "text": "The package builder is the only screen a human drives.\n\nEverything after it — the statement, the portal unlock, the club register, the consent request — happens because of what was chosen here. So this is the one screen worth over-investing in." },
+    { "id": "note-statement", "page": "fees", "x": 1400, "y": -180, "w": 380, "text": "Section A is the school fees proper. Section B is what was chosen for this pupil this term.\n\nOne document, one balance, two subtotals — so a parent can see the optional half of the bill and drop it next term without touching the core." },
+
+    { "id": "note-activities", "page": "activities", "x": 0, "y": -180, "w": 420, "text": "Same catalogue row, two delivery channels.\n\nSwimming is delivered at school, so an enrolment puts the pupil on a register and raises a consent request. A coding module is delivered in the portal, so the same enrolment unlocks it. Neither needs its own billing path." },
+
+    { "id": "note-ballot", "page": "engagement", "x": 2800, "y": -200, "w": 400, "text": "The ballot is the one thing here that must NOT reuse the spine.\n\nEverything else is deliberately traceable — you need to know who owes what. A student council vote needs the opposite: two tables with no key between them, so nobody can see how a child voted." },
+
+    { "id": "note-public", "page": "public", "x": 0, "y": -150, "w": 420, "text": "The public site, rebuilt on the refined palette.\n\nHome replaces the three broken testimonial photographs with initial monograms — no missing files, and nothing waiting on a photo shoot before launch." },
+    { "id": "note-apply", "page": "public", "x": 2800, "y": -150, "w": 380, "text": "Admissions now confirms DELIVERY, not just submission. Today a failed save to the school's own list is swallowed silently and the visitor still sees success." },
+
+    { "id": "note-parent", "page": "dashboards", "x": 4200, "y": -190, "w": 400, "text": "The parent dashboard as it would look once a parent can actually be linked to their children.\n\nToday this screen renders nothing at all — no child, no report, not even an explanation — because nothing in the live system ever sets that link. Billing makes that gap fatal rather than merely awkward." },
+    { "id": "note-teacherdash", "page": "dashboards", "x": 2800, "y": -190, "w": 380, "text": "Same story for supervisors: 'my students' and 'my classes' read zero today because accounts have no field connecting them to a staff record." },
+
+    { "id": "note-records", "page": "records", "x": 1400, "y": -150, "w": 380, "text": "The Supervisors screen adds a 'portal login linked' badge — making visible the connection whose absence quietly empties a teacher's whole dashboard." },
+
+    { "id": "note-reports", "page": "reportcards", "x": 0, "y": -160, "w": 400, "text": "The report workflow is the best-built part of the system and needs no rework — only a term to exist, and clearer feedback when one does not. The five states now carry a fixed colour everywhere they appear." },
+
+    { "id": "note-ops", "page": "operations", "x": 4200, "y": -160, "w": 380, "text": "Gallery gains real file upload — today staff must supply a path to an image already hosted elsewhere, which in practice means asking a developer." },
+    { "id": "note-users", "page": "operations", "x": 7000, "y": -160, "w": 380, "text": "Create Account gains the child picker. This one field is the difference between a working parent portal and an empty one — and now also between a parent seeing a bill and seeing nothing." }
+  ],
+  "launch": { "view": "canvas", "page": "architecture" }
+}

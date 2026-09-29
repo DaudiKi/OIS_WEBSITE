@@ -1,0 +1,96 @@
+/* Styles specific to the Gallery page, ported from gallery.html */
+
+.grid-item {
+  width: 31%;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid-item { width: 48%; }
+}
+@media (max-width: 640px) {
+  .grid-item { width: 100%; }
+}
+
+.gallery-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.item-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.grid-item:hover .item-overlay {
+  opacity: 1;
+}
+.grid-item:hover img {
+  transform: scale(1.08);
+}
+
+.filter-btn {
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+.filter-btn.active {
+  background: #2c64ac;
+  color: white;
+  border-color: #2c64ac;
+  box-shadow: 0 4px 15px rgba(44, 100, 172, 0.3);
+}
+
+/* Lightbox */
+.ois-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lightboxFadeIn 0.3s ease;
+}
+
+@keyframes lightboxFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ois-lightbox-image {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: lightboxZoomIn 0.4s ease;
+}
+
+@keyframes lightboxZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ois-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border-radius: 9999px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.ois-lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

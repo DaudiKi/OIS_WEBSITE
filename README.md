@@ -4,7 +4,7 @@
   # OrchardsWood International School Website
   
   [![Website Status](https://img.shields.io/badge/status-active-success.svg)](#)
-  [![Tech Stack](https://img.shields.io/badge/tech--stack-Tailwind%20%7C%20GSAP%20%7C%20Firebase-0072BC.svg)](#)
+  [![Tech Stack](https://img.shields.io/badge/tech--stack-React%20%7C%20Vite%20%7C%20Tailwind%20%7C%20GSAP-0072BC.svg)](#)
   [![License: ISC](https://img.shields.io/badge/License-ISC-4CAF50.svg)](https://opensource.org/licenses/ISC)
 
   *Providing a nurturing Christian education from Preschool to High School in Buziga, Kampala.*
@@ -14,9 +14,11 @@
 
 ## Overview
 
-The **OrchardsWood International School (OIS)** website is a premium, interactive, and responsive web portal built to connect parents, prospective students, and educators with the school's mission, calendar, gallery, and admissions office. 
+The **OrchardsWood International School (OIS)** website is a premium, interactive, and responsive web portal built to connect parents, prospective students, and educators with the school's mission, calendar, gallery, and admissions office.
 
 Designed with modern typography (Inter & Righteous), rich gradients, dynamic GSAP scroll-triggered animations, and a live Google Calendar integration, this website provides a state-of-the-art user experience for visitors exploring OIS.
+
+Alongside the public site, the project ships the **OIS Academic Management System (AMS)** — a role-based portal for administrators, teachers, parents, and students covering enrolment, attendance, grades, events, and announcements.
 
 ---
 
@@ -26,13 +28,14 @@ This project uses a modern web stack tailored for high performance, smooth anima
 
 | Category | Technology / Library | Description |
 | :--- | :--- | :--- |
-| **Markup & Architecture** | [HTML5](https://developer.mozilla.org/en-US/docs/Web/HTML) & [ES6+ JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) | Semantic, accessibility-oriented page structure with modular inlined logic. |
+| **UI Framework** | [React 18](https://react.dev/) & [Vite 5](https://vitejs.dev/) | Component-driven pages compiled by a multi-page Vite build, so every original URL is preserved. |
 | **Styling** | [Tailwind CSS v3](https://tailwindcss.com/) & PostCSS | Curated colors matching the school identity, custom utility classes, and optimized building. |
 | **Animation Core** | [GSAP](https://gsap.com/) & [ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) | Smooth micro-animations, floating interactive elements, and text/card reveals on scroll. |
-| **Calendar Sync** | [Google Calendar API v3](https://developers.google.com/calendar/api/v3/reference) | Live, dynamic queries to the public school calendar with a CSV-based local fallback. |
-| **Gallery Engine** | [Masonry.js](https://masonry.desandro.com/) & [imagesLoaded](https://imagesloaded.desandro.com/) | Pinterest-style fluid grid alignment that stabilizes layout loading across various screen sizes. |
-| **Media Previews** | [Lightbox2](https://lokeshdhakar.com/projects/lightbox2/) | Clean overlay modal system supporting group slides and full-resolution image displays. |
-| **Email Gateway** | [SMTP.js](https://smtpjs.com/) | Secure direct client-side email delivery system for handling admissions applications. |
+| **Routing (AMS)** | [React Router](https://reactrouter.com/) | Client-side routing for the Academic Management System single-page app. |
+| **Calendar** | Custom React calendar & [Google Calendar](https://calendar.google.com/) embed | Interactive month grid built from the school's term CSV and AMS-published events, plus the official embed. |
+| **Gallery Engine** | Custom React grid & lightbox | Category filters, entrance animations, and a keyboard-navigable fullscreen viewer — no jQuery required. |
+| **Admissions** | Google Forms + AMS pipeline | Applications submit to the school's existing Google Form and feed the AMS applications module. |
+| **AMS Backend** | localStorage (demo) or [Supabase](https://supabase.com/) | Runs fully offline on static hosting by default; switches to Postgres + Auth via configuration. |
 | **Quality Control** | [Prettier](https://prettier.io/) & [ESLint](https://eslint.org/) | Strict guidelines enforcing unified code formatting and static code quality analysis. |
 
 ---
@@ -52,77 +55,88 @@ To retain visual consistency, all custom Tailwind utilities map to the core colo
 
 ```bash
 OIS_WEBSITE/
-├── public/                     # Main web root folder
+├── public/                     # Static assets copied verbatim into the build
 │   ├── assets/                 # Static media and assets
 │   │   ├── icons/              # Logos, locations, and action icons (e.g., oisLogo.png)
 │   │   └── images/             # Backgrounds, cards, photos (e.g., Home Background.jpg)
-│   ├── css/                    # Stylesheets
-│   │   ├── styles.css          # Tailwind source stylesheet (entrypoint)
-│   │   └── output.css          # Compiled production stylesheet
-│   ├── js/                     # Client-side JavaScript (logic placeholder files)
-│   │   ├── calender.js
-│   │   ├── forms.js
-│   │   ├── gallary.js
-│   │   └── main.js
-│   ├── about.html              # OIS Mission, Vision, and Staff values
-│   ├── apply.html              # Multi-step Interactive Admissions Form
-│   ├── calendar.html           # Calendar UI (Dynamic Google Calendar API / CSV parser)
-│   ├── gallery.html            # Masonry Pinterest-style Image Gallery
-│   ├── index.html              # Homepage featuring GSAP scroll animations
-│   ├── ois_august_calendar.csv # Fallback academic calendar data
+│   ├── ams-config.js           # AMS backend configuration (demo mode by default)
+│   ├── ois_august_calendar.csv # Academic term calendar data
 │   └── favicon.ico             # School logo browser tab icon
-├── eslint.config.mjs           # ESLint configuration
+├── src/
+│   ├── components/             # Shared layout (TopBar, Header, Footer, SocialIcons)
+│   ├── pages/                  # Public pages (Home, About, Apply, Gallery, Calendar)
+│   ├── entries/                # Per-page React entry points
+│   ├── styles/                 # Tailwind entry + per-page stylesheets
+│   ├── lib/                    # CSV parsing, event merging, gallery data
+│   └── ams/                    # Academic Management System single-page app
+│       ├── pages/              # Dashboard, Students, Teachers, Attendance, Grades, ...
+│       ├── components/         # AMS layout and shared UI primitives
+│       └── data/               # localStorage store, Supabase adapter, unified API
+├── supabase/schema.sql         # Database schema for optional Supabase backend
+├── index.html                  # Homepage featuring GSAP scroll animations
+├── about.html                  # OIS Mission, Vision, and Staff values
+├── apply.html                  # Multi-step Interactive Admissions Form
+├── calendar.html               # Calendar UI (interactive grid + Google Calendar)
+├── gallery.html                # Filterable image gallery with lightbox
+├── ams.html                    # Academic Management System portal
+├── vite.config.js              # Multi-page build configuration
 ├── tailwind.config.js          # Tailwind theme configurations (extended brand colors)
-├── postcss.config.js           # PostCSS configuration
-├── package.json                # Project script execution and package dependencies
-├── package-lock.json           # Locked package tree
-└── test_calendar_api.html      # Google Calendar API sandbox verification file
+├── postcss.config.cjs          # PostCSS configuration
+└── package.json                # Project script execution and package dependencies
 ```
 
 ---
 
 ## Interactive Pages & Features
 
-### 1. Home Page — [index.html](file:///d:/OIS_WEBSITE/public/index.html)
+### 1. Home Page — `index.html`
 The central portal of OrchardsWood International School.
 - **GSAP ScrollTrigger Card Reveal**: Cards slide and fade smoothly into view as the user scrolls.
 - **Wave Title Animation**: Headline text characters feature a wave-like vertical floating motion.
 - **Testimonials Section**: Features testimonials overlaying a dynamic, rotating CSS spiral background.
 - **School Portal Button**: A custom-designed shortcut pointing to the OIS Academic Management System (AMS).
 
-### 2. About Page — [about.html](file:///d:/OIS_WEBSITE/public/about.html)
+### 2. About Page — `about.html`
 Showcases the school's heritage, foundational Christian values, and academic structure.
 - Highlights the ACE curriculum (Accelerated Christian Education), PACEs, and ICCE certificates.
 - Features detailed sections outlining the school's **Vision**, **Mission**, **Core Values**, and leadership message.
 
-### 3. Academic Calendar — [calendar.html](file:///d:/OIS_WEBSITE/public/calendar.html)
+### 3. Academic Calendar — `calendar.html`
 Provides parents and students with a clear overview of holidays, events, and assessments.
-- **API Sync**: Dynamic connection to the school's public Google Calendar via ID `7eb5a9b638028ced87f52d91048bc2a9bac6b47ee2d3191cb8e2647f3e1077d4@group.calendar.google.com`.
-- **CSV Fallback**: In the event of an API error, a local CSV parser reads `public/ois_august_calendar.csv` to render schedule listings.
-- **Sandbox Testing**: Use [test_calendar_api.html](file:///d:/OIS_WEBSITE/test_calendar_api.html) to independently verify the Google Calendar API key and token outputs.
+- **Interactive Month Grid**: Colour-coded categories (exams, holidays, sports, parents, school) with day selection.
+- **Term CSV Source**: Events are seeded from `public/ois_august_calendar.csv` and merged with events published from the AMS.
+- **Google Calendar Embed**: The school's official public calendar remains available in a dedicated tab.
 
-### 4. Interactive Gallery — [gallery.html](file:///d:/OIS_WEBSITE/public/gallery.html)
+### 4. Interactive Gallery — `gallery.html`
 Displays high-resolution photos of student life, sports events, and facilities.
-- **Masonry Layout**: Auto-fitting Pinterest grid layout.
+- **Responsive Grid Layout**: Fluid image grid with staggered entrance animations.
 - **Category Filter Tags**: Instant filter toggles allowing users to browse specific segments.
-- **Lightbox Overlay**: Image clicking expands a fullscreen slider overlay supporting navigation arrows.
+- **Lightbox Overlay**: Fullscreen viewer with arrow/keyboard navigation and wrap-around browsing.
 
-### 5. Admissions Application — [apply.html](file:///d:/OIS_WEBSITE/public/apply.html)
+### 5. Admissions Application — `apply.html`
 An interactive multi-step wizard allowing parents to enroll new students online.
 - **Multi-Step Flow**: Splits application inputs into Student Info, Parent Info, and Academic history sections.
 - **Interactive Progress Indicator**: Animated status bar adjusting dynamically as steps are completed.
 - **Real-Time Validation**: Field-level validation displaying styled error popups for incomplete sections.
-- **SMTP Submission**: Secure client-side email delivery using SMTP.js.
+- **Dual Submission**: Delivers to the school's existing Google Form and records the application in the AMS.
+
+### 6. Academic Management System — `ams.html`
+A role-based portal for **administrators, teachers, parents, and students**.
+- **Accounts & Access**: Login and signup with an approval workflow for staff registrations.
+- **School Records**: Students, teachers, and classes management with enrolment tracking.
+- **Daily Operations**: Attendance registers, gradebook, announcements, and calendar events.
+- **Admissions Review**: Applications submitted from the public site can be reviewed and accepted, enrolling the student.
+- **Gallery Manager**: Curate and publish photos that appear on the public gallery page.
 
 ---
 
 ## Getting Started & Local Development
 
-To compile styles and run the website locally, follow this guide:
+To run and build the website locally, follow this guide:
 
 ### Prerequisites
 
-Make sure you have [Node.js](https://nodejs.org/) (v16.0.0 or higher) installed on your system.
+Make sure you have [Node.js](https://nodejs.org/) (v18.0.0 or higher) installed on your system.
 
 ### Installation
 
@@ -135,28 +149,36 @@ git clone https://github.com/DaudiKi/OIS_WEBSITE.git
 # Navigate to the project root
 cd OIS_WEBSITE
 
-# Install dependencies (Tailwind, PostCSS, ESLint, Prettier)
+# Install dependencies (React, Vite, Tailwind, GSAP, ESLint, Prettier)
 npm install
 ```
 
-### Compiling CSS
-
-The website styling compiles from source files using Tailwind CLI. To compile tailwind classes or watch for changes during development, run:
+### Running the Site
 
 ```bash
-# Build stylesheet and watch for source html/js changes
-npm run build:css
+npm run dev       # Start the development server with hot reloading
+npm run build     # Produce an optimized production build in dist/
+npm run preview   # Serve the production build locally for verification
 ```
 
-This command runs:
-`tailwindcss -i ./public/css/styles.css -o ./public/css/output.css --watch`
+Tailwind compiles automatically as part of `dev` and `build` — no separate CSS watch step is required.
 
-### Testing the Google Calendar Integration
+### Configuring the AMS Backend
 
-To verify that local API requests can fetch from the Google Calendar API correctly:
-1. Open the [test_calendar_api.html](file:///d:/OIS_WEBSITE/test_calendar_api.html) file directly in a web browser.
-2. The page will immediately fire a test fetch request using the school's calendar credentials.
-3. Review the status indicators (Success / Error logs) printed directly on the page.
+The AMS runs in **demo mode** out of the box: all data is stored in the browser's localStorage with a seeded sample dataset, and the demo accounts are listed on the login screen.
+
+To connect a real backend:
+1. Create a [Supabase](https://supabase.com/) project.
+2. Run [`supabase/schema.sql`](supabase/schema.sql) in the Supabase SQL editor.
+3. Fill in your project URL and anon key in [`public/ams-config.js`](public/ams-config.js).
+
+No code changes are required — authentication, data access, and the public applications feed switch over automatically.
+
+---
+
+## Deployment
+
+Pushes to `main` trigger [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which installs dependencies, runs `npm run build`, and deploys the generated `dist/` directory to the school's hosting via FTP.
 
 ---
 
@@ -164,11 +186,11 @@ To verify that local API requests can fetch from the Google Calendar API correct
 
 - **Linting**: Ensure code changes pass ESLint rules defined in `eslint.config.mjs` by running:
   ```bash
-  npx eslint public/**/*.js
+  npx eslint src
   ```
-- **Formatting**: Format code with Prettier to keep HTML and styling attributes standardized:
+- **Formatting**: Format code with Prettier to keep components and styling attributes standardized:
   ```bash
-  npx prettier --write public/**/*.html
+  npx prettier --write "src/**/*.{js,jsx,css}"
   ```
 
 ---
@@ -177,4 +199,4 @@ To verify that local API requests can fetch from the Google Calendar API correct
 
 - **Author**: Daudi Kirabo Makumbi Mawejje
 - **School**: OrchardsWood International School (OIS)
-- **License**: ISC License - see the [package.json](file:///d:/OIS_WEBSITE/package.json) for details.
+- **License**: ISC License - see the [package.json](package.json) for details.

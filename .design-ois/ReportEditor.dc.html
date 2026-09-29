@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Figtree:wght@400;500;600;700;800&display=swap">
+  <style>
+    body { margin:0; font-family:'Figtree', ui-sans-serif, system-ui, sans-serif; color:#1A1F26; background:#F5F7F9; }
+    h1,h2,h3 { margin:0; font-family:'Newsreader', Georgia, serif; font-weight:600; }
+    p { margin:0; }
+    .card { background:#FFFFFF; border:1px solid #DDE3E9; border-radius:12px; }
+    .num { font-variant-numeric:tabular-nums; }
+    .score { width:44px; height:34px; border:1px solid #C9D2DB; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; font-variant-numeric:tabular-nums; background:#FFF; }
+    .trait { width:26px; height:26px; border-radius:6px; border:1px solid #DDE3E9; display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:600; color:#5A6572; }
+    .trait.on { background:#2c64ac; border-color:#2c64ac; color:#FFF; }
+  </style>
+</helmet>
+
+<div style="width:1280px; height:880px; display:flex; flex-direction:column; box-sizing:border-box; overflow:hidden;">
+
+  <!-- HEADER -->
+  <div style="height:66px; flex:none; background:#FFFFFF; border-bottom:1px solid #DDE3E9; display:flex; align-items:center; justify-content:space-between; padding:0 24px;">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span style="width:34px;height:34px;border-radius:8px;border:1px solid #C9D2DB;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3D4650" stroke-width="2.4" stroke-linecap="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </span>
+      <div style="display:flex; flex-direction:column; line-height:1.3;">
+        <h1 style="font-size:18px;">Daniel Kizito — Term 2, 2026</h1>
+        <span class="num" style="font-size:12.5px; color:#5A6572;">OIS0042 · Grade 9 · Supervisor: Joshua Kisitu</span>
+      </div>
+      <span style="display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:20px; background:#FBE7E4; color:#B23A2E;"><span style="width:6px;height:6px;border-radius:50%;background:#B23A2E;"></span>Returned for correction</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:#5A6572;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4e9236" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Saved just now</span>
+      <span style="display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:7px;border:1px solid #C9D2DB;background:#FFF;font-size:13.5px;font-weight:600;">Preview card</span>
+      <span style="display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:7px;background:#2c64ac;color:#FFF;font-size:13.5px;font-weight:600;">Submit for checking</span>
+    </div>
+  </div>
+
+  <!-- RETURN NOTE -->
+  <div style="flex:none; margin:16px 24px 0; border-radius:10px; background:#FFF7F5; border:1px solid #EFC9C1; border-left:3px solid #B23A2E; padding:14px 18px; display:flex; gap:12px;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B23A2E" stroke-width="2.2" stroke-linecap="round" style="flex:none; margin-top:1px;"><path d="M12 9v4M12 17h.01"></path><circle cx="12" cy="12" r="9"></circle></svg>
+    <div style="display:flex; flex-direction:column; gap:3px;">
+      <span style="font-size:13.5px; font-weight:700; color:#8F2F24;">Returned by Herriet Makumbi · 15 Sep</span>
+      <p style="font-size:13.5px; line-height:1.6; color:#3D4650;">Science PACE 4 has no score recorded, and the diligence rating looks inconsistent with the attendance note. Please check both before resubmitting.</p>
+    </div>
+  </div>
+
+  <div style="flex-grow:1; display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:18px; padding:16px 24px 20px; min-height:0;">
+
+    <!-- LEFT: subjects -->
+    <div style="display:flex; flex-direction:column; gap:16px; min-width:0;">
+
+      <div class="card" style="padding:20px;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between;">
+          <h2 style="font-size:18px;">PACE scores</h2>
+          <span style="font-size:13px; font-weight:600; color:#2c64ac;">+ Add subject</span>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px; margin-top:16px; padding-bottom:8px; border-bottom:1px solid #EEF1F4;">
+          <span style="width:132px; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#5A6572;">Subject</span>
+          <div style="display:flex; gap:8px;">
+            <span style="width:44px; text-align:center; font-size:11px; font-weight:700; color:#5A6572;">P1</span>
+            <span style="width:44px; text-align:center; font-size:11px; font-weight:700; color:#5A6572;">P2</span>
+            <span style="width:44px; text-align:center; font-size:11px; font-weight:700; color:#5A6572;">P3</span>
+            <span style="width:44px; text-align:center; font-size:11px; font-weight:700; color:#5A6572;">P4</span>
+          </div>
+          <span style="margin-left:auto; width:130px; text-align:right; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#5A6572;">Average · Grade</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="width:132px; font-size:13.5px; font-weight:500;">Maths</span>
+            <div style="display:flex; gap:8px;">
+              <span class="score">98</span><span class="score">97</span><span class="score">98</span><span class="score">97</span>
+            </div>
+            <div style="margin-left:auto; width:130px; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+              <span class="num" style="font-size:14px; font-weight:600;">97.50%</span>
+              <span style="font-size:12px; font-weight:700; padding:2px 8px; border-radius:5px; background:#E8F3E3; color:#35661F;">A</span>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="width:132px; font-size:13.5px; font-weight:500;">English</span>
+            <div style="display:flex; gap:8px;">
+              <span class="score">95</span><span class="score">94</span><span class="score">96</span><span class="score">95</span>
+            </div>
+            <div style="margin-left:auto; width:130px; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+              <span class="num" style="font-size:14px; font-weight:600;">95.00%</span>
+              <span style="font-size:12px; font-weight:700; padding:2px 8px; border-radius:5px; background:#E8F3E3; color:#35661F;">B</span>
+            </div>
+          </div>
+
+          <!-- The flagged missing score -->
+          <div style="display:flex; align-items:center; gap:10px; padding:8px; margin:-8px; border-radius:9px; background:#FFF7F5;">
+            <span style="width:132px; font-size:13.5px; font-weight:600; color:#8F2F24;">Science</span>
+            <div style="display:flex; gap:8px;">
+              <span class="score">99</span><span class="score">98</span><span class="score">98</span>
+              <span class="score" style="border:1.5px solid #B23A2E; background:#FFF; color:#B23A2E;">—</span>
+            </div>
+            <div style="margin-left:auto; width:130px; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+              <span class="num" style="font-size:14px; font-weight:600;">98.33%</span>
+              <span style="font-size:12px; font-weight:700; padding:2px 8px; border-radius:5px; background:#FBF0DC; color:#B4740A;">3 of 4</span>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="width:132px; font-size:13.5px; font-weight:500;">Social Studies</span>
+            <div style="display:flex; gap:8px;">
+              <span class="score">95</span><span class="score">94</span><span class="score">95</span><span class="score">95</span>
+            </div>
+            <div style="margin-left:auto; width:130px; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+              <span class="num" style="font-size:14px; font-weight:600;">94.75%</span>
+              <span style="font-size:12px; font-weight:700; padding:2px 8px; border-radius:5px; background:#E8F3E3; color:#35661F;">B</span>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="width:132px; font-size:13.5px; font-weight:500;">Word Building</span>
+            <div style="display:flex; gap:8px;">
+              <span class="score">92</span><span class="score">91</span><span class="score">93</span><span class="score">92</span>
+            </div>
+            <div style="margin-left:auto; width:130px; display:flex; align-items:center; justify-content:flex-end; gap:8px;">
+              <span class="num" style="font-size:14px; font-weight:600;">92.00%</span>
+              <span style="font-size:12px; font-weight:700; padding:2px 8px; border-radius:5px; background:#EAF1F9; color:#1B4478;">C</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:20px;">
+        <div style="display:flex; align-items:baseline; justify-content:space-between;">
+          <h2 style="font-size:18px;">Character &amp; habits</h2>
+          <span class="num" style="font-size:12.5px; color:#B4740A; font-weight:600;">54 of 60 rated</span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px 26px; margin-top:16px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:13.5px;">Attentive</span>
+            <div style="display:flex; gap:5px;"><span class="trait">1</span><span class="trait">2</span><span class="trait">3</span><span class="trait on">4</span><span class="trait">5</span></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:13.5px;">Diligent</span>
+            <div style="display:flex; gap:5px;"><span class="trait">1</span><span class="trait">2</span><span class="trait on" style="background:#B23A2E;border-color:#B23A2E;">3</span><span class="trait">4</span><span class="trait">5</span></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:13.5px;">Honest</span>
+            <div style="display:flex; gap:5px;"><span class="trait">1</span><span class="trait">2</span><span class="trait">3</span><span class="trait">4</span><span class="trait on">5</span></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:13.5px;">Punctual</span>
+            <div style="display:flex; gap:5px;"><span class="trait">1</span><span class="trait">2</span><span class="trait">3</span><span class="trait on">4</span><span class="trait">5</span></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:13.5px;">Respectful</span>
+            <div style="display:flex; gap:5px;"><span class="trait">1</span><span class="trait">2</span><span class="trait">3</span><span class="trait">4</span><span class="trait on">5</span></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:13.5px;">Orderly</span>
+            <div style="display:flex; gap:5px;"><span class="trait">1</span><span class="trait">2</span><span class="trait">3</span><span class="trait on">4</span><span class="trait">5</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div style="display:flex; flex-direction:column; gap:14px; min-height:0;">
+      <div class="card" style="padding:18px;">
+        <h3 style="font-size:16px;">This term</h3>
+        <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:9px; margin-top:13px;">
+          <div style="background:#EAF1F9; border-radius:9px; padding:12px; text-align:center;">
+            <span class="num" style="display:block; font-family:'Newsreader',serif; font-size:26px; font-weight:600; color:#1B4478; line-height:1;">A</span>
+            <span style="font-size:11px; color:#5A6572;">Overall grade</span>
+          </div>
+          <div style="background:#F5F7F9; border-radius:9px; padding:12px; text-align:center;">
+            <span class="num" style="display:block; font-family:'Newsreader',serif; font-size:26px; font-weight:600; line-height:1;">95.5</span>
+            <span style="font-size:11px; color:#5A6572;">Average %</span>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:13px; margin-top:13px; padding-top:13px; border-top:1px solid #EEF1F4;">
+          <span style="color:#5A6572;">Attendance</span><span class="num" style="font-weight:600; color:#35661F;">98%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:13px; margin-top:7px;">
+          <span style="color:#5A6572;">PACEs completed</span><span class="num" style="font-weight:600;">12</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:18px; flex-grow:1; display:flex; flex-direction:column;">
+        <h3 style="font-size:16px;">Supervisor's comment</h3>
+        <div style="flex-grow:1; margin-top:11px; border:1.5px solid #C9D2DB; border-radius:9px; padding:12px; font-size:13.5px; line-height:1.65; color:#3D4650; min-height:120px;">Daniel has had a strong term, particularly in Science where he is working well above level. He should keep working on completing his goal card before break rather than after.</div>
+        <span class="num" style="font-size:11.5px; color:#98A2AE; margin-top:7px;">238 / 600 characters</span>
+      </div>
+
+      <div class="card" style="padding:16px 18px;">
+        <span style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#5A6572;">History</span>
+        <div style="display:flex; flex-direction:column; gap:9px; margin-top:11px;">
+          <div style="display:flex; gap:9px; align-items:flex-start;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#B23A2E;margin-top:5px;flex:none;"></span>
+            <div style="display:flex;flex-direction:column;line-height:1.35;">
+              <span style="font-size:12.5px; font-weight:600;">Returned — H. Makumbi</span>
+              <span style="font-size:11.5px; color:#5A6572;">15 Sep, 10:24</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:9px; align-items:flex-start;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#B4740A;margin-top:5px;flex:none;"></span>
+            <div style="display:flex;flex-direction:column;line-height:1.35;">
+              <span style="font-size:12.5px; font-weight:600;">Submitted — J. Kisitu</span>
+              <span style="font-size:11.5px; color:#5A6572;">14 Sep, 16:02</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

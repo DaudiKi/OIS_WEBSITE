@@ -1,0 +1,625 @@
+-- OIS AMS database schema for Supabase.
+-- Run this in the Supabase SQL editor (or via supabase db push) after
+-- creating a project, then configure public/ams-config.js on the website.
+
+create extension if not exists pgcrypto;
+
+-- Profiles mirror auth.users and carry the AMS role.
+create table if not exists public.profiles (
+  id uuid primary key references auth.users (id) on delete cascade,
+  name text not null default '',
+  email text not null default '',
+  phone text not null default '',
+  role text not null default 'parent' check (role in ('admin', 'teacher', 'parent', 'student')),
+  status text not null default 'active' check (status in ('active', 'pending', 'disabled')),
+  "studentId" text,
+  "childIds" text[],
+  "createdAt" timestamptz not null default now()
+);
+
+-- Auto-create a profile on signup. Teacher/admin signups start as pending.
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  insert into public.profiles (id, name, email, phone, role, status)
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data ->> 'name', ''),
+    coalesce(new.email, ''),
+    coalesce(new.raw_user_meta_data ->> 'phone', ''),
+    coalesce(new.raw_user_meta_data ->> 'role', 'parent'),
+    case
+      when coalesce(new.raw_user_meta_data ->> 'role', 'parent') in ('teacher', 'admin') then 'pending'
+      else 'active'
+    end
+  );
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function public.handle_new_user();
+
+create table if not exists public.teachers (
+  id text primary key default gen_random_uuid()::text,
+  name text not null,
+  email text not null default '',
+  phone text not null default '',
+  subject text not null default '',
+  role text not null default '',
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.classes (
+  id text primary key default gen_random_uuid()::text,
+  name text not null,
+  level text not null default '',
+  "teacherId" text references public.teachers (id) on delete set null,
+  room text not null default '',
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.students (
+  id text primary key default gen_random_uuid()::text,
+  "firstName" text not null,
+  "lastName" text not null,
+  gender text not null default '',
+  dob date,
+  "classId" text references public.classes (id) on delete set null,
+  "parentName" text not null default '',
+  "parentPhone" text not null default '',
+  "parentEmail" text not null default '',
+  status text not null default 'active',
+  "admittedAt" timestamptz not null default now(),
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.grades (
+  id text primary key default gen_random_uuid()::text,
+  "studentId" text not null references public.students (id) on delete cascade,
+  subject text not null,
+  term text not null default '',
+  score numeric not null default 0,
+  "maxScore" numeric not null default 100,
+  comment text not null default '',
+  "recordedAt" timestamptz not null default now(),
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.attendance (
+  id text primary key default gen_random_uuid()::text,
+  "studentId" text not null references public.students (id) on delete cascade,
+  "classId" text not null references public.classes (id) on delete cascade,
+  date date not null,
+  status text not null default 'present' check (status in ('present', 'absent', 'late', 'excused')),
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.announcements (
+  id text primary key default gen_random_uuid()::text,
+  title text not null,
+  body text not null default '',
+  audience text not null default 'all',
+  author text not null default '',
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.events (
+  id text primary key default gen_random_uuid()::text,
+  title text not null,
+  date date not null,
+  "endDate" date,
+  "startTime" text not null default '',
+  "endTime" text not null default '',
+  location text not null default '',
+  description text not null default '',
+  category text not null default 'school',
+  published boolean not null default true,
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.applications (
+  id text primary key default gen_random_uuid()::text,
+  "studentName" text not null default '',
+  "firstName" text not null default '',
+  "lastName" text not null default '',
+  dob text not null default '',
+  gender text not null default '',
+  "parentName" text not null default '',
+  relationship text not null default '',
+  email text not null default '',
+  phone text not null default '',
+  address text not null default '',
+  "previousSchool" text not null default '',
+  "gradeApplying" text not null default '',
+  "specialNeeds" text not null default '',
+  "referralSource" text not null default '',
+  comments text not null default '',
+  status text not null default 'new' check (status in ('new', 'reviewing', 'accepted', 'rejected')),
+  "submittedAt" timestamptz not null default now(),
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.gallery_items (
+  id text primary key default gen_random_uuid()::text,
+  category text not null default 'events',
+  image text not null,
+  webp text,
+  alt text not null default '',
+  "lightboxTitle" text not null default '',
+  title text not null default '',
+  description text not null default '',
+  published boolean not null default true,
+  "createdAt" timestamptz not null default now()
+);
+
+-- Row level security ---------------------------------------------------------
+
+alter table public.profiles enable row level security;
+alter table public.teachers enable row level security;
+alter table public.classes enable row level security;
+alter table public.students enable row level security;
+alter table public.grades enable row level security;
+alter table public.attendance enable row level security;
+alter table public.announcements enable row level security;
+alter table public.events enable row level security;
+alter table public.applications enable row level security;
+alter table public.gallery_items enable row level security;
+
+create or replace function public.is_staff()
+returns boolean
+language sql stable security definer set search_path = public
+as $$
+  select exists (
+    select 1 from public.profiles
+    where id = auth.uid() and role in ('admin', 'teacher') and status = 'active'
+  );
+$$;
+
+-- Profiles: users see their own profile; staff see all; admins manage all.
+create policy "profiles_select_own" on public.profiles for select using (id = auth.uid() or public.is_staff());
+create policy "profiles_update_admin" on public.profiles for update using (
+  exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin' and p.status = 'active')
+);
+
+-- Staff manage school records; signed-in users can read them.
+do $$
+declare t text;
+begin
+  foreach t in array array['teachers', 'classes', 'students', 'grades', 'attendance', 'announcements'] loop
+    execute format('create policy "%s_read" on public.%I for select using (auth.role() = ''authenticated'')', t, t);
+    execute format('create policy "%s_write" on public.%I for all using (public.is_staff()) with check (public.is_staff())', t, t);
+  end loop;
+end $$;
+
+-- Events and gallery are publicly readable (they feed the public website).
+create policy "events_public_read" on public.events for select using (true);
+create policy "events_staff_write" on public.events for all using (public.is_staff()) with check (public.is_staff());
+create policy "gallery_public_read" on public.gallery_items for select using (true);
+create policy "gallery_staff_write" on public.gallery_items for all using (public.is_staff()) with check (public.is_staff());
+
+-- Applications: anyone (including anonymous website visitors) can submit;
+-- only staff can read and manage them.
+create policy "applications_public_insert" on public.applications for insert with check (true);
+create policy "applications_staff_read" on public.applications for select using (public.is_staff());
+create policy "applications_staff_update" on public.applications for update using (public.is_staff());
+create policy "applications_staff_delete" on public.applications for delete using (public.is_staff());
+
+-- ===========================================================================
+-- ICCE report cards
+-- ===========================================================================
+
+-- Columns the report card needs on existing tables. Safe to re-run.
+alter table public.students add column if not exists photo text default '';
+alter table public.students add column if not exists "icceLevel" text default '';
+alter table public.classes  add column if not exists "supervisorIds" text[] default array[]::text[];
+
+-- Student numbers -------------------------------------------------------------
+-- The human-readable identifier (OIS0001, OIS0002, ...) staff and families
+-- actually use: printed on the report card, and what an administrator types to
+-- pull up a pupil.
+--
+-- Deliberately not the primary key. grades, attendance, reports and profiles
+-- all reference students.id, and a student number occasionally has to be
+-- corrected; letting that cascade through every academic record is a risk the
+-- school should never have to think about. It is unique and indexed, so a
+-- lookup by number is a single index hit either way.
+
+alter table public.students add column if not exists "studentNumber" text;
+
+create sequence if not exists public.student_number_seq as bigint start with 1 owned by none;
+
+create or replace function public.assign_student_number()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  if new."studentNumber" is null or btrim(new."studentNumber") = '' then
+    -- lpad to 4 for the school's current size; past OIS9999 it simply grows.
+    new."studentNumber" := 'OIS' || lpad(nextval('public.student_number_seq')::text, 4, '0');
+  else
+    new."studentNumber" := upper(btrim(new."studentNumber"));
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists students_assign_number on public.students;
+create trigger students_assign_number
+  before insert on public.students
+  for each row execute function public.assign_student_number();
+
+-- Backfill anyone predating the column, oldest admission first, so numbers
+-- follow the order pupils actually joined the school.
+do $$
+declare s record;
+begin
+  for s in select id from public.students where "studentNumber" is null or btrim("studentNumber") = ''
+           order by "admittedAt", "createdAt" loop
+    update public.students
+       set "studentNumber" = 'OIS' || lpad(nextval('public.student_number_seq')::text, 4, '0')
+     where id = s.id;
+  end loop;
+end $$;
+
+alter table public.students alter column "studentNumber" set not null;
+
+create unique index if not exists students_student_number_key
+  on public.students ("studentNumber");
+
+-- Numbers are issued inside a SECURITY DEFINER trigger, so callers never touch
+-- the sequence directly and need no privileges on it.
+revoke usage, select on sequence public.student_number_seq from public, anon, authenticated;
+
+create table if not exists public.terms (
+  id text primary key default ('trm-' || substr(md5(random()::text), 1, 10)),
+  name text not null,
+  number int,
+  year int not null,
+  "startDate" date,
+  "endDate" date,
+  status text not null default 'planned',   -- planned | open | closed
+  "createdAt" timestamptz not null default now()
+);
+
+create table if not exists public.settings (
+  id text primary key,
+  value jsonb not null default '{}'::jsonb,
+  "updatedAt" timestamptz not null default now()
+);
+
+create table if not exists public.reports (
+  id text primary key default ('rpt-' || substr(md5(random()::text), 1, 10)),
+  "studentId" text not null references public.students(id) on delete cascade,
+  "termId" text not null references public.terms(id) on delete cascade,
+  status text not null default 'draft',     -- draft|submitted|returned|verified|published
+  subjects jsonb not null default '[]'::jsonb,   -- [{ name, scores: [number] }]
+  traits jsonb not null default '{}'::jsonb,
+  "bibleMemory" jsonb not null default '[]'::jsonb,
+  comments text default '',
+  attendance jsonb default '{}'::jsonb,
+  "returnNote" text,
+  history jsonb not null default '[]'::jsonb,
+  "submittedAt" timestamptz,
+  "verifiedAt" timestamptz,
+  "publishedAt" timestamptz,
+  "returnedAt" timestamptz,
+  "submittedBy" text,
+  "verifiedBy" text,
+  "createdAt" timestamptz not null default now(),
+  "updatedAt" timestamptz,
+  unique ("studentId", "termId")
+);
+
+alter table public.terms enable row level security;
+alter table public.settings enable row level security;
+alter table public.reports enable row level security;
+
+-- Terms and settings: everyone signed in can read, staff can change.
+create policy "terms_read" on public.terms for select using (auth.role() = 'authenticated');
+create policy "terms_write" on public.terms for all using (public.is_staff()) with check (public.is_staff());
+create policy "settings_read" on public.settings for select using (auth.role() = 'authenticated');
+create policy "settings_write" on public.settings for all using (public.is_staff()) with check (public.is_staff());
+
+-- Reports: staff see everything; a family sees only PUBLISHED reports
+-- belonging to their own children. This is enforced in the database, so a
+-- modified client cannot reach another family's records.
+create policy "reports_staff_read" on public.reports for select using (public.is_staff());
+
+create policy "reports_family_read" on public.reports for select using (
+  status = 'published'
+  and exists (
+    select 1 from public.profiles p
+    where p.id = auth.uid()
+      and (
+        p."studentId" = public.reports."studentId"
+        or public.reports."studentId" = any (coalesce(p."childIds", array[]::text[]))
+      )
+  )
+);
+
+create policy "reports_staff_write" on public.reports for all
+  using (public.is_staff()) with check (public.is_staff());
+
+-- The report lifecycle runs server-side so the allowed transitions and the
+-- audit trail cannot be bypassed from the browser.
+create or replace function public.transition_report(
+  report_id text,
+  action text,
+  actor text default null,
+  note text default null
+) returns public.reports
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  r public.reports;
+  next_status text;
+  allowed text[];
+begin
+  if not public.is_staff() then
+    raise exception 'Only school staff may change a report''s status.';
+  end if;
+
+  select * into r from public.reports where id = report_id for update;
+  if not found then
+    raise exception 'Report not found.';
+  end if;
+
+  case action
+    when 'submit'    then next_status := 'submitted'; allowed := array['draft', 'returned'];
+    when 'return'    then next_status := 'returned';  allowed := array['submitted', 'verified'];
+    when 'verify'    then next_status := 'verified';  allowed := array['submitted'];
+    when 'publish'   then next_status := 'published'; allowed := array['verified'];
+    when 'unpublish' then next_status := 'verified';  allowed := array['published'];
+    else raise exception 'Unknown report action: %', action;
+  end case;
+
+  if not (r.status = any (allowed)) then
+    raise exception 'A report that is "%" cannot be %ed.', r.status, action;
+  end if;
+
+  -- Verifying and publishing are the administrator's alone.
+  if action in ('verify', 'publish', 'unpublish') and not exists (
+    select 1 from public.profiles p
+    where p.id = auth.uid() and p.role = 'admin' and p.status = 'active'
+  ) then
+    raise exception 'Only an administrator may % a report.', action;
+  end if;
+
+  update public.reports set
+    status = next_status,
+    "submittedAt"  = case when action = 'submit'  then now() else "submittedAt"  end,
+    "returnedAt"   = case when action = 'return'  then now() else "returnedAt"   end,
+    "verifiedAt"   = case when action = 'verify'  then now() else "verifiedAt"   end,
+    "publishedAt"  = case when action = 'publish' then now() else "publishedAt"  end,
+    "returnNote"   = case when action = 'return'  then note  else "returnNote"   end,
+    "submittedBy"  = case when action = 'submit'  then auth.uid()::text else "submittedBy" end,
+    "verifiedBy"   = case when action = 'verify'  then auth.uid()::text else "verifiedBy"  end,
+    history = history || jsonb_build_object(
+      'at', now(), 'by', coalesce(actor, 'Unknown'), 'action', action, 'note', coalesce(note, '')
+    ),
+    "updatedAt" = now()
+  where id = report_id
+  returning * into r;
+
+  return r;
+end;
+$$;
+
+-- Account creation (administrators only) --------------------------------------
+-- The AMS has no public signup: every login is created from inside the portal
+-- by an administrator, so nobody outside the school can enrol themselves.
+--
+-- Students rarely have a school email address, so their login is their student
+-- number. A synthetic address is derived from it (OIS0001 ->
+-- ois0001@students.ois.ug) purely so GoTrue has something to authenticate
+-- against; the same transform lives in supabaseAdapter.js and api.js, and all
+-- three must agree.
+
+-- Starting password issued to a new student login. The school can change it.
+update public.settings
+   set value = jsonb_set(value, '{students}', '{"defaultPassword": "OIS2027"}'::jsonb, true)
+ where id = 'school' and not (value ? 'students');
+
+create or replace function public.admin_create_user(
+  p_role text,
+  p_name text,
+  p_phone text default '',
+  p_email text default null,
+  p_student_id text default null,
+  p_password text default null
+) returns jsonb
+language plpgsql
+security definer
+-- pgcrypto lives in the extensions schema on Supabase, so crypt()/gen_salt()
+-- are not resolvable under search_path = public alone.
+set search_path = public, extensions
+as $$
+declare
+  v_uid uuid := gen_random_uuid();
+  v_email text;
+  v_password text;
+  v_number text;
+begin
+  if not exists (
+    select 1 from public.profiles where id = auth.uid() and role = 'admin' and status = 'active'
+  ) then
+    raise exception 'Only an administrator may create accounts.';
+  end if;
+
+  if p_role not in ('admin', 'teacher', 'parent', 'student') then
+    raise exception 'Unknown role: %', p_role;
+  end if;
+
+  if p_role = 'student' then
+    if p_student_id is null then
+      raise exception 'Select which student this login belongs to.';
+    end if;
+    select "studentNumber" into v_number from public.students where id = p_student_id;
+    if v_number is null then
+      raise exception 'Student not found.';
+    end if;
+    if exists (select 1 from public.profiles where "studentId" = p_student_id and role = 'student') then
+      raise exception 'This student already has a login.';
+    end if;
+    v_email := lower(v_number) || '@students.ois.ug';
+    v_password := coalesce(
+      nullif(btrim(p_password), ''),
+      (select value #>> '{students,defaultPassword}' from public.settings where id = 'school'),
+      'OIS2027'
+    );
+  else
+    if p_email is null or btrim(p_email) = '' then
+      raise exception 'An email address is required for this role.';
+    end if;
+    v_email := lower(btrim(p_email));
+    v_password := p_password;
+  end if;
+
+  if v_password is null or length(v_password) < 6 then
+    raise exception 'Password must be at least 6 characters.';
+  end if;
+  if p_name is null or btrim(p_name) = '' then
+    raise exception 'Name is required.';
+  end if;
+
+  begin
+    insert into auth.users (
+      instance_id, id, aud, role, email, encrypted_password,
+      email_confirmed_at, created_at, updated_at,
+      raw_app_meta_data, raw_user_meta_data
+    ) values (
+      '00000000-0000-0000-0000-000000000000', v_uid, 'authenticated', 'authenticated',
+      v_email, crypt(v_password, gen_salt('bf')),
+      now(), now(), now(),
+      '{"provider":"email","providers":["email"]}'::jsonb,
+      jsonb_build_object('name', p_name, 'phone', coalesce(p_phone, ''), 'role', p_role)
+    );
+  exception when unique_violation then
+    if p_role = 'student' then
+      raise exception 'This student already has a login (%).', v_email;
+    else
+      raise exception 'An account with this email already exists.';
+    end if;
+  end;
+
+  insert into auth.identities (
+    provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at
+  ) values (
+    v_uid::text, v_uid,
+    jsonb_build_object('sub', v_uid::text, 'email', v_email, 'email_verified', true, 'phone_verified', false),
+    'email', now(), now(), now()
+  );
+
+  -- The signup trigger just created this profile (pending for teacher/admin).
+  -- An account an administrator created is trusted immediately, so activate it
+  -- and record the student link here.
+  update public.profiles
+     set status = 'active', role = p_role, "studentId" = p_student_id
+   where id = v_uid;
+
+  return jsonb_build_object(
+    'id', v_uid, 'email', v_email, 'password', v_password,
+    'name', p_name, 'role', p_role, 'studentNumber', v_number
+  );
+end;
+$$;
+
+revoke execute on function public.admin_create_user(text, text, text, text, text, text) from public, anon, authenticated;
+grant execute on function public.admin_create_user(text, text, text, text, text, text) to authenticated;
+
+-- Password reset performed by an administrator on somebody else's account.
+create or replace function public.admin_set_password(
+  p_user_id uuid,
+  p_password text
+) returns void
+language plpgsql
+security definer
+set search_path = public, extensions
+as $$
+begin
+  if not exists (
+    select 1 from public.profiles where id = auth.uid() and role = 'admin' and status = 'active'
+  ) then
+    raise exception 'Only an administrator may reset a password.';
+  end if;
+  if p_password is null or length(p_password) < 6 then
+    raise exception 'Password must be at least 6 characters.';
+  end if;
+  if not exists (select 1 from auth.users where id = p_user_id) then
+    raise exception 'Account not found.';
+  end if;
+
+  update auth.users
+     set encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = now()
+   where id = p_user_id;
+end;
+$$;
+
+revoke execute on function public.admin_set_password(uuid, text) from public, anon, authenticated;
+grant execute on function public.admin_set_password(uuid, text) to authenticated;
+
+-- Bootstrapping the first administrator ---------------------------------------
+-- Signups with role 'teacher' or 'admin' start as 'pending', and promoting a
+-- profile requires an already-active admin. On a fresh project nobody can
+-- approve the first one, so it has to be made active here. Sign up through the
+-- app first, then run this once with that address:
+--
+--   update public.profiles
+--      set role = 'admin', status = 'active'
+--    where email = 'you@example.com';
+--
+-- Every later teacher and admin is approved from inside the AMS.
+
+-- Function privileges ---------------------------------------------------------
+-- Postgres grants EXECUTE on new functions to the PUBLIC pseudo-role, which
+-- exposes them at /rest/v1/rpc/<name>. Revoking from anon/authenticated alone
+-- does nothing while that inherited PUBLIC grant remains, so revoke from
+-- PUBLIC and grant back only what each role genuinely needs.
+
+-- A trigger function has no business being callable over REST. EXECUTE is
+-- checked at CREATE TRIGGER time rather than on each fire, so signup still works.
+revoke execute on function public.handle_new_user() from public, anon, authenticated;
+
+-- The report lifecycle belongs to signed-in staff. transition_report also
+-- checks is_staff() internally; this additionally removes it from the
+-- anonymous API surface instead of relying on that check alone.
+revoke execute on function public.transition_report(text, text, text, text) from public, anon, authenticated;
+grant execute on function public.transition_report(text, text, text, text) to authenticated;
+
+-- public.is_staff() deliberately keeps its PUBLIC grant. The "for all" staff
+-- write policies on events and gallery_items evaluate their USING clause even
+-- for anonymous visitors, so revoking it would break the public website feeds.
+-- It discloses nothing: it reads only the caller's own profile row and returns
+-- a boolean.
+
+-- Seed the default ICCE grading scale (Handbook Africa 2021 Rev 0W, p.39).
+insert into public.settings (id, value) values ('school', jsonb_build_object(
+  'school', jsonb_build_object(
+    'name', 'OrchardsWood International School',
+    'address', 'Wavamunno Rd., Kampala, Uganda',
+    'email', 'orchardswoodis@gmail.com',
+    'phone', '+256 780394344',
+    'website', 'www.ois.ug',
+    'motto', 'Equipping this generation for Life'
+  ),
+  'gradeScale', jsonb_build_array(
+    jsonb_build_object('grade', 'A*', 'min', 98, 'max', 100),
+    jsonb_build_object('grade', 'A',  'min', 96, 'max', 97.99),
+    jsonb_build_object('grade', 'B',  'min', 92, 'max', 95.99),
+    jsonb_build_object('grade', 'C',  'min', 88, 'max', 91.99),
+    jsonb_build_object('grade', 'D',  'min', 84, 'max', 87.99),
+    jsonb_build_object('grade', 'E',  'min', 80, 'max', 83.99)
+  ),
+  'subjects', jsonb_build_array(
+    'Maths', 'English', 'Science', 'Social Studies', 'Word Building', 'Literature', 'Bible Reading'
+  )
+)) on conflict (id) do nothing;
